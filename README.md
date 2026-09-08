@@ -40,6 +40,7 @@ and reviewed results. Start with the experiment that interests you:
 | Exercise | Status / evidence |
 | --- | --- |
 | [Ollama streaming baseline](exercises/00_ollama_baseline/) | Cold/warm TTFT and response timing |
+| [GPU runtime and data movement](exercises/01_data_movement/) | Transfer bandwidth, copy batching, RMSNorm/GEMM pipelines and explanatory diagrams |
 | [C++ GPU extension](exercises/03_cpp_extension/) | Small PyTorch extension and CUDA check |
 | [Kernel fusion](exercises/04_kernel_fusion/) | Sustained eager/compiled baseline: 270.8M calls, correctness checks, inline charts |
 | [Nsight Compute RMSNorm profiling](exercises/04_ncu_rmsnorm/) | Prepared for a future NVTX-filtered kernel study; not executed |
@@ -57,7 +58,7 @@ limitations. Raw captures and machine-specific settings remain outside Git.
 | Stage | Status |
 | --- | --- |
 | 00 — Measurement foundations | Baseline imported |
-| 01 — GPU runtime and data movement | Planned |
+| 01 — GPU runtime and data movement | Transfer and pipeline experiment |
 | 02 — CUDA execution and memory behavior | Planned |
 | 03 — PyTorch and transformer execution | C++ extension imported |
 | 04 — Triton kernels and fusion | Eager/compiled baseline complete; custom kernel next |

@@ -1,0 +1,8 @@
+{
+  "version": "2026.4.1.191",
+  "previous_version": "2022.4.2.50",
+  "package_url": "https://developer.nvidia.com/downloads/assets/tools/secure/nsight-systems/2026_4/NsightSystems-linux-cli-public-2026.4.1.191-3860507.deb",
+  "download_sha256": "b896cb2b9586ddf617c363a43bababad0a015dff4c77d8f0fbb9c26144056a69",
+  "package_type": "Linux x86_64 CLI only",
+  "source": "https://developer.nvidia.com/nsight-systems/get-started"
+}

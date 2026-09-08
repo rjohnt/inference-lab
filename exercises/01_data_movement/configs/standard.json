@@ -1,0 +1,16 @@
+{
+  "seed": 20260908,
+  "repeats": 3,
+  "transfer_bytes": [4096, 65536, 1048576, 16777216, 67108864, 268435456],
+  "transfer_seconds": 5,
+  "pipeline_seconds": 15,
+  "min_samples": 200,
+  "target_sample_seconds": 0.025,
+  "max_samples": 20000,
+  "pipeline_batches": 24,
+  "slots": 3,
+  "rmsnorm_shape": [4096, 1024],
+  "matmul_shape": [1024, 1024],
+  "packing_bytes": 4194304,
+  "packing_chunks": [1, 16, 256]
+}
