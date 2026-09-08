@@ -16,6 +16,7 @@ from implementations import build
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--methods", nargs="+", default=["eager", "compiled"])
     args = parser.parse_args()
     results = []
     torch.set_num_threads(1)
@@ -25,7 +26,7 @@ def main():
             data = (torch.randn(rows, 4096, device="cuda", dtype=torch.bfloat16),
                     torch.randn(rows, 4096, device="cuda", dtype=torch.bfloat16),
                     torch.randn(4096, device="cuda", dtype=torch.bfloat16))
-            for method in ["eager", "compiled"]:
+            for method in args.methods:
                 fn = build(method, 1e-6)
                 for _ in range(50):
                     fn(*data)
@@ -41,6 +42,7 @@ def main():
                                 "kernel_count": sum(kernels.values()), "kernels": dict(kernels)})
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps({"implementation_sha256": hashlib.sha256((ROOT / "src/implementations.py").read_bytes()).hexdigest(),
+                                   "source_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "src").glob("*.py"))},
                                    "note": "One warmed ordinary call per case; profiling is separate from benchmark timing.",
                                    "profiles": results}, indent=2) + "\n")
     print(json.dumps([{k: v for k, v in row.items() if k != "kernels"} for row in results]))

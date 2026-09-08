@@ -57,7 +57,7 @@ and reviewed results. Start with the experiment that interests you:
 | [GPU runtime and data movement](exercises/01_data_movement/) | 105 measured cases; transfer bandwidth, copy batching, RMSNorm/GEMM pipelines and diagrams |
 | [Sequential, streams, and batching](exercises/01_compute_streams/) | 54 measured cases; sequential vs four streams vs batching, plus CUDA Graph replay |
 | [C++ GPU extension](exercises/03_cpp_extension/) | Small PyTorch extension and CUDA check |
-| [Kernel fusion](exercises/04_kernel_fusion/) | Sustained eager/compiled baseline: 270.8M calls, correctness checks, inline charts |
+| [Kernel fusion](exercises/04_kernel_fusion/) | Eager/compiled baseline complete; custom Triton checks passed, sustained three-method comparison running |
 | [LayerNorm vs RMSNorm — training-lab](https://github.com/rjohnt/training-lab/tree/main/exercises/01_layernorm_vs_rmsnorm) | Planned training-memory study, forward-only controls and shared-axis charts |
 | [Nsight Compute RMSNorm profiling](exercises/04_ncu_rmsnorm/) | Prepared for a future NVTX-filtered kernel study; not executed |
 | [Qwen3 8B speculative decoding](exercises/05_speculative_decoding/) | Baseline, EAGLE-3, DFlash and n-gram experiments |
@@ -77,7 +77,7 @@ limitations. Raw captures and machine-specific settings remain outside Git.
 | 01 — GPU runtime and data movement | Transfer/pipeline and compute-stream/batching studies complete |
 | 02 — CUDA execution and memory behavior | Planned |
 | 03 — PyTorch and transformer execution | C++ extension imported |
-| 04 — Triton kernels and fusion | Eager/compiled baseline complete; custom kernel next |
+| 04 — Triton kernels and fusion | Custom Triton implementation verified; sustained comparison running |
 | 05 — Single-node LLM serving | Multiple experiments imported |
 | 06 — Capacity, KV cache, and quantization | Planned |
 | 07 — Production operations | Planned |

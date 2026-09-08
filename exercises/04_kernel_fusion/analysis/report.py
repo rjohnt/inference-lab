@@ -81,19 +81,19 @@ def main():
                          f"Confidence intervals use paired circular block bootstrap with {cfg['bootstrap_block_rounds']}-round blocks to preserve short-range timing correlation.")
     else:
         sampling_note = f"Fixed {cfg['rounds']} rounds; GPU samples use {cfg['graph_replays_per_round']} graph replays, and Python samples use {cfg['wall_batch_calls']} calls."
-    text = ["# Eager versus compiled residual + RMSNorm", "",
+    text = ["# Residual + RMSNorm implementation comparison", "",
             "## Question and prediction", "",
-            "Does Inductor compilation reduce warmed execution time for residual addition, RMS normalization, and learned scaling? Fewer launches and intermediate memory transfers should help, particularly on small workloads.", "",
+            "How do eager PyTorch, Inductor compilation and any registered custom kernels compare on residual addition, RMS normalization and learned scaling? Fewer launches and intermediate allocations may help; a handwritten kernel is not guaranteed to beat compiler-generated code.", "",
             "## Workload and environment", "",
             f"{env['gpu']}; PyTorch {env['torch']}; Triton {env['triton']}; CUDA {env['cuda_runtime']}; driver {env['gpu_initial']['driver_version']}; Python {env['python']}. CPU: {env['cpu']}. Linux/WSL, one PyTorch CPU thread. GPU clocks were not locked.", "",
             "Forward inference only; contiguous row-major inputs; FP32 and BF16; residual addition rounds to input dtype before normalization; FP32 accumulation and scaling; output returns to input dtype. Only the normalized output is returned. This includes residual addition and weight scaling, not standalone RMSNorm.", "",
             "## Method", "",
-            f"{len(runs)} independent process runs, {len(keys)} cases each, seed {cfg['seed']}. Each method receives the same inputs, {cfg['warmup_calls']} warmup calls, and at least {cfg['rounds']} measured rounds. Method order is randomized with balanced first/second positions; case order is deterministically shuffled. Inputs and allocations are reused across rounds (warm-cache microbenchmark).", "",
+            f"{len(runs)} independent process runs, {len(keys)} cases each, seed {cfg['seed']}. Each method receives the same inputs, {cfg['warmup_calls']} warmup calls, and at least {cfg['rounds']} measured rounds. Method order is randomized with balanced execution positions; case order is deterministically shuffled. Inputs and allocations are reused across rounds (warm-cache microbenchmark).", "",
             sampling_note, "",
             f"GPU timing uses CUDA events around repeated replay of a graph containing {cfg['graph_batch_calls']} calls, divided by all replayed calls. Python timing uses a synchronized batch of ordinary calls divided by batch size. Graph capture, calibration and compilation are excluded. Automatic compiler CUDA Graphs are disabled so graph treatment is matched between implementations.", "",
             "Median and p95 below are distributions of **per-call batch averages**, not individual-request tail latency. Bootstrap confidence intervals in summaries resample paired rounds and describe within-run variability only. First-call durations are saved separately and may hit existing compiler caches; they are not cold compilation benchmarks.", "",
             "Correctness: three random input seeds plus zeros for every method/shape, checked against an independent FP64 reduction with explicit dtype tolerances; input immutability, output dtype/shape, and captured-graph output are checked. These tests cover the benchmark inputs, not all possible numerical extremes.", "",
-            "## Results", "", "![Speedups](speedups.svg)", ""]
+            "## Results", "", "![Speedups](speedups.png)", "", "[SVG](speedups.svg)", ""]
     for name, manifest, data in runs:
         text += [f"### {name}", "", "| Case | Method | GPU eager µs p50 / p95 | GPU method µs p50 / p95 | GPU speedup | Python eager µs p50 / p95 | Python method µs p50 / p95 | Python speedup |", "|---|---|---:|---:|---:|---:|---:|---:|"]
         for key in keys:
@@ -135,8 +135,8 @@ def main():
              "Timer reads, duration-floor decisions, sample writes, and progress reporting occur outside the timed batches. They add total run time and gaps between batches. External SSH status reads can still contend for host CPU, and driver queries can disturb scheduling or power state; those indirect effects are not quantified here. Treat the Python wall-clock results as more exposed to host activity. See the exercise notes for how a published run was monitored. This is not a controlled comparison against a completely unobserved run.", "",
              "## Reproduction and later optimizations", "",
              "From the exercise directory on the GPU host:", "", "```bash", "source env.sh",
-             "python src/benchmark.py --config configs/long.json --out local/new-run1",
-             "python src/benchmark.py --config configs/long.json --out local/new-run2",
+             "python src/benchmark.py --config configs/long.json --methods " + " ".join(cfg["methods"]) + " --out local/new-run1",
+             "python src/benchmark.py --config configs/long.json --methods " + " ".join(cfg["methods"]) + " --out local/new-run2",
              "python analysis/report.py local/new-run1 local/new-run2 --out local/new-report", "```", "",
              "Output directories must be new. `COMPLETE` is written only after all cases pass. Raw numeric samples stay in ignored `local/`; reviewed manifests, summaries, CSV and charts can be published. Source/configuration SHA256 values identify the measured experiment. Add later kernels through `implementations.build`, keep the operation and protocol fixed, and include both eager and compiled baselines in each new run.", ""]
     (args.out / "report.md").write_text("\n".join(text))

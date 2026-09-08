@@ -3,11 +3,60 @@
 Question: how much can a custom Triton kernel improve a transformer normalization
 operation over eager and compiled PyTorch on an RTX 4070 SUPER?
 
-Status: **eager versus `torch.compile` baseline complete**, September 8, 2026.
+Status: **custom Triton kernel implemented and extended numerical checks passed;
+the sustained three-method comparison is running**. Historical baselines below
+remain unchanged.
+
+## Custom Triton implementation
+
+[triton_rmsnorm.py](src/triton_rmsnorm.py) loads one row per program, adds the
+residual, explicitly rounds to the input dtype, reduces squared values in FP32,
+normalizes, applies the learned scale and writes the final output. Intermediates
+stay within the kernel. The initial launch uses four warps for widths up to 4096
+and eight for larger supported widths; it is a fixed heuristic, not an autotuned
+winner. FP contraction is disabled to preserve the expression's rounding order.
+
+The wrapper accepts contiguous two-dimensional CUDA FP32/BF16 inputs with width
+1–8192, a matching residual and a one-dimensional weight. It rejects autograd
+inputs and unsupported layouts. It returns a fresh output without modifying inputs.
+
+![Fusion contract](diagram/fusion.png)
+
+[SVG diagram](diagram/fusion.svg)
+
+[Extended numerical checks](results/triton-check.json) cover 48 cases: random,
+zero, cancellation and small-magnitude inputs; both dtypes; widths 1, 33, 1000,
+1024, 4096 and 8192. Unsupported strided/autograd inputs are rejected. The timing
+harness additionally checks all measured shapes against the same FP64 oracle,
+including CUDA Graph replay. These checks do not cover arbitrary numerical extremes.
+
+Run all three methods with the unchanged long-run protocol:
+
+```bash
+python src/check_triton.py
+python src/benchmark.py --config configs/long.json --methods eager compiled triton_fused --out local/fusion1
+python analysis/verify_run.py local/fusion1
+python analysis/report.py local/fusion1 --out local/fusion-report
+python analysis/compare_compiled.py local/fusion1 --out local/fusion-report
+python analysis/stability.py local/fusion1 --out local/fusion-report
+# After timing finishes:
+python analysis/profile_kernels.py --methods eager compiled triton_fused --out local/fusion-profile.json
+```
+
+Three methods × two timing modes × 16 cases × 30 measured seconds gives a
+48-minute measured floor, plus setup and overhead. A custom kernel is not
+guaranteed to beat Inductor's already-fused implementation; compare against the
+co-run compiled control as well as eager PyTorch. Kernel counts alone do not
+establish lower memory traffic or explain a latency difference.
+
+Reference: [Triton row-reduction tutorial](https://triton-lang.org/main/getting-started/tutorials/05-layer-norm.html).
+
+## Sustained eager/compiled baseline (v2)
+
+Completed September 8, 2026.
 The sustained run covered 16 cases with **2,000–2,212 samples per method and timing
 mode**, totaling **137,040 timed samples and 270,771,482 operation calls**.
-Correctness and the independent result audit passed. The custom Triton fusion
-kernel is the next step.
+Correctness and the independent result audit passed.
 
 [Full sustained baseline report](results/baseline-v2/report.md) ·
 [CSV timings](results/baseline-v2/timings.csv) ·
@@ -144,7 +193,6 @@ To evaluate a later kernel, add a factory branch to `implementations.build` and
 run it beside both controls:
 
 ```bash
-# After implementing the `triton_fused` branch:
 python src/benchmark.py --methods eager compiled triton_fused --out local/fusion1
 ```
 

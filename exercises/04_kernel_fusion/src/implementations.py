@@ -28,4 +28,7 @@ def build(name, eps):
         torch.compiler.reset()
         return torch.compile(reference, backend="inductor", fullgraph=True,
                              dynamic=False, options={"triton.cudagraphs": False})
+    if name == "triton_fused":
+        from triton_rmsnorm import fused_rmsnorm
+        return lambda x, residual, weight: fused_rmsnorm(x, residual, weight, eps)
     raise ValueError(f"Unknown implementation: {name}")

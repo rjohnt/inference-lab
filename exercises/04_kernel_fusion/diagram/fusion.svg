@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 590"><defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1e293b" stroke-width=".5"/></pattern>
+<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
+<style>text{font-family:'SF Mono','Cascadia Code',monospace;fill:#e2e8f0}</style></defs>
+<rect width="100%" height="100%" fill="#0f172a"/><rect width="100%" height="100%" fill="url(#grid)"/>
+<text x="30" y="36" font-size="21" style="fill:#e2e8f0" text-anchor="start">Residual + weighted RMSNorm: one operation, three implementations</text>
+<text x="30" y="62" font-size="13" style="fill:#94a3b8" text-anchor="start">Conceptual dataflow — box widths do not represent latency or DRAM traffic</text>
+<path d="M265 150H305" stroke="#94a3b8" marker-end="url(#arrow)"/>
+<path d="M520 150H560" stroke="#94a3b8" marker-end="url(#arrow)"/>
+<path d="M795 150H835" stroke="#94a3b8" marker-end="url(#arrow)"/>
+<rect x="35" y="115" width="230" height="70" rx="8" fill="#0f172a"/>
+<rect x="35" y="115" width="230" height="70" rx="8" fill="#22d3ee" fill-opacity=".12" stroke="#22d3ee"/>
+<text x="150.0" y="143" font-size="15" style="fill:#e2e8f0" text-anchor="middle">Residual addition</text>
+<text x="150.0" y="164" font-size="11" style="fill:#94a3b8" text-anchor="middle">z = round_dtype(x + r)</text>
+<rect x="305" y="115" width="215" height="70" rx="8" fill="#0f172a"/>
+<rect x="305" y="115" width="215" height="70" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399"/>
+<text x="412.5" y="143" font-size="15" style="fill:#e2e8f0" text-anchor="middle">FP32 row reduction</text>
+<text x="412.5" y="164" font-size="11" style="fill:#94a3b8" text-anchor="middle">mean(z × z)</text>
+<rect x="560" y="115" width="235" height="70" rx="8" fill="#0f172a"/>
+<rect x="560" y="115" width="235" height="70" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399"/>
+<text x="677.5" y="143" font-size="15" style="fill:#e2e8f0" text-anchor="middle">Normalize and weight</text>
+<text x="677.5" y="164" font-size="11" style="fill:#94a3b8" text-anchor="middle">z × rsqrt(mean + eps) × w</text>
+<rect x="835" y="115" width="230" height="70" rx="8" fill="#0f172a"/>
+<rect x="835" y="115" width="230" height="70" rx="8" fill="#a78bfa" fill-opacity=".12" stroke="#a78bfa"/>
+<text x="950.0" y="143" font-size="15" style="fill:#e2e8f0" text-anchor="middle">Output</text>
+<text x="950.0" y="164" font-size="11" style="fill:#94a3b8" text-anchor="middle">cast to input dtype</text>
+<text x="35" y="230" font-size="18" style="fill:#22d3ee" text-anchor="start">Eager PyTorch</text>
+<text x="35" y="258" font-size="14" style="fill:#e2e8f0" text-anchor="start">Separate operations allocate intermediates and launch multiple GPU kernels.</text>
+<text x="35" y="285" font-size="13" style="fill:#fbbf24" text-anchor="start">BF16 residual rounding is part of the contract, even when everything is fused.</text>
+<rect x="35" y="325" width="490" height="70" rx="8" fill="#0f172a"/>
+<rect x="35" y="325" width="490" height="70" rx="8" fill="#a78bfa" fill-opacity=".12" stroke="#a78bfa"/>
+<text x="280.0" y="353" font-size="15" style="fill:#e2e8f0" text-anchor="middle">torch.compile / Inductor</text>
+<text x="280.0" y="374" font-size="11" style="fill:#94a3b8" text-anchor="middle">Generates fused code for the same Python expression</text>
+<rect x="570" y="325" width="495" height="70" rx="8" fill="#0f172a"/>
+<rect x="570" y="325" width="495" height="70" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399"/>
+<text x="817.5" y="353" font-size="15" style="fill:#e2e8f0" text-anchor="middle">Custom Triton</text>
+<text x="817.5" y="374" font-size="11" style="fill:#94a3b8" text-anchor="middle">One row per program; masked loads; FP32 reduction</text>
+<text x="35" y="440" font-size="17" style="fill:#e2e8f0" text-anchor="start">Fusion alone does not establish an advantage over torch.compile.</text>
+<text x="35" y="474" font-size="14" style="fill:#94a3b8" text-anchor="start">Measure GPU execution and ordinary Python calls separately.</text>
+<text x="35" y="504" font-size="13" style="fill:#94a3b8" text-anchor="start">Identical inputs, FP64 reference, no input mutation; compilation outside timing.</text>
+<text x="35" y="544" font-size="13" style="fill:#94a3b8" text-anchor="start">Warm reused buffers test this microbenchmark, not full-model serving throughput.</text>
+</svg>
