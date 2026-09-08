@@ -8,6 +8,75 @@ three-stream pipeline on an RTX 4070 SUPER. Workloads are compiled residual RMSN
 and BF16 matrix multiplication. Each uses the same operation and input values
 across its execution variants. The GPU-resident control omits CPU transfers and
 is a different data-residency contract, not an equivalent end-to-end application.
+It still includes Python submission overhead and is not a pure kernel-time ceiling.
+
+## Measured results
+
+Completed September 8, 2026: **105 cases, 107,468 timed blocks and 25,077,760
+operations** across three repetitions. The run took 14 minutes 8 seconds,
+including 13.15 minutes of timed blocks. Numerical checks and the independent
+raw-sample audit passed; the executed benchmark source hash matches this repository.
+
+| Workload | Pageable serial | Pinned serial | Pipelined | GPU resident | Pipeline / pageable |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| RMSNorm | 322 | 856 | 1,137 | 12,638 | 3.53× |
+| Matrix multiplication | 1,578 | 2,870 | 3,587 | 20,065 | 2.27× |
+
+Values are completed batches/second, taking the median of the three repeat
+medians. Pipelining improved throughput beyond pinned serial by **1.33× for
+RMSNorm** and **1.25× for GEMM**. Keeping data resident gave a much larger gain,
+but removes CPU input/output transfers from the workload contract.
+
+![Pipeline throughput comparison](results/baseline-v1/pipeline-throughput.png)
+
+[SVG throughput chart](results/baseline-v1/pipeline-throughput.svg)
+
+At 256 MiB, pinned H2D reached **26.21 GB/s** versus **8.56 GB/s** pageable;
+pinned D2H reached **26.45 GB/s** versus **8.24 GB/s** pageable. These are effective
+payload rates, including host submission and synchronized block completion.
+
+![Transfer bandwidth curves](results/baseline-v1/transfer-bandwidth.png)
+
+[SVG bandwidth chart](results/baseline-v1/transfer-bandwidth.svg)
+
+Submitting a 4 MiB payload as one copy took **164.4 µs**, versus **672.3 µs** for
+256 small copies of pre-existing contiguous views: about **4.09× less time**.
+Any real application cost to pack scattered data is excluded.
+
+![Copy batching comparison](results/baseline-v1/copy-batching.png)
+
+[SVG batching chart](results/baseline-v1/copy-batching.svg) ·
+[Full report](results/baseline-v1/report.md) ·
+[CSV measurements](results/baseline-v1/timings.csv) ·
+[Independent audit](results/baseline-v1/audit.json)
+
+## Observed pipeline scheduling
+
+Separate Nsight captures show different behavior for the two workloads. The
+RMSNorm pipeline recorded compute overlapping transfers for much of its kernel
+activity. The small GEMM pipeline recorded **no copy/compute overlap** in this
+capture, despite its higher unprofiled throughput. Reduced synchronization and
+submission overhead are plausible contributors; these captures do not isolate
+that cause or prove that GEMM cannot overlap in another configuration.
+
+![RMSNorm serial and pipeline activity](results/baseline-v1/rmsnorm-timeline.png)
+
+[SVG RMSNorm timeline](results/baseline-v1/rmsnorm-timeline.svg)
+
+![GEMM serial and pipeline activity](results/baseline-v1/matmul-timeline.png)
+
+[SVG GEMM timeline](results/baseline-v1/matmul-timeline.svg) ·
+[Profiler version and compatibility record](results/baseline-v1/profiling.json)
+
+Each panel shows the first nine batches from a separate 24-batch capture, on a
+common time scale within the figure. The `overlapped` variant name describes the
+requested pipeline structure, not guaranteed hardware overlap. Nsight required
+a WSL timestamp-conversion workaround with reduced timestamp accuracy; the
+uninstrumented benchmark remains the source for speedup claims.
+
+For independent compute kernels, see the separate
+[sequential/streams/batching study](../01_compute_streams/), whose graph-node
+traces demonstrate concurrent GEMMs and compare them with one larger batched GEMM.
 
 ## Theory
 
@@ -41,6 +110,12 @@ download)`. That is an optimistic model: shared copy engines, memory-bandwidth
 competition, CPU submission, and fill/drain overhead can prevent it. Throughput
 can improve without improving the latency of an individual batch.
 
+For example, upload=0.8 ms, compute=0.1 ms and download=0.4 ms imply 1.3 ms
+serially versus an ideal 0.8 ms pipeline interval: at most about 1.6× throughput
+under that model. Making the 0.1 ms kernel twice as fast saves only 0.05 ms
+serially and does not change the ideal upload-limited pipeline interval. This
+is why eliminating transfers can matter more than another kernel speedup.
+
 Our pipeline rotates three slots. Upload completion releases compute; compute
 completion releases download. The host waits for a slot's download before reusing
 its storage. CPU output must not be consumed before completion. Inputs differ
@@ -48,7 +123,9 @@ between slots so correctness checks can detect accidental cross-slot results.
 
 RMSNorm performs relatively little arithmetic per byte. GEMM reuses its resident
 weight matrix and performs about `2 * M * N * K` operations per batch, so it may
-have more computation to overlap. The first GEMM shape is 1024 × 1024 × 1024;
+have more computation to overlap. The first GEMM shape is 1024 × 1024 × 1024: about 2.15 billion floating-point
+operations with 4 MiB of total host/device traffic, or 512 operations per
+transferred byte. This ratio excludes GPU-internal memory traffic;
 a larger compute-dominated GEMM is a possible follow-up if host overhead dominates.
 
 ## Experiment plan and controls
@@ -64,6 +141,11 @@ The variants are pageable serial (blocking copies), pinned serial (asynchronous
 copies followed by one synchronization per batch), three-stream pinned overlap,
 and GPU-resident computation. The pageable-to-pipeline comparison changes both
 memory type and scheduling; pinned serial provides the intermediate control.
+RMSNorm and GEMM run in separate cases, never together. The pipeline overlaps
+stages of different batches; it uses one compute stream and does not deliberately
+run multiple GEMMs or RMSNorm kernels concurrently. “Serial” means each batch
+finishes its upload, compute and download before the next batch begins.
+
 Transfer-only tests use `non_blocking=True` for both memory types, synchronize
 at block boundaries, and retain buffers until completion.
 
@@ -135,7 +217,8 @@ python analysis/timeline.py local/matmul-serial/timeline.json local/matmul-overl
 CUDA-event spans can include scheduling gaps between the markers. They must not
 be described as hardware-engine occupancy. Nsight Systems traces can instead
 show actual kernel and copy activities. Capture only the warmed region with the
-CUDA profiler API; never compare instrumented timings with benchmark timings.
+CUDA profiler API; the Nsight workload follows the same pipeline path without
+adding per-stage CUDA timing events; never compare instrumented timings with benchmark timings.
 [Profiling guidance](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
 
 For Nsight Systems, activate the measured Python environment and run:
@@ -157,3 +240,34 @@ batch number and transfer sizes. Raw traces and SQLite files stay private.
 The CLI update is pinned in [nsight-systems.json](configs/nsight-systems.json),
 including the SHA-256 of the downloaded NVIDIA package. The checksum records the
 exact downloaded artifact; it is not a separately authenticated vendor signature.
+
+A reproducible user-level CLI installation avoids changing CUDA or driver packages:
+
+```bash
+# Download the package URL recorded in configs/nsight-systems.json first.
+bash src/install_nsys.sh /path/to/downloaded-NVIDIA-CLI.deb
+export PATH="$HOME/.local/bin:$PATH"
+nsys --version
+```
+
+The installer checks the recorded SHA-256, extracts under the user's `.local/opt`,
+and updates the `.local/bin/nsys` symlink. The prior system package remains available
+at its original path. Persist the PATH entry in the user's shell configuration
+when this should become the default CLI.
+
+### WSL profiling compatibility
+
+Nsight Systems was upgraded from 2022.4.2 to **2026.4.1.191**, installed under the
+user's tools directory and selected as the default `nsys`. The Windows GPU driver
+remained 591.74. Initial captures completed but contained only CUDA API events,
+without GPU kernel/copy activity tables. Explicit software tracing had the same
+symptom; those captures are not treated as evidence of GPU overlap.
+
+[NVIDIA's WSL workaround](https://forums.developer.nvidia.com/t/nsys-doesnt-show-cuda-kernel-and-memory-data/315536/9)
+sets `CuptiUseRawGpuTimestamps=false` in the configuration reported by `nsys -z`.
+`python src/configure_nsys_wsl.py` applies that setting while preserving other
+configuration and backing up an existing file. This restored GPU activity records.
+It uses CUPTI timestamp conversion with **reduced timestamp accuracy**. The
+workaround applies to the separate profiler captures, not the unprofiled benchmark.
+Do not infer tiny overlap intervals or precise microsecond differences from these
+traces. The capture wrapper now rejects exports missing GPU activity tables.

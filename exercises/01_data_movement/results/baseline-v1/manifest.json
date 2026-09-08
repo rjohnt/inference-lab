@@ -1,0 +1,43 @@
+{
+  "config": {
+    "seed": 20260908,
+    "repeats": 3,
+    "transfer_bytes": [
+      4096,
+      65536,
+      1048576,
+      16777216,
+      67108864,
+      268435456
+    ],
+    "transfer_seconds": 5,
+    "pipeline_seconds": 15,
+    "min_samples": 200,
+    "target_sample_seconds": 0.025,
+    "max_samples": 20000,
+    "pipeline_batches": 24,
+    "slots": 3,
+    "rmsnorm_shape": [
+      4096,
+      1024
+    ],
+    "matmul_shape": [
+      1024,
+      1024
+    ],
+    "packing_bytes": 4194304,
+    "packing_chunks": [
+      1,
+      16,
+      256
+    ]
+  },
+  "source_sha256": "5c1c383b2bc3d8d2d6c69fe2bb812921dd071d4003833959f56e252fbe1133e2",
+  "operation_sha256": "1f4a45daab5fc82f69dc878ed6529e6c986124d817f13990cf348bf5b994feaf",
+  "python": "3.12.3",
+  "torch": "2.13.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "start_utc": "2026-09-08T19:34:07Z",
+  "end_utc": "2026-09-08T19:48:15Z"
+}

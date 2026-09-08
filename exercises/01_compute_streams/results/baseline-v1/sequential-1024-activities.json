@@ -1,0 +1,173 @@
+{
+  "raw_sha256": "eb3190330dc86cc3945b844424451250d89019331311d0b0c3a1bbca0cda8b5d",
+  "strategy": "sequential",
+  "rows": 1024,
+  "graph_replays": 8,
+  "kernels": 32,
+  "events": [
+    {
+      "start_us": 0.0,
+      "end_us": 43.519,
+      "lane": 0
+    },
+    {
+      "start_us": 46.623,
+      "end_us": 89.855,
+      "lane": 0
+    },
+    {
+      "start_us": 92.991,
+      "end_us": 136.255,
+      "lane": 0
+    },
+    {
+      "start_us": 139.423,
+      "end_us": 182.399,
+      "lane": 0
+    },
+    {
+      "start_us": 185.535,
+      "end_us": 228.415,
+      "lane": 0
+    },
+    {
+      "start_us": 231.487,
+      "end_us": 274.047,
+      "lane": 0
+    },
+    {
+      "start_us": 277.183,
+      "end_us": 319.967,
+      "lane": 0
+    },
+    {
+      "start_us": 323.039,
+      "end_us": 365.47,
+      "lane": 0
+    },
+    {
+      "start_us": 368.574,
+      "end_us": 411.326,
+      "lane": 0
+    },
+    {
+      "start_us": 414.43,
+      "end_us": 457.054,
+      "lane": 0
+    },
+    {
+      "start_us": 460.158,
+      "end_us": 502.686,
+      "lane": 0
+    },
+    {
+      "start_us": 505.854,
+      "end_us": 548.51,
+      "lane": 0
+    },
+    {
+      "start_us": 551.646,
+      "end_us": 594.11,
+      "lane": 0
+    },
+    {
+      "start_us": 597.278,
+      "end_us": 639.453,
+      "lane": 0
+    },
+    {
+      "start_us": 642.621,
+      "end_us": 684.861,
+      "lane": 0
+    },
+    {
+      "start_us": 688.061,
+      "end_us": 730.237,
+      "lane": 0
+    },
+    {
+      "start_us": 733.373,
+      "end_us": 775.581,
+      "lane": 0
+    },
+    {
+      "start_us": 778.781,
+      "end_us": 820.925,
+      "lane": 0
+    },
+    {
+      "start_us": 824.061,
+      "end_us": 866.333,
+      "lane": 0
+    },
+    {
+      "start_us": 869.469,
+      "end_us": 911.612,
+      "lane": 0
+    },
+    {
+      "start_us": 914.716,
+      "end_us": 956.924,
+      "lane": 0
+    },
+    {
+      "start_us": 960.092,
+      "end_us": 1002.524,
+      "lane": 0
+    },
+    {
+      "start_us": 1005.596,
+      "end_us": 1047.804,
+      "lane": 0
+    },
+    {
+      "start_us": 1050.94,
+      "end_us": 1093.084,
+      "lane": 0
+    },
+    {
+      "start_us": 1096.156,
+      "end_us": 1138.364,
+      "lane": 0
+    },
+    {
+      "start_us": 1141.436,
+      "end_us": 1183.643,
+      "lane": 0
+    },
+    {
+      "start_us": 1186.779,
+      "end_us": 1228.923,
+      "lane": 0
+    },
+    {
+      "start_us": 1231.995,
+      "end_us": 1274.299,
+      "lane": 0
+    },
+    {
+      "start_us": 1277.819,
+      "end_us": 1319.899,
+      "lane": 0
+    },
+    {
+      "start_us": 1323.035,
+      "end_us": 1365.147,
+      "lane": 0
+    },
+    {
+      "start_us": 1368.315,
+      "end_us": 1410.555,
+      "lane": 0
+    },
+    {
+      "start_us": 1414.203,
+      "end_us": 1456.283,
+      "lane": 0
+    }
+  ],
+  "peak_concurrent_kernel_intervals": 1,
+  "overlap_fraction_of_busy_time": 0.0,
+  "timestamp_method": "Nsight Systems with WSL CUPTI conversion; reduced timestamp accuracy",
+  "notes": "Separate instrumented capture. Graph scheduler may use internal streams. Tiny overlaps are not reliable with this timestamp workaround."
+}

@@ -1,0 +1,53 @@
+{
+  "raw_sha256": "8bdbb0a78e92003094ea5cfab77d5c398b2f507805eaa6f9c5dc2d4e577097f5",
+  "strategy": "batched",
+  "rows": 1024,
+  "graph_replays": 8,
+  "kernels": 8,
+  "events": [
+    {
+      "start_us": 0.0,
+      "end_us": 142.4,
+      "lane": 0
+    },
+    {
+      "start_us": 143.072,
+      "end_us": 283.68,
+      "lane": 0
+    },
+    {
+      "start_us": 284.288,
+      "end_us": 423.583,
+      "lane": 0
+    },
+    {
+      "start_us": 424.191,
+      "end_us": 562.879,
+      "lane": 0
+    },
+    {
+      "start_us": 563.551,
+      "end_us": 701.951,
+      "lane": 0
+    },
+    {
+      "start_us": 702.591,
+      "end_us": 840.574,
+      "lane": 0
+    },
+    {
+      "start_us": 841.182,
+      "end_us": 978.814,
+      "lane": 0
+    },
+    {
+      "start_us": 979.39,
+      "end_us": 1116.862,
+      "lane": 0
+    }
+  ],
+  "peak_concurrent_kernel_intervals": 1,
+  "overlap_fraction_of_busy_time": 0.0,
+  "timestamp_method": "Nsight Systems with WSL CUPTI conversion; reduced timestamp accuracy",
+  "notes": "Separate instrumented capture. Graph scheduler may use internal streams. Tiny overlaps are not reliable with this timestamp workaround."
+}

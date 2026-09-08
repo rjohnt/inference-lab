@@ -1,0 +1,11 @@
+{
+  "nsight_systems": "2026.4.1.191-264138605071v0",
+  "previous_nsight_systems": "2022.4.2.50",
+  "driver": "591.74",
+  "installation": "user-level; selected as default CLI",
+  "setting": {
+    "CuptiUseRawGpuTimestamps": false
+  },
+  "limitation": "WSL CUPTI timestamp conversion has reduced accuracy. Initial raw-timestamp captures lacked GPU activity tables. Explicit software tracing alone did not fix this.",
+  "timing_separation": "Our profiler captures ran separately from our timed benchmarks."
+}

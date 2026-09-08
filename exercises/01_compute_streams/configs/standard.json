@@ -1,0 +1,11 @@
+{
+  "seed": 20260908,
+  "repeats": 3,
+  "requests": 4,
+  "rows": [32, 256, 1024],
+  "width": 1024,
+  "seconds": 5,
+  "min_samples": 200,
+  "target_sample_seconds": 0.025,
+  "max_samples": 20000
+}

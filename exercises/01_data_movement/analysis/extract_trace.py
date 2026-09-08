@@ -1,7 +1,7 @@
 """Extract only reviewed relative GPU activity timings from private Nsight SQLite."""
-import argparse,json,sqlite3
+import argparse,json,sqlite3,hashlib
 from pathlib import Path
-ap=argparse.ArgumentParser();ap.add_argument('sqlite',type=Path);ap.add_argument('--workload',required=True);ap.add_argument('--variant',required=True);ap.add_argument('--out',type=Path,required=True);args=ap.parse_args()
+ap=argparse.ArgumentParser();ap.add_argument('sqlite',type=Path);ap.add_argument('--workload',required=True);ap.add_argument('--variant',required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--wsl-timestamps',action='store_true');args=ap.parse_args()
 con=sqlite3.connect(f'file:{args.sqlite}?mode=ro',uri=True)
 tables={r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
 kernels='CUPTI_ACTIVITY_KIND_KERNEL'
@@ -27,8 +27,9 @@ for a,b in intervals:
 compute=[e for e in events if e['stage']=='compute']
 total=sum(e['end_ms']-e['start_ms'] for e in compute)
 overlap=sum(max(0,min(e['end_ms'],b)-max(e['start_ms'],a)) for e in compute for a,b in merged)
-result=dict(source='Nsight Systems CUDA activity trace',workload=args.workload,variant=args.variant,
+result=dict(source='Nsight Systems CUDA activity trace',raw_sha256=hashlib.sha256(args.sqlite.read_bytes()).hexdigest(),workload=args.workload,variant=args.variant,
  events=sorted(events,key=lambda e:e['start_ms']),compute_ms=total,compute_overlapping_copy_ms=overlap,
- compute_overlap_fraction=overlap/total,notes='Separate profiled run. Fraction of kernel activity time overlapping either copy direction; not a throughput speedup.')
+ compute_overlap_fraction=overlap/total,wsl_timestamp_workaround=args.wsl_timestamps,notes='Separate profiled run. Fraction of kernel activity time overlapping either copy direction; not a throughput speedup.')
+if args.wsl_timestamps: result['notes'] += ' CUPTI GPU-to-CPU timestamp conversion enabled for WSL; reduced timestamp accuracy.'
 args.out.parent.mkdir(parents=True,exist_ok=True);args.out.write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps({k:v for k,v in result.items() if k!='events'}))

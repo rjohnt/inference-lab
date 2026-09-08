@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cases": 54,
+  "samples": 16379,
+  "request_groups": 6722019,
+  "measured_seconds": 270.53558314479596,
+  "raw_sha256": "07d40d25b1e76600b5b171212b09ee030db5cab3c0162ad1cb2c104caa55cbd2"
+}

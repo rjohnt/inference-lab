@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cases": 105,
+  "samples": 107468,
+  "total_operations": 25077760,
+  "measured_seconds": 788.8819058510489,
+  "raw_sha256": "537ec457fa1bf3526b1abdac53879c0ba662632276f5df1865728a1f4c748f65"
+}

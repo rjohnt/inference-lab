@@ -1,0 +1,493 @@
+{
+  "source": "Nsight Systems CUDA activity trace",
+  "raw_sha256": "d9af269222d6b48b1f922b0188ba39082c03e41e5750415ab7e8dc01483f82f7",
+  "workload": "rmsnorm",
+  "variant": "pinned_serial",
+  "events": [
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 0,
+      "start_ms": 0.0,
+      "end_ms": 0.926973
+    },
+    {
+      "stage": "compute",
+      "batch": 0,
+      "start_ms": 1.061693,
+      "end_ms": 1.073821
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 0,
+      "start_ms": 1.105437,
+      "end_ms": 1.468892
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 1,
+      "start_ms": 1.628059,
+      "end_ms": 2.268537
+    },
+    {
+      "stage": "compute",
+      "batch": 1,
+      "start_ms": 2.311353,
+      "end_ms": 2.324505
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 1,
+      "start_ms": 2.359033,
+      "end_ms": 2.68588
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 2,
+      "start_ms": 2.823703,
+      "end_ms": 3.463253
+    },
+    {
+      "stage": "compute",
+      "batch": 2,
+      "start_ms": 3.503541,
+      "end_ms": 3.534805
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 2,
+      "start_ms": 3.567253,
+      "end_ms": 3.884564
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 3,
+      "start_ms": 4.009428,
+      "end_ms": 4.649042
+    },
+    {
+      "stage": "compute",
+      "batch": 3,
+      "start_ms": 4.693074,
+      "end_ms": 4.735697
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 3,
+      "start_ms": 4.770257,
+      "end_ms": 5.087728
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 4,
+      "start_ms": 5.211344,
+      "end_ms": 5.850958
+    },
+    {
+      "stage": "compute",
+      "batch": 4,
+      "start_ms": 5.887246,
+      "end_ms": 5.92955
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 4,
+      "start_ms": 5.96155,
+      "end_ms": 6.278925
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 5,
+      "start_ms": 6.425132,
+      "end_ms": 7.065578
+    },
+    {
+      "stage": "compute",
+      "batch": 5,
+      "start_ms": 7.110666,
+      "end_ms": 7.15313
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 5,
+      "start_ms": 7.189834,
+      "end_ms": 7.520777
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 6,
+      "start_ms": 7.657,
+      "end_ms": 8.296678
+    },
+    {
+      "stage": "compute",
+      "batch": 6,
+      "start_ms": 8.343526,
+      "end_ms": 8.385734
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 6,
+      "start_ms": 8.420486,
+      "end_ms": 8.744965
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 7,
+      "start_ms": 8.869348,
+      "end_ms": 9.514818
+    },
+    {
+      "stage": "compute",
+      "batch": 7,
+      "start_ms": 9.559874,
+      "end_ms": 9.600834
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 7,
+      "start_ms": 9.635682,
+      "end_ms": 9.953601
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 8,
+      "start_ms": 10.081505,
+      "end_ms": 10.724063
+    },
+    {
+      "stage": "compute",
+      "batch": 8,
+      "start_ms": 10.771774,
+      "end_ms": 10.813342
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 8,
+      "start_ms": 10.85235,
+      "end_ms": 11.169693
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 9,
+      "start_ms": 11.297821,
+      "end_ms": 11.937531
+    },
+    {
+      "stage": "compute",
+      "batch": 9,
+      "start_ms": 11.983739,
+      "end_ms": 12.025339
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 9,
+      "start_ms": 12.063802,
+      "end_ms": 12.381209
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 10,
+      "start_ms": 12.504249,
+      "end_ms": 13.147575
+    },
+    {
+      "stage": "compute",
+      "batch": 10,
+      "start_ms": 13.195863,
+      "end_ms": 13.236855
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 10,
+      "start_ms": 13.271671,
+      "end_ms": 13.605622
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 11,
+      "start_ms": 13.732853,
+      "end_ms": 14.376531
+    },
+    {
+      "stage": "compute",
+      "batch": 11,
+      "start_ms": 14.421235,
+      "end_ms": 14.463507
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 11,
+      "start_ms": 14.502963,
+      "end_ms": 14.820338
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 12,
+      "start_ms": 14.947025,
+      "end_ms": 15.587023
+    },
+    {
+      "stage": "compute",
+      "batch": 12,
+      "start_ms": 15.634511,
+      "end_ms": 15.677455
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 12,
+      "start_ms": 15.712783,
+      "end_ms": 16.031598
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 13,
+      "start_ms": 16.156526,
+      "end_ms": 16.796076
+    },
+    {
+      "stage": "compute",
+      "batch": 13,
+      "start_ms": 16.844075,
+      "end_ms": 16.884619
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 13,
+      "start_ms": 16.922891,
+      "end_ms": 17.240266
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 14,
+      "start_ms": 17.359818,
+      "end_ms": 17.999336
+    },
+    {
+      "stage": "compute",
+      "batch": 14,
+      "start_ms": 18.04212,
+      "end_ms": 18.08452
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 14,
+      "start_ms": 18.123847,
+      "end_ms": 18.459494
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 15,
+      "start_ms": 18.594758,
+      "end_ms": 19.23466
+    },
+    {
+      "stage": "compute",
+      "batch": 15,
+      "start_ms": 19.282148,
+      "end_ms": 19.323908
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 15,
+      "start_ms": 19.362052,
+      "end_ms": 19.679395
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 16,
+      "start_ms": 19.813314,
+      "end_ms": 20.453024
+    },
+    {
+      "stage": "compute",
+      "batch": 16,
+      "start_ms": 20.497664,
+      "end_ms": 20.53888
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 16,
+      "start_ms": 20.576192,
+      "end_ms": 20.893567
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 17,
+      "start_ms": 21.01491,
+      "end_ms": 21.65446
+    },
+    {
+      "stage": "compute",
+      "batch": 17,
+      "start_ms": 21.699612,
+      "end_ms": 21.741628
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 17,
+      "start_ms": 21.7807,
+      "end_ms": 22.098043
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 18,
+      "start_ms": 22.241083,
+      "end_ms": 22.880729
+    },
+    {
+      "stage": "compute",
+      "batch": 18,
+      "start_ms": 22.92748,
+      "end_ms": 22.969464
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 18,
+      "start_ms": 23.00684,
+      "end_ms": 23.324247
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 19,
+      "start_ms": 23.455575,
+      "end_ms": 24.095093
+    },
+    {
+      "stage": "compute",
+      "batch": 19,
+      "start_ms": 24.141973,
+      "end_ms": 24.182804
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 19,
+      "start_ms": 24.217492,
+      "end_ms": 24.534899
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 20,
+      "start_ms": 24.662675,
+      "end_ms": 25.302481
+    },
+    {
+      "stage": "compute",
+      "batch": 20,
+      "start_ms": 25.338609,
+      "end_ms": 25.379409
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 20,
+      "start_ms": 25.411377,
+      "end_ms": 25.7292
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 21,
+      "start_ms": 25.861071,
+      "end_ms": 26.506637
+    },
+    {
+      "stage": "compute",
+      "batch": 21,
+      "start_ms": 26.547821,
+      "end_ms": 26.588845
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 21,
+      "start_ms": 26.621453,
+      "end_ms": 26.938956
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 22,
+      "start_ms": 27.069259,
+      "end_ms": 27.709321
+    },
+    {
+      "stage": "compute",
+      "batch": 22,
+      "start_ms": 27.753929,
+      "end_ms": 27.794665
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 22,
+      "start_ms": 27.833769,
+      "end_ms": 28.151112
+    },
+    {
+      "stage": "H2D",
+      "bytes": 16777216,
+      "batch": 23,
+      "start_ms": 28.279624,
+      "end_ms": 28.919206
+    },
+    {
+      "stage": "compute",
+      "batch": 23,
+      "start_ms": 28.964454,
+      "end_ms": 29.005605
+    },
+    {
+      "stage": "D2H",
+      "bytes": 8388608,
+      "batch": 23,
+      "start_ms": 29.044229,
+      "end_ms": 29.36154
+    }
+  ],
+  "compute_ms": 0.9309409999999965,
+  "compute_overlapping_copy_ms": 0,
+  "compute_overlap_fraction": 0.0,
+  "wsl_timestamp_workaround": true,
+  "notes": "Separate profiled run. Fraction of kernel activity time overlapping either copy direction; not a throughput speedup. CUPTI GPU-to-CPU timestamp conversion enabled for WSL; reduced timestamp accuracy."
+}

@@ -62,7 +62,7 @@ def main():
                 series.append((size,np.median(vals),min(vals),max(vals)))
             a=np.array(series);ax.plot(a[:,0],a[:,1],'o-',label='Pinned' if pinned else 'Pageable')
             ax.fill_between(a[:,0],a[:,2],a[:,3],alpha=.15)
-        ax.set_xscale('log',base=2);ax.set_xlabel('Payload bytes');ax.set_ylabel('Effective GB/s (payload / wall time)')
+        ax.set_xscale('log',base=2);ax.set_xticks(cfg['transfer_bytes'],[f'{n//1048576} MiB' if n>=1048576 else f'{n//1024} KiB' for n in cfg['transfer_bytes']],rotation=25);ax.set_xlabel('Payload size');ax.set_ylabel('Effective GB/s (payload / wall time)')
         ax.set_title(d);ax.grid(alpha=.2);ax.legend()
     fig.suptitle('Host/device transfers · median across repeats; shading = repeat range')
     finish(fig,'transfer-bandwidth')
@@ -75,6 +75,8 @@ def main():
         ax.bar(range(4),med,yerr=[med-lo,hi-med],capsize=4,color=['#94a3b8','#22d3ee','#34d399','#a78bfa'])
         ax.set_xticks(range(4),['Pageable\nserial','Pinned\nserial','3-stream\npipeline','GPU\nresident'])
         ax.set_ylabel('Completed batches / second');ax.set_title(w.upper());ax.grid(axis='y',alpha=.2)
+        ax.set_ylim(0,max(hi)*1.15)
+        for i,value in enumerate(med): ax.text(i,hi[i]+max(hi)*.025,f'{value:,.0f}',ha='center',fontsize=10)
         findings.append(f'| {w} | '+ ' | '.join(f'{v:,.1f}' for v in med)+f' | {med[2]/med[0]:.2f}× |')
     fig.suptitle('End-to-end batch throughput · error bars = repeat range')
     finish(fig,'pipeline-throughput')
@@ -82,12 +84,12 @@ def main():
     for rep in range(1,cfg['repeats']+1):
         subset=sorted((r for r in rows if r['kind']=='packing' and r['repeat']==rep),key=lambda r:r['chunks'])
         ax.plot([r['chunks'] for r in subset],[r['median_seconds']*1e6 for r in subset],'o-',label=f'Repeat {rep}')
-    ax.set_xscale('log',base=2);ax.set_xlabel('Copy submissions for the same 4 MiB payload');ax.set_ylabel('Microseconds per payload')
+    ax.set_xscale('log',base=2);ax.set_xticks(cfg['packing_chunks'],[str(n) for n in cfg['packing_chunks']]);ax.set_xlabel('Copy submissions for the same 4 MiB payload');ax.set_ylabel('Microseconds per payload')
     ax.set_title('Small-copy overhead · pre-existing contiguous views; no packing cost')
     ax.legend();ax.grid(alpha=.2);finish(fig,'copy-batching')
     text='''# Data movement results
 
-All numerical checks and independent timing audits passed. Three repetitions are
+All numerical checks and independent timing audits passed. Repetitions are
 separate measurement passes in one process, with independently shuffled case order.
 Error bars show the range of repeat medians, not confidence intervals.
 
