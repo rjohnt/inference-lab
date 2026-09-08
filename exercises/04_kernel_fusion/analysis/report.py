@@ -1,6 +1,7 @@
 """Render a self-contained report from complete, comparable benchmark runs."""
 import argparse
 import csv
+from datetime import datetime
 import json
 from pathlib import Path
 
@@ -104,6 +105,12 @@ def main():
                 text.append(f"| {key} | {method} | {latency(g['eager'])} | {latency(g[method])} | {g['versus_eager'][method]['speedup']:.2f}× | {latency(w['eager'])} | {latency(w[method])} | {w['versus_eager'][method]['speedup']:.2f}× |")
         text.append("")
     if cfg.get("min_measured_seconds"):
+        text += ["## Run duration", "", "| Run | Timestamp-to-timestamp elapsed minutes | Sum of measured batch minutes |", "|---|---:|---:|"]
+        for run_name, manifest, data in runs:
+            elapsed = (datetime.fromisoformat(manifest["finished_utc"]) - datetime.fromisoformat(manifest["started_utc"])).total_seconds()
+            measured = sum(row["metrics"][metric][method]["measured_seconds"] for row in data.values() for metric in ["graph_gpu", "wall"] for method in cfg["methods"])
+            text.append(f"| {run_name} | {elapsed / 60:.2f} | {measured / 60:.2f} |")
+        text += ["", "Elapsed timestamps include recorded setup, calibration, checks, reporting and gaps; measured totals sum the distinct timed batches. Process imports before the start timestamp are not included.", ""]
         text += ["## Actual sampling totals", "", "| Run | Case | Metric | Method | Samples | Calls/sample | Total calls | Measured seconds |", "|---|---|---|---|---:|---:|---:|---:|"]
         for run_name, manifest, data in runs:
             for key in keys:
@@ -124,6 +131,8 @@ def main():
     text += ["## Interpretation and limitations", "",
              "These measurements establish a local baseline for later custom kernels. The graph result isolates device execution more closely; the Python result also reflects dispatch, allocation and synchronization overhead. Neither is end-to-end model throughput. Reused inputs may fit in GPU cache for small shapes; do not extrapolate these ratios to streaming-memory workloads.", "",
              "A sustained run does not establish cross-day or cross-machine reproducibility. Multiple process runs, when present, check immediate repeatability on the same machine. Windows display activity, thermal state, power management, and unlocked clocks can affect results. Per-case GPU snapshots are retained in summaries. Do not average the two timing modes together.", "",
+             "## Instrumentation and observer effects", "",
+             "Timer reads, duration-floor decisions, sample writes, and progress reporting occur outside the timed batches. They add total run time and gaps between batches. External SSH status reads can still contend for host CPU, and driver queries can disturb scheduling or power state; those indirect effects are not quantified here. Treat the Python wall-clock results as more exposed to host activity. See the exercise notes for how a published run was monitored. This is not a controlled comparison against a completely unobserved run.", "",
              "## Reproduction and later optimizations", "",
              "From the exercise directory on the GPU host:", "", "```bash", "source env.sh",
              "python src/benchmark.py --config configs/long.json --out local/new-run1",

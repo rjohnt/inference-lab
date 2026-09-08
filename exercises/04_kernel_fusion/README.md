@@ -138,3 +138,15 @@ are persistent, so that number is not a controlled cold-compilation benchmark.
 GPU clocks are unlocked and WSL shares the display GPU. Warm reused inputs may
 fit in cache at small shapes; streaming-memory and end-to-end model tests remain
 future work.
+
+## Observer overhead
+
+Elapsed-time checks, sample writes, and progress updates happen between timed
+batches, after synchronization. They are excluded directly from per-call timing,
+but can alter overall duty cycle or compete for host resources. SSH status reads
+and GPU driver queries are also potential indirect disturbances, particularly
+for the Python wall-clock metric. The current sustained run was checked
+occasionally over SSH; GPU-state polling was stopped during the remaining
+measurements after discussing observer overhead. No claim of zero observer
+effect is made. A logging-disabled, unobserved repeat would be needed to measure
+that effect directly.
