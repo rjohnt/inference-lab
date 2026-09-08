@@ -3,9 +3,57 @@
 Question: how much can a custom Triton kernel improve a transformer normalization
 operation over eager and compiled PyTorch on an RTX 4070 SUPER?
 
-Status: **custom Triton kernel implemented and extended numerical checks passed;
-the sustained three-method comparison is running**. Historical baselines below
+Status: **custom Triton comparison complete**, September 8, 2026. All 16 cases
+passed correctness and independent sample audits. Historical baselines below
 remain unchanged.
+
+## Measured custom-kernel results
+
+The three-method run collected **214,164 timed samples and 504,486,459 operation
+calls**, with **2,064–2,481 samples per method/timing pair in each case**. It ran
+for 58.28 elapsed minutes, including 55.43 minutes of measured batches.
+
+| Comparison | GPU speedup range | GPU faster cases | Python-call speedup range | Python faster cases |
+| --- | ---: | ---: | ---: | ---: |
+| Custom Triton over eager | 1.67–20.26× | 16/16 | 1.63–7.95× | 16/16 |
+| Custom Triton over compiled | 0.835–4.04× | 5/16 | 0.951–2.54× | 15/16 |
+
+Values below 1 mean a regression. These are co-run comparisons, not ratios against
+the earlier baseline. Paired block-bootstrap intervals support the directions
+within this run, but do not establish cross-day reliability or practical importance
+for tiny differences.
+
+![Custom Triton versus compiled](results/triton-v1/versus-compiled.png)
+
+[SVG](results/triton-v1/versus-compiled.svg) ·
+[Direct comparison and confidence intervals](results/triton-v1/versus-compiled.csv) ·
+[Full report](results/triton-v1/report.md)
+
+The strongest GPU result is BF16 `[4096, 1024]`: **182.26 µs eager, 36.37 µs
+compiled, 9.00 µs custom**. Python-call medians are 187.36, 69.16 and 28.49 µs,
+respectively. A counterexample is BF16 `[512, 4096]`: compiled GPU execution takes
+5.86 µs versus 7.02 µs custom, even though the custom Python-call path is faster.
+The custom kernel improves dispatch overhead much more consistently than device
+execution; the two timing modes must not be combined into one speedup.
+
+Separate profiling confirms **10 eager kernels versus one compiled and one custom
+kernel** in both checked BF16 shapes. Both optimized implementations are already
+fused. The fourfold difference at `[4096, 1024]` needs hardware-counter profiling
+to explain; this study does not claim a measured reduction in DRAM traffic.
+
+![Both optimized implementations versus eager](results/triton-v1/speedups.png)
+
+[SVG](results/triton-v1/speedups.svg) · [Kernel counts](results/triton-v1/profile.json)
+
+The largest first-quarter/last-quarter median drift was **0.85%** across 96
+method/metric/case combinations. This is one sustained process run. Occasional
+SSH progress reads and a pre-existing GPU monitor were present; indirect observer
+effects were not isolated. These warm-buffer measurements are not end-to-end
+transformer throughput, and clocks were not locked.
+
+![Within-run drift](results/triton-v1/stability.png)
+
+[SVG](results/triton-v1/stability.svg) · [Audited run metadata](results/triton-v1/run1/)
 
 ## Custom Triton implementation
 
@@ -50,6 +98,12 @@ co-run compiled control as well as eager PyTorch. Kernel counts alone do not
 establish lower memory traffic or explain a latency difference.
 
 Reference: [Triton row-reduction tutorial](https://triton-lang.org/main/getting-started/tutorials/05-layer-norm.html).
+
+The direct-comparison confidence intervals and drift chart require the retained
+raw samples to regenerate. The general report can be regenerated from the
+published compact `results/triton-v1/run1` directory. A later tuning run should
+keep both controls and preserve this fixed-launch kernel as the first custom
+baseline. Further optimization and Nsight Compute explanation remain follow-ups.
 
 ## Sustained eager/compiled baseline (v2)
 

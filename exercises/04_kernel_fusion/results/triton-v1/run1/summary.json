@@ -1,0 +1,3138 @@
+[
+  {
+    "case": "float32-512x1024",
+    "rows": 512,
+    "width": 1024,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.215010728283232e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.6371298740032216e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.993062757170264e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.050727563433611e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.648402279234688e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 6.130784413471702e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.150891351808241e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.670410985203489e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.19734095153035e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.09860481800569687,
+      "compiled": 13.56709511099325,
+      "triton_fused": 0.41912815399700776
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "510",
+      "utilization.gpu": "0",
+      "temperature.gpu": "52",
+      "clocks.sm": "2520",
+      "clocks.mem": "10501",
+      "power.draw": "35.52",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "820",
+      "utilization.gpu": "60",
+      "temperature.gpu": "64",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "121.32",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2298,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 287,
+        "compiled": 211,
+        "triton_fused": 479
+      },
+      "graph_gpu": {
+        "eager": 992,
+        "compiled": 3872,
+        "triton_fused": 3776
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 15.265032168357603,
+          "p95_us": 15.297153159495323,
+          "min_us": 15.176257779521327,
+          "max_us": 16.705032317869126,
+          "rounds": 2298,
+          "measured_seconds": 34.82893892192866,
+          "measured_calls": 2279616
+        },
+        "compiled": {
+          "p50_us": 3.563900870725143,
+          "p95_us": 3.5792793863075825,
+          "min_us": 3.5363967753638907,
+          "max_us": 3.863801640912521,
+          "rounds": 2298,
+          "measured_seconds": 31.747430490493556,
+          "measured_calls": 8897856
+        },
+        "triton_fused": {
+          "p50_us": 3.659389786801096,
+          "p95_us": 3.666433477300709,
+          "min_us": 3.6336271944692577,
+          "max_us": 4.120677962141522,
+          "rounds": 2298,
+          "measured_seconds": 31.777648004532036,
+          "measured_calls": 8677248
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 4.283237026525837,
+            "ci95_low": 4.282968855263464,
+            "ci95_high": 4.283554968413277
+          },
+          "triton_fused": {
+            "speedup": 4.171469304367746,
+            "ci95_low": 4.171169905158372,
+            "ci95_high": 4.171742524742206
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 50.55594599303136,
+          "p95_us": 52.128099477351924,
+          "min_us": 48.912167247386755,
+          "max_us": 64.763393728223,
+          "rounds": 2298,
+          "measured_seconds": 33.50302850199998,
+          "measured_calls": 659526
+        },
+        "compiled": {
+          "p50_us": 68.22982938388625,
+          "p95_us": 71.22140213270141,
+          "min_us": 66.54688625592416,
+          "max_us": 82.95301895734598,
+          "rounds": 2298,
+          "measured_seconds": 33.30085612099994,
+          "measured_calls": 484878
+        },
+        "triton_fused": {
+          "p50_us": 27.138503131524008,
+          "p95_us": 27.915991649269312,
+          "min_us": 26.542354906054282,
+          "max_us": 41.06434237995825,
+          "rounds": 2298,
+          "measured_seconds": 30.031017805999976,
+          "measured_calls": 1100742
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.740965446485069,
+            "ci95_low": 0.739701012830603,
+            "ci95_high": 0.7419745997898601
+          },
+          "triton_fused": {
+            "speedup": 1.862886311305273,
+            "ci95_low": 1.8608979520771878,
+            "ci95_high": 1.8650568127167797
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-512x1024",
+    "rows": 512,
+    "width": 1024,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0078125,
+          "rms_error": 1.2507321116572712e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.00390625,
+          "rms_error": 6.744022357452195e-06
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0078125,
+          "rms_error": 1.1834787073894404e-05
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0028583379462361336
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002678987570106983
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0028722258284687996
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.001953125,
+          "rms_error": 3.0157830224197824e-06
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.00390625,
+          "rms_error": 8.636299753561616e-06
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.001953125,
+          "rms_error": 4.909339168079896e-06
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0008993000083137304,
+      "compiled": 0.07929412501107436,
+      "triton_fused": 0.0162131050019525
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "734",
+      "utilization.gpu": "0",
+      "temperature.gpu": "57",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "89.35",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "785",
+      "utilization.gpu": "53",
+      "temperature.gpu": "60",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "114.22",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2193,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 197,
+        "compiled": 222,
+        "triton_fused": 496
+      },
+      "graph_gpu": {
+        "eager": 704,
+        "compiled": 5632,
+        "triton_fused": 6336
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 20.593454891985115,
+          "p95_us": 20.641745220531117,
+          "min_us": 20.54836397821253,
+          "max_us": 22.541090846061707,
+          "rounds": 2193,
+          "measured_seconds": 31.823898155212284,
+          "measured_calls": 1543872
+        },
+        "compiled": {
+          "p50_us": 2.435636283321814,
+          "p95_us": 2.4439898065545345,
+          "min_us": 2.4290909482674166,
+          "max_us": 2.6569090444933283,
+          "rounds": 2193,
+          "measured_seconds": 30.114244665146035,
+          "measured_calls": 12350976
+        },
+        "triton_fused": {
+          "p50_us": 2.159030298994045,
+          "p95_us": 2.1614545222484702,
+          "min_us": 2.153525298291987,
+          "max_us": 2.4956767306183325,
+          "rounds": 2193,
+          "measured_seconds": 30.025163152694848,
+          "measured_calls": 13894848
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 8.45506163338106,
+            "ci95_low": 8.454949285118131,
+            "ci95_high": 8.455546621922023
+          },
+          "triton_fused": {
+            "speedup": 9.538288972405901,
+            "ci95_low": 9.537574856967748,
+            "ci95_high": 9.538311581158586
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 75.1025888324873,
+          "p95_us": 77.59868121827411,
+          "min_us": 73.54057868020305,
+          "max_us": 168.52799492385788,
+          "rounds": 2193,
+          "measured_seconds": 32.633007806,
+          "measured_calls": 432021
+        },
+        "compiled": {
+          "p50_us": 67.81978378378379,
+          "p95_us": 70.57122792792794,
+          "min_us": 65.72204504504505,
+          "max_us": 110.73878378378377,
+          "rounds": 2193,
+          "measured_seconds": 33.21827954000005,
+          "measured_calls": 486846
+        },
+        "triton_fused": {
+          "p50_us": 27.79376814516129,
+          "p95_us": 28.546648790322582,
+          "min_us": 27.057651209677417,
+          "max_us": 115.42746975806452,
+          "rounds": 2193,
+          "measured_seconds": 30.421537438999977,
+          "measured_calls": 1087728
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.1073846692275193,
+            "ci95_low": 1.1056023639734665,
+            "ci95_high": 1.1089352049053018
+          },
+          "triton_fused": {
+            "speedup": 2.7021377036838437,
+            "ci95_low": 2.6995823817121343,
+            "ci95_high": 2.704760905949243
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-512x4096",
+    "rows": 512,
+    "width": 4096,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 2.8076794478693046e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.3228472198534291e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0078125,
+          "rms_error": 6.408538865798619e-06
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0028361219447106123
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027692271396517754
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027946920599788427
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.70931907632621e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.3228472198534291e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0078125,
+          "rms_error": 8.431054993707221e-06
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0009420999995199963,
+      "compiled": 0.07678720400144812,
+      "triton_fused": 0.01598460099194199
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "58",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "83.85",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "879",
+      "utilization.gpu": "68",
+      "temperature.gpu": "72",
+      "clocks.sm": "2670",
+      "clocks.mem": "10251",
+      "power.draw": "180.99",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2325,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 191,
+        "compiled": 218,
+        "triton_fused": 461
+      },
+      "graph_gpu": {
+        "eager": 288,
+        "compiled": 2368,
+        "triton_fused": 2016
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 53.10222175386217,
+          "p95_us": 55.77244361241659,
+          "min_us": 52.53688825501336,
+          "max_us": 57.543112172020805,
+          "rounds": 2325,
+          "measured_seconds": 35.971871734619135,
+          "measured_calls": 669600
+        },
+        "compiled": {
+          "p50_us": 5.862053987142202,
+          "p95_us": 6.21621632898176,
+          "min_us": 5.763459447267893,
+          "max_us": 6.384000182151794,
+          "rounds": 2325,
+          "measured_seconds": 32.56451725387574,
+          "measured_calls": 5505600
+        },
+        "triton_fused": {
+          "p50_us": 7.019682536049495,
+          "p95_us": 7.410285491791982,
+          "min_us": 6.882031758626302,
+          "max_us": 7.548952386492775,
+          "rounds": 2325,
+          "measured_seconds": 33.249396930694616,
+          "measured_calls": 4687200
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 9.058637445225905,
+            "ci95_low": 9.046928503588372,
+            "ci95_high": 9.074184485266471
+          },
+          "triton_fused": {
+            "speedup": 7.564761152823699,
+            "ci95_low": 7.554535584735277,
+            "ci95_high": 7.57982573657087
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 75.01149738219895,
+          "p95_us": 77.18631413612565,
+          "min_us": 73.52196858638743,
+          "max_us": 147.0230680628272,
+          "rounds": 2325,
+          "measured_seconds": 33.49883304599997,
+          "measured_calls": 444075
+        },
+        "compiled": {
+          "p50_us": 68.64037155963302,
+          "p95_us": 71.02555963302751,
+          "min_us": 66.84039908256881,
+          "max_us": 88.23258715596332,
+          "rounds": 2325,
+          "measured_seconds": 34.96786090299996,
+          "measured_calls": 506850
+        },
+        "triton_fused": {
+          "p50_us": 27.882854663774403,
+          "p95_us": 28.528239045553146,
+          "min_us": 27.30693275488069,
+          "max_us": 55.62626030368763,
+          "rounds": 2325,
+          "measured_seconds": 30.02674726500005,
+          "measured_calls": 1071825
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.0928189297027748,
+            "ci95_low": 1.0909860318394686,
+            "ci95_high": 1.0939827650709455
+          },
+          "triton_fused": {
+            "speedup": 2.6902373622330145,
+            "ci95_low": 2.688020862248452,
+            "ci95_high": 2.692300163738764
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-32x4096",
+    "rows": 32,
+    "width": 4096,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.816010784087666e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.008503561361067e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 5.8772990030320216e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.563630978144829e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.733033603405602e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 5.9360946380593305e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.4587864894983795e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.470431219123384e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 5.916252021620494e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0004908999981125817,
+      "compiled": 0.07708298900979571,
+      "triton_fused": 0.015873698008363135
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "61",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "113.96",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "741",
+      "utilization.gpu": "51",
+      "temperature.gpu": "56",
+      "clocks.sm": "2775",
+      "clocks.mem": "10251",
+      "power.draw": "81.32",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2184,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 286,
+        "compiled": 216,
+        "triton_fused": 497
+      },
+      "graph_gpu": {
+        "eager": 1152,
+        "compiled": 7104,
+        "triton_fused": 6976
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 11.976000335481432,
+          "p95_us": 12.03555530971951,
+          "min_us": 11.962666279739803,
+          "max_us": 13.31911070479287,
+          "rounds": 2184,
+          "measured_seconds": 30.191643826484437,
+          "measured_calls": 2515968
+        },
+        "compiled": {
+          "p50_us": 1.9322409554644748,
+          "p95_us": 1.9403243655557032,
+          "min_us": 1.9287927462174013,
+          "max_us": 2.1367928197791985,
+          "rounds": 2184,
+          "measured_seconds": 30.00681064510363,
+          "measured_calls": 15515136
+        },
+        "triton_fused": {
+          "p50_us": 1.9709357154478722,
+          "p95_us": 1.980330282395039,
+          "min_us": 1.9695870920058784,
+          "max_us": 2.167339445254125,
+          "rounds": 2184,
+          "measured_seconds": 30.091243212699958,
+          "measured_calls": 15235584
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 6.197984936409044,
+            "ci95_low": 6.195631217829197,
+            "ci95_high": 6.207986005662449
+          },
+          "triton_fused": {
+            "speedup": 6.076301850748098,
+            "ci95_low": 6.073549999859418,
+            "ci95_high": 6.082403393210337
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 51.64615734265735,
+          "p95_us": 53.351647202797196,
+          "min_us": 50.0667937062937,
+          "max_us": 72.9696153846154,
+          "rounds": 2184,
+          "measured_seconds": 32.439241674,
+          "measured_calls": 624624
+        },
+        "compiled": {
+          "p50_us": 69.20659953703704,
+          "p95_us": 71.96461111111111,
+          "min_us": 67.83379166666667,
+          "max_us": 105.06821759259259,
+          "rounds": 2184,
+          "measured_seconds": 32.85771979500002,
+          "measured_calls": 471744
+        },
+        "triton_fused": {
+          "p50_us": 27.912891348088532,
+          "p95_us": 28.63393128772636,
+          "min_us": 27.22756338028169,
+          "max_us": 33.59195171026157,
+          "rounds": 2184,
+          "measured_seconds": 30.422699611000002,
+          "measured_calls": 1085448
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.7462605833569105,
+            "ci95_low": 0.745324719530742,
+            "ci95_high": 0.7470357811028775
+          },
+          "triton_fused": {
+            "speedup": 1.8502618270032445,
+            "ci95_low": 1.8486272098909267,
+            "ci95_high": 1.8517297711846146
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-512x4096",
+    "rows": 512,
+    "width": 4096,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 6.081213399511398e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.8836434391196235e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.037164723693422e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.001436503311197e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 5.96539351249703e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.101468841279711e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 6.141208075405302e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 5.850868589618585e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.953647175260812e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0017160639981739223,
+      "compiled": 0.073485184009769,
+      "triton_fused": 0.00020160801068414003
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "54",
+      "clocks.sm": "2775",
+      "clocks.mem": "10251",
+      "power.draw": "65.45",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "883",
+      "utilization.gpu": "72",
+      "temperature.gpu": "72",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "187.22",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2481,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 271,
+        "compiled": 218,
+        "triton_fused": 427
+      },
+      "graph_gpu": {
+        "eager": 384,
+        "compiled": 1088,
+        "triton_fused": 1152
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 42.19200213750204,
+          "p95_us": 43.30133398373922,
+          "min_us": 41.853333512941994,
+          "max_us": 45.49066722393036,
+          "rounds": 2481,
+          "measured_seconds": 40.39169952011111,
+          "measured_calls": 952704
+        },
+        "compiled": {
+          "p50_us": 12.884706258773804,
+          "p95_us": 13.27058848212747,
+          "min_us": 12.65035306706148,
+          "max_us": 13.80799973712248,
+          "rounds": 2481,
+          "measured_seconds": 34.851813961982735,
+          "measured_calls": 2699328
+        },
+        "triton_fused": {
+          "p50_us": 12.23199980126487,
+          "p95_us": 12.681778106424543,
+          "min_us": 12.026666767067379,
+          "max_us": 13.088888592190212,
+          "rounds": 2481,
+          "measured_seconds": 35.16043139457721,
+          "measured_calls": 2858112
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 3.2745800556199343,
+            "ci95_low": 3.271886862418174,
+            "ci95_high": 3.2807017340534217
+          },
+          "triton_fused": {
+            "speedup": 3.449313507439651,
+            "ci95_low": 3.4441462161558727,
+            "ci95_high": 3.4571345384923364
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 54.30953505535055,
+          "p95_us": 55.83134686346863,
+          "min_us": 50.76589667896679,
+          "max_us": 73.33177859778598,
+          "rounds": 2481,
+          "measured_seconds": 36.57607579000001,
+          "measured_calls": 672351
+        },
+        "compiled": {
+          "p50_us": 68.61958256880733,
+          "p95_us": 71.55353669724771,
+          "min_us": 66.87556880733945,
+          "max_us": 90.32528899082568,
+          "rounds": 2481,
+          "measured_seconds": 37.36227879199991,
+          "measured_calls": 540858
+        },
+        "triton_fused": {
+          "p50_us": 28.17781733021077,
+          "p95_us": 29.057887587822016,
+          "min_us": 27.48033489461358,
+          "max_us": 45.040557377049176,
+          "rounds": 2481,
+          "measured_seconds": 30.011704784000006,
+          "measured_calls": 1059387
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.7914582546591918,
+            "ci95_low": 0.7904995885588597,
+            "ci95_high": 0.7922307018978776
+          },
+          "triton_fused": {
+            "speedup": 1.9273861569512953,
+            "ci95_low": 1.9242876414907688,
+            "ci95_high": 1.9298650913037063
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-1x1024",
+    "rows": 1,
+    "width": 1024,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.002818784676492214
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.002980315126478672
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.003075370332226157
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0003671970043797046,
+      "compiled": 0.07679294599802233,
+      "triton_fused": 0.00015349799650721252
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "66",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "112.65",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "47",
+      "temperature.gpu": "51",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "50.98",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2196,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 205,
+        "compiled": 218,
+        "triton_fused": 494
+      },
+      "graph_gpu": {
+        "eager": 1376,
+        "compiled": 14912,
+        "triton_fused": 13440
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 10.206511547399122,
+          "p95_us": 10.28084321770557,
+          "min_us": 10.185581307078516,
+          "max_us": 11.19697648425435,
+          "rounds": 2196,
+          "measured_seconds": 30.876449439048667,
+          "measured_calls": 3021696
+        },
+        "compiled": {
+          "p50_us": 0.9163948727268006,
+          "p95_us": 0.9216963605307714,
+          "min_us": 0.9147467915080648,
+          "max_us": 1.0039484679954758,
+          "rounds": 2196,
+          "measured_seconds": 30.03962749671931,
+          "measured_calls": 32746752
+        },
+        "triton_fused": {
+          "p50_us": 1.016228539603097,
+          "p95_us": 1.0243047560964311,
+          "min_us": 1.01478092727207,
+          "max_us": 1.1096381005786715,
+          "rounds": 2196,
+          "measured_seconds": 30.040413097381407,
+          "measured_calls": 29514240
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 11.137678582845943,
+            "ci95_low": 11.136866307477998,
+            "ci95_high": 11.140114652641245
+          },
+          "triton_fused": {
+            "speedup": 10.04351988715592,
+            "ci95_low": 10.039715209911549,
+            "ci95_high": 10.044881518624933
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 72.96205609756097,
+          "p95_us": 75.92433780487805,
+          "min_us": 71.80398536585365,
+          "max_us": 113.88371707317073,
+          "rounds": 2196,
+          "measured_seconds": 33.07766136799999,
+          "measured_calls": 450180
+        },
+        "compiled": {
+          "p50_us": 68.53883256880734,
+          "p95_us": 71.76877178899082,
+          "min_us": 66.73312385321101,
+          "max_us": 92.19860550458715,
+          "rounds": 2196,
+          "measured_seconds": 33.04016218700004,
+          "measured_calls": 478728
+        },
+        "triton_fused": {
+          "p50_us": 27.512608299595144,
+          "p95_us": 28.37815334008097,
+          "min_us": 26.92758299595142,
+          "max_us": 39.45423481781376,
+          "rounds": 2196,
+          "measured_seconds": 30.004924411999962,
+          "measured_calls": 1084824
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.0645360208654429,
+            "ci95_low": 1.061527992409469,
+            "ci95_high": 1.0667352040498614
+          },
+          "triton_fused": {
+            "speedup": 2.651949800725896,
+            "ci95_low": 2.6494247138025884,
+            "ci95_high": 2.6545172642903916
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-1x1024",
+    "rows": 1,
+    "width": 1024,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 5.638455391476782e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 6.149664244503583e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 9.498990749534642e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 5.638455391476782e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 6.149664244503583e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 9.498990749534642e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 5.638455391476782e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 6.149664244503583e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.3035452534923024e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.00023710000095888972,
+      "compiled": 0.07789940800284967,
+      "triton_fused": 0.00018169901159126312
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "51",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "46.60",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "47",
+      "temperature.gpu": "52",
+      "clocks.sm": "2775",
+      "clocks.mem": "10251",
+      "power.draw": "51.73",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2208,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 293,
+        "compiled": 211,
+        "triton_fused": 498
+      },
+      "graph_gpu": {
+        "eager": 2208,
+        "compiled": 13920,
+        "triton_fused": 12768
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 6.250203087709952,
+          "p95_us": 6.293796974679698,
+          "min_us": 6.233971188033837,
+          "max_us": 7.038144961647365,
+          "rounds": 2208,
+          "measured_seconds": 30.496345963478014,
+          "measured_calls": 4875264
+        },
+        "compiled": {
+          "p50_us": 0.9761678076338494,
+          "p95_us": 0.9823990895830351,
+          "min_us": 0.9751540490950661,
+          "max_us": 1.0693149320010482,
+          "rounds": 2208,
+          "measured_seconds": 30.034443659782582,
+          "measured_calls": 30735360
+        },
+        "triton_fused": {
+          "p50_us": 1.0686716937779783,
+          "p95_us": 1.0765313654017628,
+          "min_us": 1.0680200760824639,
+          "max_us": 1.1837593744273174,
+          "rounds": 2208,
+          "measured_seconds": 30.1769278182983,
+          "measured_calls": 28191744
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 6.402795747649097,
+            "ci95_low": 6.401851782283558,
+            "ci95_high": 6.403603113154656
+          },
+          "triton_fused": {
+            "speedup": 5.8485717588478225,
+            "ci95_low": 5.845509952643833,
+            "ci95_high": 5.849005425905454
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 49.92506655290103,
+          "p95_us": 51.70046723549488,
+          "min_us": 48.96269624573379,
+          "max_us": 96.61234129692834,
+          "rounds": 2208,
+          "measured_seconds": 32.511578386,
+          "measured_calls": 646944
+        },
+        "compiled": {
+          "p50_us": 68.40002843601896,
+          "p95_us": 72.01664597156399,
+          "min_us": 66.55184360189574,
+          "max_us": 117.91528909952606,
+          "rounds": 2208,
+          "measured_seconds": 32.12253843100002,
+          "measured_calls": 465888
+        },
+        "triton_fused": {
+          "p50_us": 27.43770582329317,
+          "p95_us": 28.456760742971888,
+          "min_us": 26.741267068273093,
+          "max_us": 55.859269076305225,
+          "rounds": 2208,
+          "measured_seconds": 30.353729416999983,
+          "measured_calls": 1099584
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.7298983303727817,
+            "ci95_low": 0.729142644129161,
+            "ci95_high": 0.7306809072809973
+          },
+          "triton_fused": {
+            "speedup": 1.819578753210382,
+            "ci95_low": 1.8178028398495878,
+            "ci95_high": 1.8212141332731797
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-32x1024",
+    "rows": 32,
+    "width": 1024,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.027129018093547e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.8002711966764764e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.906595745841514e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.791079615846684e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.662123214733583e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.998599306167307e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.68591573824051e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.645453526881283e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 5.7756075477755076e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.00024179898900911212,
+      "compiled": 0.07330597699910868,
+      "triton_fused": 0.00014239999291021377
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "52",
+      "clocks.sm": "2775",
+      "clocks.mem": "10251",
+      "power.draw": "47.21",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "56",
+      "temperature.gpu": "55",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "64.57",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2199,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 289,
+        "compiled": 218,
+        "triton_fused": 512
+      },
+      "graph_gpu": {
+        "eager": 1728,
+        "compiled": 12288,
+        "triton_fused": 11232
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 7.9288891068211305,
+          "p95_us": 7.95967032512029,
+          "min_us": 7.8844444619284735,
+          "max_us": 8.71525925618631,
+          "rounds": 2199,
+          "measured_seconds": 30.140442120552116,
+          "measured_calls": 3799872
+        },
+        "compiled": {
+          "p50_us": 1.1105000351866086,
+          "p95_us": 1.115562254562974,
+          "min_us": 1.1075000123431284,
+          "max_us": 1.2325833085924387,
+          "rounds": 2199,
+          "measured_seconds": 30.03514095497131,
+          "measured_calls": 27021312
+        },
+        "triton_fused": {
+          "p50_us": 1.2204672536279402,
+          "p95_us": 1.2261196758672384,
+          "min_us": 1.2131737507985867,
+          "max_us": 1.3333333183897187,
+          "rounds": 2199,
+          "measured_seconds": 30.15675621604911,
+          "measured_calls": 24699168
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 7.139926929843599,
+            "ci95_low": 7.138859419605295,
+            "ci95_high": 7.140910829644391
+          },
+          "triton_fused": {
+            "speedup": 6.4966012674669065,
+            "ci95_low": 6.495721866138087,
+            "ci95_high": 6.497527584899685
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 50.646387543252594,
+          "p95_us": 52.334834256055366,
+          "min_us": 49.457667820069204,
+          "max_us": 75.43928027681662,
+          "rounds": 2199,
+          "measured_seconds": 32.36206180600001,
+          "measured_calls": 635511
+        },
+        "compiled": {
+          "p50_us": 67.99932110091744,
+          "p95_us": 70.54184587155963,
+          "min_us": 66.39709174311928,
+          "max_us": 85.96577981651376,
+          "rounds": 2199,
+          "measured_seconds": 32.79203202500003,
+          "measured_calls": 479382
+        },
+        "triton_fused": {
+          "p50_us": 27.3245234375,
+          "p95_us": 27.924571484374997,
+          "min_us": 26.653388671875,
+          "max_us": 32.7674921875,
+          "rounds": 2199,
+          "measured_seconds": 30.88021489200007,
+          "measured_calls": 1125888
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.744807252826665,
+            "ci95_low": 0.7436330462528129,
+            "ci95_high": 0.7459397803027741
+          },
+          "triton_fused": {
+            "speedup": 1.8535140295894719,
+            "ci95_low": 1.8518779912970265,
+            "ci95_high": 1.8555036404095353
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-4096x1024",
+    "rows": 4096,
+    "width": 1024,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.099891436406324e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.063951474288842e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.095297067076899e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.430511474609375e-06,
+          "rms_error": 6.111737604896916e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.07394667895278e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.118740003557832e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.105314298565645e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.04560810302246e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.11834494179675e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0014942039997549728,
+      "compiled": 0.07246369300992228,
+      "triton_fused": 0.0002532009966671467
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "54",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "53.73",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "1003",
+      "utilization.gpu": "97",
+      "temperature.gpu": "66",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "163.23",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2190,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 77,
+        "compiled": 130,
+        "triton_fused": 115
+      },
+      "graph_gpu": {
+        "eager": 96,
+        "compiled": 160,
+        "triton_fused": 160
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 185.74933211008707,
+          "p95_us": 186.06932957967123,
+          "min_us": 185.41866540908813,
+          "max_us": 188.5226567586263,
+          "rounds": 2190,
+          "measured_seconds": 39.06895156288163,
+          "measured_calls": 210240
+        },
+        "compiled": {
+          "p50_us": 99.72479939460754,
+          "p95_us": 99.7759997844696,
+          "min_us": 99.23200011253357,
+          "max_us": 100.95360279083252,
+          "rounds": 2190,
+          "measured_seconds": 34.934621085167166,
+          "measured_calls": 350400
+        },
+        "triton_fused": {
+          "p50_us": 111.51360273361206,
+          "p95_us": 112.11232364177704,
+          "min_us": 107.03359842300415,
+          "max_us": 113.52319717407227,
+          "rounds": 2190,
+          "measured_seconds": 38.83369883155819,
+          "measured_calls": 350400
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.8626192605821492,
+            "ci95_low": 1.8625122738398388,
+            "ci95_high": 1.8627262473244597
+          },
+          "triton_fused": {
+            "speedup": 1.665710079817008,
+            "ci95_low": 1.665327859256927,
+            "ci95_high": 1.666475225764794
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 193.9372792207792,
+          "p95_us": 196.73565909090908,
+          "min_us": 192.94896103896104,
+          "max_us": 203.11136363636365,
+          "rounds": 2190,
+          "measured_seconds": 32.75810805599999,
+          "measured_calls": 168630
+        },
+        "compiled": {
+          "p50_us": 113.29787307692308,
+          "p95_us": 116.12152884615384,
+          "min_us": 111.31516923076923,
+          "max_us": 124.77486153846154,
+          "rounds": 2190,
+          "measured_seconds": 32.322522194000015,
+          "measured_calls": 284700
+        },
+        "triton_fused": {
+          "p50_us": 119.14023913043478,
+          "p95_us": 120.43616260869564,
+          "min_us": 116.5354,
+          "max_us": 131.13538260869564,
+          "rounds": 2190,
+          "measured_seconds": 30.037626398999947,
+          "measured_calls": 251850
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.7117468665021307,
+            "ci95_low": 1.7109714683721862,
+            "ci95_high": 1.7128294457166144
+          },
+          "triton_fused": {
+            "speedup": 1.6278066976889025,
+            "ci95_low": 1.6272981451710635,
+            "ci95_high": 1.6281697698612634
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-4096x4096",
+    "rows": 4096,
+    "width": 4096,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 1.4891305909259245e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.285584585275501e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.4984322660893667e-05
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002778340596705675
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027919544372707605
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002816694090142846
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 1.5599391190335155e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.03125,
+          "rms_error": 1.5244619135046378e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.597802111064084e-05
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.006428396998671815,
+      "compiled": 0.08127967099426314,
+      "triton_fused": 0.00036580000596586615
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "61",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "103.04",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "1627",
+      "utilization.gpu": "99",
+      "temperature.gpu": "67",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "157.57",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2220,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 9,
+        "compiled": 62,
+        "triton_fused": 62
+      },
+      "graph_gpu": {
+        "eager": 32,
+        "compiled": 96,
+        "triton_fused": 96
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 1692.352056503296,
+          "p95_us": 1712.2912228107452,
+          "min_us": 1689.2800331115723,
+          "max_us": 1720.128059387207,
+          "rounds": 2220,
+          "measured_seconds": 120.39138512420674,
+          "measured_calls": 71040
+        },
+        "compiled": {
+          "p50_us": 223.38134050369263,
+          "p95_us": 225.03573993841806,
+          "min_us": 221.4613358179728,
+          "max_us": 228.48000129063925,
+          "rounds": 2220,
+          "measured_seconds": 47.60951008033755,
+          "measured_calls": 213120
+        },
+        "triton_fused": {
+          "p50_us": 208.21332931518555,
+          "p95_us": 213.39733600616438,
+          "min_us": 204.40532763799033,
+          "max_us": 230.4640014966329,
+          "rounds": 2220,
+          "measured_seconds": 44.48513445663455,
+          "measured_calls": 213120
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 7.576067243070915,
+            "ci95_low": 7.5753442834294304,
+            "ci95_high": 7.5771529523535035
+          },
+          "triton_fused": {
+            "speedup": 8.12797173970297,
+            "ci95_low": 8.1271377155428,
+            "ci95_high": 8.128958264264295
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 1726.335722222222,
+          "p95_us": 1749.0202222222222,
+          "min_us": 1707.4872222222223,
+          "max_us": 1807.4642222222221,
+          "rounds": 2220,
+          "measured_seconds": 34.55127682300001,
+          "measured_calls": 19980
+        },
+        "compiled": {
+          "p50_us": 243.1209274193548,
+          "p95_us": 246.65212661290323,
+          "min_us": 240.84159677419356,
+          "max_us": 258.4449516129032,
+          "rounds": 2220,
+          "measured_seconds": 33.52190684600001,
+          "measured_calls": 137640
+        },
+        "triton_fused": {
+          "p50_us": 217.16285483870968,
+          "p95_us": 221.19851290322578,
+          "min_us": 210.845,
+          "max_us": 253.71324193548386,
+          "rounds": 2220,
+          "measured_seconds": 30.013347744000036,
+          "measured_calls": 137640
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 7.100728598507266,
+            "ci95_low": 7.098445011561824,
+            "ci95_high": 7.10259103411456
+          },
+          "triton_fused": {
+            "speedup": 7.949498193438281,
+            "ci95_low": 7.947894672903103,
+            "ci95_high": 7.951299161629827
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-4096x4096",
+    "rows": 4096,
+    "width": 4096,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.9579232214446165e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.004491837074966e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 6.027313759204844e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.9487799575208555e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.9484065673132136e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.961704374612964e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.92964610746094e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.952365711436869e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 1.9073486328125e-06,
+          "rms_error": 5.938542457784024e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.006080296006985009,
+      "compiled": 0.07648324499314185,
+      "triton_fused": 0.0005969990015728399
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "62",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "104.94",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "1819",
+      "utilization.gpu": "99",
+      "temperature.gpu": "67",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "157.40",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2064,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 10,
+        "compiled": 33,
+        "triton_fused": 32
+      },
+      "graph_gpu": {
+        "eager": 32,
+        "compiled": 64,
+        "triton_fused": 64
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 1470.7520008087158,
+          "p95_us": 1488.507229089737,
+          "min_us": 1467.6480293273926,
+          "max_us": 1494.431972503662,
+          "rounds": 2064,
+          "measured_seconds": 97.2783002281188,
+          "measured_calls": 66048
+        },
+        "compiled": {
+          "p50_us": 452.91200280189514,
+          "p95_us": 455.7439982891083,
+          "min_us": 451.35998725891113,
+          "max_us": 459.82399582862854,
+          "rounds": 2064,
+          "measured_seconds": 59.84444750213622,
+          "measured_calls": 132096
+        },
+        "triton_fused": {
+          "p50_us": 433.6960017681122,
+          "p95_us": 444.5383906364441,
+          "min_us": 432.8959882259369,
+          "max_us": 461.08800172805786,
+          "rounds": 2064,
+          "measured_seconds": 57.42819056510924,
+          "measured_calls": 132096
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 3.247323965163331,
+            "ci95_low": 3.2471386867864975,
+            "ci95_high": 3.2474829283848634
+          },
+          "triton_fused": {
+            "speedup": 3.3912048873235747,
+            "ci95_low": 3.3908809683335903,
+            "ci95_high": 3.3914036984621787
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 1497.62515,
+          "p95_us": 1517.2590449999998,
+          "min_us": 1483.1693,
+          "max_us": 1577.9789,
+          "rounds": 2064,
+          "measured_seconds": 30.961564828000046,
+          "measured_calls": 20640
+        },
+        "compiled": {
+          "p50_us": 470.89716666666664,
+          "p95_us": 476.4145409090909,
+          "min_us": 466.0517575757576,
+          "max_us": 495.11230303030305,
+          "rounds": 2064,
+          "measured_seconds": 32.121540797,
+          "measured_calls": 68112
+        },
+        "triton_fused": {
+          "p50_us": 453.523171875,
+          "p95_us": 462.536075,
+          "min_us": 440.681,
+          "max_us": 486.19953125,
+          "rounds": 2064,
+          "measured_seconds": 30.040982791999983,
+          "measured_calls": 66048
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 3.1803655999912226,
+            "ci95_low": 3.1796581088928995,
+            "ci95_high": 3.1814294086645094
+          },
+          "triton_fused": {
+            "speedup": 3.302202054656593,
+            "ci95_low": 3.3016795688917093,
+            "ci95_high": 3.302865270246807
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "float32-1x4096",
+    "rows": 1,
+    "width": 4096,
+    "dtype": "float32",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.3942272043295816e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.540234664953459e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.5907246004617264e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.3942272043295816e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.540234664953459e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 8.11027121017105e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.3942272043295816e-08
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 9.5367431640625e-07,
+          "rms_error": 6.540234664953459e-08
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 4.76837158203125e-07,
+          "rms_error": 4.5907246004617264e-08
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.00023160000273492187,
+      "compiled": 0.07710080601100344,
+      "triton_fused": 0.00014859999646432698
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "63",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "102.63",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "66",
+      "temperature.gpu": "52",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "52.30",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2187,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 294,
+        "compiled": 216,
+        "triton_fused": 502
+      },
+      "graph_gpu": {
+        "eager": 2080,
+        "compiled": 8672,
+        "triton_fused": 8608
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 6.659446312830998,
+          "p95_us": 6.713078434650715,
+          "min_us": 6.653984693380503,
+          "max_us": 7.266953816780677,
+          "rounds": 2187,
+          "measured_seconds": 30.338795861244186,
+          "measured_calls": 4548960
+        },
+        "compiled": {
+          "p50_us": 1.5885461520444863,
+          "p95_us": 1.5911439028173355,
+          "min_us": 1.5877196049778224,
+          "max_us": 1.738036910546222,
+          "rounds": 2187,
+          "measured_seconds": 30.14111740016955,
+          "measured_calls": 18965664
+        },
+        "triton_fused": {
+          "p50_us": 1.59438657937883,
+          "p95_us": 1.5972638883555246,
+          "min_us": 1.5878661857661704,
+          "max_us": 1.7432268002662517,
+          "rounds": 2187,
+          "measured_seconds": 30.02816063594836,
+          "measured_calls": 18825696
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 4.192164202632814,
+            "ci95_low": 4.191854217263699,
+            "ci95_high": 4.1945570645533445
+          },
+          "triton_fused": {
+            "speedup": 4.176807807442475,
+            "ci95_low": 4.176749180942974,
+            "ci95_high": 4.179229757889438
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 49.71052721088436,
+          "p95_us": 51.41637721088435,
+          "min_us": 48.92957823129252,
+          "max_us": 63.84759523809524,
+          "rounds": 2187,
+          "measured_seconds": 32.17578657300002,
+          "measured_calls": 642978
+        },
+        "compiled": {
+          "p50_us": 69.25136574074074,
+          "p95_us": 71.94665,
+          "min_us": 67.50969444444443,
+          "max_us": 83.4462638888889,
+          "rounds": 2187,
+          "measured_seconds": 32.91642652999995,
+          "measured_calls": 472392
+        },
+        "triton_fused": {
+          "p50_us": 27.30835657370518,
+          "p95_us": 27.88351593625498,
+          "min_us": 26.772312749003984,
+          "max_us": 34.825888446215146,
+          "rounds": 2187,
+          "measured_seconds": 30.11197795099997,
+          "measured_calls": 1097874
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 0.7178273912602353,
+            "ci95_low": 0.7169870165814591,
+            "ci95_high": 0.7186794991297751
+          },
+          "triton_fused": {
+            "speedup": 1.8203412232704588,
+            "ci95_low": 1.819110757908645,
+            "ci95_high": 1.8214451571111578
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-32x1024",
+    "rows": 32,
+    "width": 1024,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0009765625,
+          "rms_error": 5.394796517066425e-06
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.0027652964927256107
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027530123479664326
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.0027805613353848457
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0002815000043483451,
+      "compiled": 0.072796380991349,
+      "triton_fused": 0.00014099999680183828
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "51",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "47.67",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "63",
+      "temperature.gpu": "55",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "60.76",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2199,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 200,
+        "compiled": 218,
+        "triton_fused": 496
+      },
+      "graph_gpu": {
+        "eager": 1152,
+        "compiled": 13120,
+        "triton_fused": 11968
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 12.016000019179451,
+          "p95_us": 12.071849736902449,
+          "min_us": 11.952888634469774,
+          "max_us": 13.117333253224691,
+          "rounds": 2199,
+          "measured_seconds": 30.437000787735077,
+          "measured_calls": 2533248
+        },
+        "compiled": {
+          "p50_us": 1.0421853966829253,
+          "p95_us": 1.0487448951093161,
+          "min_us": 1.0373463717902578,
+          "max_us": 1.1363902469960654,
+          "rounds": 2199,
+          "measured_seconds": 30.060819360733095,
+          "measured_calls": 28850880
+        },
+        "triton_fused": {
+          "p50_us": 1.1419892948579022,
+          "p95_us": 1.1466855830687253,
+          "min_us": 1.1365988994027203,
+          "max_us": 1.2580053532187314,
+          "rounds": 2199,
+          "measured_seconds": 30.04772870254532,
+          "measured_calls": 26317632
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 11.529618489593172,
+            "ci95_low": 11.527079990676311,
+            "ci95_high": 11.5384873493718
+          },
+          "triton_fused": {
+            "speedup": 10.52199006880761,
+            "ci95_low": 10.52121137500744,
+            "ci95_high": 10.528968619519908
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 73.782975,
+          "p95_us": 76.39764749999999,
+          "min_us": 72.36738,
+          "max_us": 118.93001,
+          "rounds": 2199,
+          "measured_seconds": 32.64225748099993,
+          "measured_calls": 439800
+        },
+        "compiled": {
+          "p50_us": 68.49723394495413,
+          "p95_us": 71.30119541284404,
+          "min_us": 66.81944036697249,
+          "max_us": 110.76652752293577,
+          "rounds": 2199,
+          "measured_seconds": 33.05215390000003,
+          "measured_calls": 479382
+        },
+        "triton_fused": {
+          "p50_us": 27.36735483870968,
+          "p95_us": 28.166746169354838,
+          "min_us": 26.799387096774193,
+          "max_us": 48.6143185483871,
+          "rounds": 2199,
+          "measured_seconds": 30.014608584999994,
+          "measured_calls": 1090704
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.0771672190338897,
+            "ci95_low": 1.0754612185350727,
+            "ci95_high": 1.0782727771322125
+          },
+          "triton_fused": {
+            "speedup": 2.696021425338406,
+            "ci95_low": 2.6933137897301074,
+            "ci95_high": 2.6985836140401434
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-1x4096",
+    "rows": 1,
+    "width": 4096,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.002777891233563423
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.03125,
+          "rms_error": 0.002876024227589369
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0029270711820572615
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.00026554799114819616,
+      "compiled": 0.0776322839956265,
+      "triton_fused": 0.0001428260002285242
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "54",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "53.53",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "735",
+      "utilization.gpu": "61",
+      "temperature.gpu": "53",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "52.57",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2187,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 205,
+        "compiled": 217,
+        "triton_fused": 511
+      },
+      "graph_gpu": {
+        "eager": 1312,
+        "compiled": 10432,
+        "triton_fused": 9696
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 10.627122187032931,
+          "p95_us": 10.67785373548182,
+          "min_us": 10.609950961136237,
+          "max_us": 11.751805136843425,
+          "rounds": 2187,
+          "measured_seconds": 30.525878475189124,
+          "measured_calls": 2869344
+        },
+        "compiled": {
+          "p50_us": 1.3148466502230591,
+          "p95_us": 1.3227975624470623,
+          "min_us": 1.313865001947602,
+          "max_us": 1.4363680880493912,
+          "rounds": 2187,
+          "measured_seconds": 30.024598396301432,
+          "measured_calls": 22814784
+        },
+        "triton_fused": {
+          "p50_us": 1.4176106098854895,
+          "p95_us": 1.4201451842934385,
+          "min_us": 1.4169768925153776,
+          "max_us": 1.550679848139042,
+          "rounds": 2187,
+          "measured_seconds": 30.073674983024784,
+          "measured_calls": 21205152
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 8.082404275228656,
+            "ci95_low": 8.081216797633088,
+            "ci95_high": 8.086485262011944
+          },
+          "triton_fused": {
+            "speedup": 7.496502998020986,
+            "ci95_low": 7.495496856919445,
+            "ci95_high": 7.500288150138354
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 72.80614634146342,
+          "p95_us": 74.74880975609756,
+          "min_us": 71.13978536585367,
+          "max_us": 86.66884390243904,
+          "rounds": 2187,
+          "measured_seconds": 32.779614293999984,
+          "measured_calls": 448335
+        },
+        "compiled": {
+          "p50_us": 67.7356267281106,
+          "p95_us": 69.88457096774194,
+          "min_us": 66.17131797235022,
+          "max_us": 82.2117741935484,
+          "rounds": 2187,
+          "measured_seconds": 32.32019790800006,
+          "measured_calls": 474579
+        },
+        "triton_fused": {
+          "p50_us": 27.33028180039139,
+          "p95_us": 27.981071624266143,
+          "min_us": 26.703454011741684,
+          "max_us": 32.924172211350296,
+          "rounds": 2187,
+          "measured_seconds": 30.688843974000076,
+          "measured_calls": 1117557
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.0748574990485549,
+            "ci95_low": 1.0726581441217296,
+            "ci95_high": 1.0762952128959222
+          },
+          "triton_fused": {
+            "speedup": 2.663936906073935,
+            "ci95_low": 2.661424805043678,
+            "ci95_high": 2.666459141347821
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-4096x1024",
+    "rows": 4096,
+    "width": 1024,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.690304088697303e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.3424021744867787e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.181198786071036e-05
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0028569919522851706
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002791773062199354
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002851945348083973
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.7229556760867126e-05
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.713444544293452e-05
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.015625,
+          "rms_error": 1.4571903193427715e-05
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0015856160025577992,
+      "compiled": 0.07649315199523699,
+      "triton_fused": 0.0002063020074274391
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "52",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "48.22",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "975",
+      "utilization.gpu": "83",
+      "temperature.gpu": "73",
+      "clocks.sm": "2700",
+      "clocks.mem": "10251",
+      "power.draw": "187.34",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2379,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 79,
+        "compiled": 214,
+        "triton_fused": 441
+      },
+      "graph_gpu": {
+        "eager": 96,
+        "compiled": 416,
+        "triton_fused": 1568
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 182.26132790247598,
+          "p95_us": 183.72373978296915,
+          "min_us": 181.52532974878946,
+          "max_us": 186.35733922322592,
+          "rounds": 2379,
+          "measured_seconds": 41.64998244857787,
+          "measured_calls": 228384
+        },
+        "compiled": {
+          "p50_us": 36.3716918688554,
+          "p95_us": 36.43569120993981,
+          "min_us": 14.052922909076397,
+          "max_us": 36.99938379801237,
+          "rounds": 2379,
+          "measured_seconds": 35.343632314205166,
+          "measured_calls": 989664
+        },
+        "triton_fused": {
+          "p50_us": 8.99722442335012,
+          "p95_us": 9.20372270807928,
+          "min_us": 8.884898253849574,
+          "max_us": 9.687510071968546,
+          "rounds": 2379,
+          "measured_seconds": 33.64116256809254,
+          "measured_calls": 3730272
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 5.011076431628521,
+            "ci95_low": 5.010490300120217,
+            "ci95_high": 5.0116631093917245
+          },
+          "triton_fused": {
+            "speedup": 20.257506018129412,
+            "ci95_low": 20.254564966343448,
+            "ci95_high": 20.261070655290666
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 187.36111392405064,
+          "p95_us": 190.15573037974684,
+          "min_us": 185.67826582278482,
+          "max_us": 198.963582278481,
+          "rounds": 2379,
+          "measured_seconds": 35.275149711,
+          "measured_calls": 187941
+        },
+        "compiled": {
+          "p50_us": 69.1647429906542,
+          "p95_us": 71.5027953271028,
+          "min_us": 66.94295794392524,
+          "max_us": 83.77801401869158,
+          "rounds": 2379,
+          "measured_seconds": 35.378675153999986,
+          "measured_calls": 509106
+        },
+        "triton_fused": {
+          "p50_us": 28.486755102040817,
+          "p95_us": 29.207415192743763,
+          "min_us": 27.628866213151927,
+          "max_us": 34.56572789115646,
+          "rounds": 2379,
+          "measured_seconds": 30.005411847999994,
+          "measured_calls": 1049139
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 2.708910722756066,
+            "ci95_low": 2.7037675452737746,
+            "ci95_high": 2.7133899066895695
+          },
+          "triton_fused": {
+            "speedup": 6.577130784215852,
+            "ci95_low": 6.570146462260425,
+            "ci95_high": 6.585032485503528
+          }
+        }
+      }
+    }
+  },
+  {
+    "case": "bfloat16-32x4096",
+    "rows": 32,
+    "width": 4096,
+    "dtype": "bfloat16",
+    "correctness": {
+      "eager": [
+        {
+          "seed": 42,
+          "max_abs_error": 6.103515625e-05,
+          "rms_error": 1.6858739115832577e-07
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "compiled": [
+        {
+          "seed": 42,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027441252022981644
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.002770907012745738
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0625,
+          "rms_error": 0.0027893977239727974
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ],
+      "triton_fused": [
+        {
+          "seed": 42,
+          "max_abs_error": 6.103515625e-05,
+          "rms_error": 1.6858739115832577e-07
+        },
+        {
+          "seed": 123,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": 20260908,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        },
+        {
+          "seed": null,
+          "max_abs_error": 0.0,
+          "rms_error": 0.0
+        }
+      ]
+    },
+    "first_call_seconds_including_compile": {
+      "eager": 0.0005416970088845119,
+      "compiled": 0.08100097900023684,
+      "triton_fused": 0.00016439899627584964
+    },
+    "gpu_before": {
+      "driver_version": "591.74",
+      "memory.used": "727",
+      "utilization.gpu": "0",
+      "temperature.gpu": "62",
+      "clocks.sm": "2745",
+      "clocks.mem": "10251",
+      "power.draw": "103.21",
+      "power.limit": "220.00"
+    },
+    "gpu_after": {
+      "driver_version": "591.74",
+      "memory.used": "737",
+      "utilization.gpu": "62",
+      "temperature.gpu": "55",
+      "clocks.sm": "2760",
+      "clocks.mem": "10251",
+      "power.draw": "72.18",
+      "power.limit": "220.00"
+    },
+    "actual_rounds": 2184,
+    "calls_per_sample": {
+      "wall": {
+        "eager": 195,
+        "compiled": 219,
+        "triton_fused": 498
+      },
+      "graph_gpu": {
+        "eager": 864,
+        "compiled": 8992,
+        "triton_fused": 8288
+      }
+    },
+    "metrics": {
+      "graph_gpu": {
+        "eager": {
+          "p50_us": 16.264129568029333,
+          "p95_us": 16.31762915187412,
+          "min_us": 16.221629248725044,
+          "max_us": 17.7967404877698,
+          "rounds": 2184,
+          "measured_seconds": 30.707194756507803,
+          "measured_calls": 1886976
+        },
+        "compiled": {
+          "p50_us": 1.5278006787826157,
+          "p95_us": 1.5301921825816198,
+          "min_us": 1.5269822285268655,
+          "max_us": 1.6645871871731035,
+          "rounds": 2184,
+          "measured_seconds": 30.018568696975983,
+          "measured_calls": 19638528
+        },
+        "triton_fused": {
+          "p50_us": 1.6598899392087487,
+          "p95_us": 1.662004626855887,
+          "min_us": 1.6583166297338183,
+          "max_us": 1.8206641480729386,
+          "rounds": 2184,
+          "measured_seconds": 30.057590592384322,
+          "measured_calls": 18100992
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 10.64545250823487,
+            "ci95_low": 10.644010458687537,
+            "ci95_high": 10.64556897092673
+          },
+          "triton_fused": {
+            "speedup": 9.798318059438486,
+            "ci95_low": 9.7975107179122,
+            "ci95_high": 9.798953746084864
+          }
+        }
+      },
+      "wall": {
+        "eager": {
+          "p50_us": 75.89524615384614,
+          "p95_us": 77.65844205128205,
+          "min_us": 74.30393333333333,
+          "max_us": 97.58628205128205,
+          "rounds": 2184,
+          "measured_seconds": 32.461916088000045,
+          "measured_calls": 425880
+        },
+        "compiled": {
+          "p50_us": 68.84605479452054,
+          "p95_us": 71.39969794520547,
+          "min_us": 67.05838812785389,
+          "max_us": 86.01836529680365,
+          "rounds": 2184,
+          "measured_seconds": 33.085240217999996,
+          "measured_calls": 478296
+        },
+        "triton_fused": {
+          "p50_us": 28.086126506024097,
+          "p95_us": 28.691782128514056,
+          "min_us": 27.456293172690764,
+          "max_us": 33.88659437751004,
+          "rounds": 2184,
+          "measured_seconds": 30.666044934000098,
+          "measured_calls": 1087632
+        },
+        "versus_eager": {
+          "compiled": {
+            "speedup": 1.1023906363315192,
+            "ci95_low": 1.1009027645182616,
+            "ci95_high": 1.103968224759859
+          },
+          "triton_fused": {
+            "speedup": 2.7022325822525803,
+            "ci95_low": 2.7002180027945744,
+            "ci95_high": 2.7041255189777806
+          }
+        }
+      }
+    }
+  }
+]

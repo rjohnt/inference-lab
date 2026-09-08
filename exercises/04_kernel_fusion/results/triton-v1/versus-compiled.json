@@ -1,0 +1,295 @@
+{
+  "bootstrap_resamples": 2000,
+  "block_rounds": 50,
+  "note": "Within-run paired uncertainty only; not cross-day variability. Intervals absent without raw samples.",
+  "comparisons": [
+    {
+      "case": "bfloat16-1x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 0.9163948727268006,
+      "triton_p50_us": 1.016228539603097,
+      "triton_speedup_over_compiled": 0.901760614875776,
+      "ci95_low": 0.9012864592759476,
+      "ci95_high": 0.9018281816141996
+    },
+    {
+      "case": "bfloat16-1x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.3148466502230591,
+      "triton_p50_us": 1.4176106098854895,
+      "triton_speedup_over_compiled": 0.9275090360174919,
+      "ci95_low": 0.9275090360174919,
+      "ci95_high": 0.927569589781733
+    },
+    {
+      "case": "bfloat16-32x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.0421853966829253,
+      "triton_p50_us": 1.1419892948579022,
+      "triton_speedup_over_compiled": 0.9126052243883814,
+      "ci95_low": 0.9123320388865078,
+      "ci95_high": 0.9132897396442181
+    },
+    {
+      "case": "bfloat16-32x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.5278006787826157,
+      "triton_p50_us": 1.6598899392087487,
+      "triton_speedup_over_compiled": 0.9204228802729544,
+      "ci95_low": 0.9204046960504203,
+      "ci95_high": 0.9205246636944152
+    },
+    {
+      "case": "bfloat16-512x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 2.435636283321814,
+      "triton_p50_us": 2.159030298994045,
+      "triton_speedup_over_compiled": 1.1281158418465216,
+      "ci95_low": 1.128031381736221,
+      "ci95_high": 1.1281185158368088
+    },
+    {
+      "case": "bfloat16-512x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 5.862053987142202,
+      "triton_p50_us": 7.019682536049495,
+      "triton_speedup_over_compiled": 0.8350881905325055,
+      "ci95_low": 0.8337491298856021,
+      "ci95_high": 0.8367900879859309
+    },
+    {
+      "case": "bfloat16-4096x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 36.3716918688554,
+      "triton_p50_us": 8.99722442335012,
+      "triton_speedup_over_compiled": 4.042545807178208,
+      "ci95_low": 4.042252330782726,
+      "ci95_high": 4.043132614475234
+    },
+    {
+      "case": "bfloat16-4096x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 223.38134050369263,
+      "triton_p50_us": 208.21332931518555,
+      "triton_speedup_over_compiled": 1.0728484157973686,
+      "ci95_low": 1.0726397262967884,
+      "ci95_high": 1.0730057868060896
+    },
+    {
+      "case": "float32-1x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 0.9761678076338494,
+      "triton_p50_us": 1.0686716937779783,
+      "triton_speedup_over_compiled": 0.9134403140995451,
+      "ci95_low": 0.9129713785627476,
+      "ci95_high": 0.9134553796292973
+    },
+    {
+      "case": "float32-1x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.5885461520444863,
+      "triton_p50_us": 1.59438657937883,
+      "triton_speedup_over_compiled": 0.996336881274666,
+      "ci95_low": 0.9963298888349481,
+      "ci95_high": 0.9964040108682405
+    },
+    {
+      "case": "float32-32x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.1105000351866086,
+      "triton_p50_us": 1.2204672536279402,
+      "triton_speedup_over_compiled": 0.9098974445119729,
+      "ci95_low": 0.9097721261592627,
+      "ci95_high": 0.9100334395137688
+    },
+    {
+      "case": "float32-32x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 1.9322409554644748,
+      "triton_p50_us": 1.9709357154478722,
+      "triton_speedup_over_compiled": 0.9803673150371602,
+      "ci95_low": 0.9783993813706197,
+      "ci95_high": 0.9814738239402364
+    },
+    {
+      "case": "float32-512x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 3.563900870725143,
+      "triton_p50_us": 3.659389786801096,
+      "triton_speedup_over_compiled": 0.9739057816632795,
+      "ci95_low": 0.9738334946389051,
+      "ci95_high": 0.973939039541005
+    },
+    {
+      "case": "float32-512x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 12.884706258773804,
+      "triton_p50_us": 12.23199980126487,
+      "triton_speedup_over_compiled": 1.053360568027596,
+      "ci95_low": 1.0509841966414541,
+      "ci95_high": 1.0556649459796195
+    },
+    {
+      "case": "float32-4096x1024",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 99.72479939460754,
+      "triton_p50_us": 111.51360273361206,
+      "triton_speedup_over_compiled": 0.8942837192053954,
+      "ci95_low": 0.8940785132525902,
+      "ci95_high": 0.8946688180869026
+    },
+    {
+      "case": "float32-4096x4096",
+      "metric": "graph_gpu",
+      "compiled_p50_us": 452.91200280189514,
+      "triton_p50_us": 433.6960017681122,
+      "triton_speedup_over_compiled": 1.044307535590465,
+      "ci95_low": 1.0442304691442887,
+      "ci95_high": 1.044346073079462
+    },
+    {
+      "case": "bfloat16-1x1024",
+      "metric": "wall",
+      "compiled_p50_us": 68.53883256880734,
+      "triton_p50_us": 27.512608299595144,
+      "triton_speedup_over_compiled": 2.4911790195412298,
+      "ci95_low": 2.4858582846959916,
+      "ci95_high": 2.4990464389158604
+    },
+    {
+      "case": "bfloat16-1x4096",
+      "metric": "wall",
+      "compiled_p50_us": 67.7356267281106,
+      "triton_p50_us": 27.33028180039139,
+      "triton_speedup_over_compiled": 2.4784093783892334,
+      "ci95_low": 2.474515011783678,
+      "ci95_high": 2.483814369582701
+    },
+    {
+      "case": "bfloat16-32x1024",
+      "metric": "wall",
+      "compiled_p50_us": 68.49723394495413,
+      "triton_p50_us": 27.36735483870968,
+      "triton_speedup_over_compiled": 2.502881054769254,
+      "ci95_low": 2.4990626303936034,
+      "ci95_high": 2.507512705620169
+    },
+    {
+      "case": "bfloat16-32x4096",
+      "metric": "wall",
+      "compiled_p50_us": 68.84605479452054,
+      "triton_p50_us": 28.086126506024097,
+      "triton_speedup_over_compiled": 2.451247763900586,
+      "ci95_low": 2.447424343498396,
+      "ci95_high": 2.4547389373620283
+    },
+    {
+      "case": "bfloat16-512x1024",
+      "metric": "wall",
+      "compiled_p50_us": 67.81978378378379,
+      "triton_p50_us": 27.79376814516129,
+      "triton_speedup_over_compiled": 2.4401075604277414,
+      "ci95_low": 2.4348743150836776,
+      "ci95_high": 2.4456622363285727
+    },
+    {
+      "case": "bfloat16-512x4096",
+      "metric": "wall",
+      "compiled_p50_us": 68.64037155963302,
+      "triton_p50_us": 27.882854663774403,
+      "triton_speedup_over_compiled": 2.4617411806406992,
+      "ci95_low": 2.458331347812837,
+      "ci95_high": 2.466312186570486
+    },
+    {
+      "case": "bfloat16-4096x1024",
+      "metric": "wall",
+      "compiled_p50_us": 69.1647429906542,
+      "triton_p50_us": 28.486755102040817,
+      "triton_speedup_over_compiled": 2.4279614418315822,
+      "ci95_low": 2.4236491017640915,
+      "ci95_high": 2.432876222557433
+    },
+    {
+      "case": "bfloat16-4096x4096",
+      "metric": "wall",
+      "compiled_p50_us": 243.1209274193548,
+      "triton_p50_us": 217.16285483870968,
+      "triton_speedup_over_compiled": 1.1195327469788727,
+      "ci95_low": 1.1192457174220642,
+      "ci95_high": 1.119884862066289
+    },
+    {
+      "case": "float32-1x1024",
+      "metric": "wall",
+      "compiled_p50_us": 68.40002843601896,
+      "triton_p50_us": 27.43770582329317,
+      "triton_speedup_over_compiled": 2.492920832249427,
+      "ci95_low": 2.488865730406025,
+      "ci95_high": 2.4968307760760178
+    },
+    {
+      "case": "float32-1x4096",
+      "metric": "wall",
+      "compiled_p50_us": 69.25136574074074,
+      "triton_p50_us": 27.30835657370518,
+      "triton_speedup_over_compiled": 2.5359038195444494,
+      "ci95_low": 2.532322613689242,
+      "ci95_high": 2.5393547699591736
+    },
+    {
+      "case": "float32-32x1024",
+      "metric": "wall",
+      "compiled_p50_us": 67.99932110091744,
+      "triton_p50_us": 27.3245234375,
+      "triton_speedup_over_compiled": 2.4885821433063167,
+      "ci95_low": 2.4849089951276273,
+      "ci95_high": 2.4923363364171784
+    },
+    {
+      "case": "float32-32x4096",
+      "metric": "wall",
+      "compiled_p50_us": 69.20659953703704,
+      "triton_p50_us": 27.912891348088532,
+      "triton_speedup_over_compiled": 2.4793776708401185,
+      "ci95_low": 2.476370840147661,
+      "ci95_high": 2.4827957065432176
+    },
+    {
+      "case": "float32-512x1024",
+      "metric": "wall",
+      "compiled_p50_us": 68.22982938388625,
+      "triton_p50_us": 27.138503131524008,
+      "triton_speedup_over_compiled": 2.5141338508324242,
+      "ci95_low": 2.510884069236775,
+      "ci95_high": 2.5187608515165025
+    },
+    {
+      "case": "float32-512x4096",
+      "metric": "wall",
+      "compiled_p50_us": 68.61958256880733,
+      "triton_p50_us": 28.17781733021077,
+      "triton_speedup_over_compiled": 2.4352341334556464,
+      "ci95_low": 2.43198886791253,
+      "ci95_high": 2.4380634012194764
+    },
+    {
+      "case": "float32-4096x1024",
+      "metric": "wall",
+      "compiled_p50_us": 113.29787307692308,
+      "triton_p50_us": 119.14023913043478,
+      "triton_speedup_over_compiled": 0.9509622769254688,
+      "ci95_low": 0.9503402066415908,
+      "ci95_high": 0.9513709473326601
+    },
+    {
+      "case": "float32-4096x4096",
+      "metric": "wall",
+      "compiled_p50_us": 470.89716666666664,
+      "triton_p50_us": 453.523171875,
+      "triton_speedup_over_compiled": 1.038308946199678,
+      "ci95_low": 1.0379751589190858,
+      "ci95_high": 1.0385706274127706
+    }
+  ]
+}

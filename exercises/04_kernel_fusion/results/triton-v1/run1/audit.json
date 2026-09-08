@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "cases": 16,
+  "methods": [
+    "eager",
+    "compiled",
+    "triton_fused"
+  ],
+  "sample_count": 214164,
+  "samples_sha256": "4e0b9ecaa84229102fe5a38691a86df69a2c7a6c06b5f85baab675a5d203c17d",
+  "checks": [
+    "completion marker",
+    "configuration hash",
+    "case coverage",
+    "round uniqueness",
+    "finite positive samples",
+    "correctness seed coverage",
+    "summary percentiles",
+    "speedup ratios",
+    "minimum rounds",
+    "minimum measured duration",
+    "measured call counts"
+  ]
+}
