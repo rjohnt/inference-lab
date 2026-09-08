@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "operation": "residual_rmsnorm_weighted_v1",
+  "seed": 20260908,
+  "epsilon": 1e-06,
+  "rows": [
+    1,
+    32,
+    512,
+    4096
+  ],
+  "widths": [
+    1024,
+    4096
+  ],
+  "dtypes": [
+    "float32",
+    "bfloat16"
+  ],
+  "methods": [
+    "eager",
+    "compiled"
+  ],
+  "warmup_calls": 100,
+  "rounds": 2000,
+  "wall_batch_calls": 32,
+  "graph_batch_calls": 32,
+  "graph_replays_per_round": 4,
+  "correctness_seeds": [
+    42,
+    123,
+    20260908
+  ],
+  "tolerances": {
+    "float32": {
+      "rtol": 2e-05,
+      "atol": 2e-06
+    },
+    "bfloat16": {
+      "rtol": 0.008,
+      "atol": 0.002
+    }
+  },
+  "max_rounds": 10000,
+  "min_measured_seconds": 30,
+  "target_sample_ms": 15,
+  "warmup_seconds": 2,
+  "bootstrap_block_rounds": 50
+}

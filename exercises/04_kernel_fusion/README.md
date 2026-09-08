@@ -57,14 +57,38 @@ expression on two different inputs. Results go to `results/environment-check.jso
 The first-call duration includes compilation and must not be reported as latency
 of a warmed kernel. `KERNEL_CHECK_OUTPUT` can redirect the check result.
 
+## Sustained-sampling protocol (v2)
+
+The initial 40-round runs above are exploratory baselines. The default is now
+[long.json](configs/long.json): **at least 2,000 samples AND 30 measured seconds**
+for every method/timing pair in every case. Sampling continues in balanced paired
+cycles until every pair meets both floors (10,000-round fail-safe).
+
+Each method is calibrated to a roughly 15 ms sample, then its batch size stays
+fixed. Actual samples, calls/sample, total calls, and measured seconds are saved.
+GPU duration is CUDA-event time; Python duration is synchronized wall time.
+Calibration, compilation, correctness checks and warmup are excluded. There are
+100 initial warmup calls plus 2 seconds of sustained warmup per method.
+
+For 16 cases × 2 methods × 2 timing modes, the measured-duration floor is
+32 minutes, plus setup and sampling overhead. The 2,000-sample floor is 50× the
+initial sample count; call counts depend on measured operation speed. Confidence
+intervals use paired 50-round block bootstrap to retain short-range timing
+correlation. This is still a repeated-buffer microbenchmark; longer sampling
+does not turn it into an end-to-end model or streaming-memory workload.
+
+The duration controller passed a GPU smoke check and an independent sample audit.
+The audit also rejects increased duration/sample requirements that the saved
+smoke run did not satisfy. Long-run results will be published separately from v1.
+
 ## Repeat the benchmark
 
 Run on the GPU host with other compute workloads idle:
 
 ```bash
 source env.sh
-python src/benchmark.py --config configs/baseline.json --out local/repeat1
-python src/benchmark.py --config configs/baseline.json --out local/repeat2
+python src/benchmark.py --config configs/long.json --out local/repeat1
+python src/benchmark.py --config configs/long.json --out local/repeat2
 python analysis/verify_run.py local/repeat1
 python analysis/verify_run.py local/repeat2
 python analysis/report.py local/repeat1 local/repeat2 --out local/repeat-report
@@ -78,7 +102,7 @@ repository includes reviewed manifests, summaries, audits, CSV, and charts.
 The report can also be regenerated from the published `results/baseline-v1/run1`
 and `run2` directories (raw samples are needed only for the independent audit).
 
-The [configuration](configs/baseline.json) freezes seeds, epsilon, shapes, dtypes,
+The [long-run configuration](configs/long.json) freezes seeds, epsilon, shapes, dtypes,
 warmup, rounds, batching, and correctness tolerances. Every run records its exact
 configuration, source hashes, environment and GPU-state snapshots. Compilation
 and graph capture are outside timing. GPU timing uses identical CUDA Graph

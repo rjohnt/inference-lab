@@ -73,6 +73,13 @@ def main():
     plt.close(fig)
     env = runs[0][1]["environment"]
     cfg = runs[0][1]["config"]
+    if cfg.get("min_measured_seconds"):
+        sampling_note = (f"At least {cfg['rounds']:,} rounds AND {cfg['min_measured_seconds']} measured seconds per method/timing pair per case. "
+                         f"Batches are calibrated once per method toward {cfg['target_sample_ms']} ms, then held fixed. "
+                         f"Additional warmup: {cfg['warmup_seconds']} seconds per method. Final round counts, batch calls and measured durations are recorded in summaries. "
+                         f"Confidence intervals use paired circular block bootstrap with {cfg['bootstrap_block_rounds']}-round blocks to preserve short-range timing correlation.")
+    else:
+        sampling_note = f"Fixed {cfg['rounds']} rounds; GPU samples use {cfg['graph_replays_per_round']} graph replays, and Python samples use {cfg['wall_batch_calls']} calls."
     text = ["# Eager versus compiled residual + RMSNorm", "",
             "## Question and prediction", "",
             "Does Inductor compilation reduce warmed execution time for residual addition, RMS normalization, and learned scaling? Fewer launches and intermediate memory transfers should help, particularly on small workloads.", "",
@@ -80,8 +87,9 @@ def main():
             f"{env['gpu']}; PyTorch {env['torch']}; Triton {env['triton']}; CUDA {env['cuda_runtime']}; driver {env['gpu_initial']['driver_version']}; Python {env['python']}. CPU: {env['cpu']}. Linux/WSL, one PyTorch CPU thread. GPU clocks were not locked.", "",
             "Forward inference only; contiguous row-major inputs; FP32 and BF16; residual addition rounds to input dtype before normalization; FP32 accumulation and scaling; output returns to input dtype. Only the normalized output is returned. This includes residual addition and weight scaling, not standalone RMSNorm.", "",
             "## Method", "",
-            f"{len(runs)} independent process runs, {len(keys)} cases each, seed {cfg['seed']}. Each method receives the same inputs, {cfg['warmup_calls']} warmup calls, and {cfg['rounds']} measured rounds. Method order is randomized with balanced first/second positions; case order is deterministically shuffled. Inputs and allocations are reused across rounds (warm-cache microbenchmark).", "",
-            f"GPU timing: CUDA events around {cfg['graph_replays_per_round']} replays of a graph containing {cfg['graph_batch_calls']} calls, divided by total calls. Python timing: synchronized wall-clock batch of {cfg['wall_batch_calls']} ordinary calls, divided by batch size. Graph capture and compilation are excluded from both. Automatic compiler CUDA Graphs are disabled so graph treatment is matched between implementations.", "",
+            f"{len(runs)} independent process runs, {len(keys)} cases each, seed {cfg['seed']}. Each method receives the same inputs, {cfg['warmup_calls']} warmup calls, and at least {cfg['rounds']} measured rounds. Method order is randomized with balanced first/second positions; case order is deterministically shuffled. Inputs and allocations are reused across rounds (warm-cache microbenchmark).", "",
+            sampling_note, "",
+            f"GPU timing uses CUDA events around repeated replay of a graph containing {cfg['graph_batch_calls']} calls, divided by all replayed calls. Python timing uses a synchronized batch of ordinary calls divided by batch size. Graph capture, calibration and compilation are excluded. Automatic compiler CUDA Graphs are disabled so graph treatment is matched between implementations.", "",
             "Median and p95 below are distributions of **per-call batch averages**, not individual-request tail latency. Bootstrap confidence intervals in summaries resample paired rounds and describe within-run variability only. First-call durations are saved separately and may hit existing compiler caches; they are not cold compilation benchmarks.", "",
             "Correctness: three random input seeds plus zeros for every method/shape, checked against an independent FP64 reduction with explicit dtype tolerances; input immutability, output dtype/shape, and captured-graph output are checked. These tests cover the benchmark inputs, not all possible numerical extremes.", "",
             "## Results", "", "![Speedups](speedups.svg)", ""]
@@ -95,6 +103,15 @@ def main():
             for method in methods:
                 text.append(f"| {key} | {method} | {latency(g['eager'])} | {latency(g[method])} | {g['versus_eager'][method]['speedup']:.2f}× | {latency(w['eager'])} | {latency(w[method])} | {w['versus_eager'][method]['speedup']:.2f}× |")
         text.append("")
+    if cfg.get("min_measured_seconds"):
+        text += ["## Actual sampling totals", "", "| Run | Case | Metric | Method | Samples | Calls/sample | Total calls | Measured seconds |", "|---|---|---|---|---:|---:|---:|---:|"]
+        for run_name, manifest, data in runs:
+            for key in keys:
+                for metric in ["graph_gpu", "wall"]:
+                    for method in cfg["methods"]:
+                        v = data[key]["metrics"][metric][method]
+                        text.append(f"| {run_name} | {key} | {metric} | {method} | {v['rounds']} | {data[key]['calls_per_sample'][metric][method]} | {v['measured_calls']:,} | {v['measured_seconds']:.2f} |")
+        text.append("")
     profile_path = args.out / "profile.json"
     if profile_path.exists():
         profile = json.loads(profile_path.read_text())
@@ -106,11 +123,11 @@ def main():
         text += ["", "[Kernel names and counts](profile.json). This supports the launch-fusion explanation; no hardware-counter measurement of DRAM traffic was performed.", ""]
     text += ["## Interpretation and limitations", "",
              "These measurements establish a local baseline for later custom kernels. The graph result isolates device execution more closely; the Python result also reflects dispatch, allocation and synchronization overhead. Neither is end-to-end model throughput. Reused inputs may fit in GPU cache for small shapes; do not extrapolate these ratios to streaming-memory workloads.", "",
-             "The second process run checks immediate repeatability on the same machine, not cross-day or cross-machine reproducibility. Windows display activity, thermal state, power management, and unlocked clocks can affect results. Per-case GPU snapshots are retained in summaries. Do not average the two timing modes together.", "",
+             "A sustained run does not establish cross-day or cross-machine reproducibility. Multiple process runs, when present, check immediate repeatability on the same machine. Windows display activity, thermal state, power management, and unlocked clocks can affect results. Per-case GPU snapshots are retained in summaries. Do not average the two timing modes together.", "",
              "## Reproduction and later optimizations", "",
              "From the exercise directory on the GPU host:", "", "```bash", "source env.sh",
-             "python src/benchmark.py --config configs/baseline.json --out local/new-run1",
-             "python src/benchmark.py --config configs/baseline.json --out local/new-run2",
+             "python src/benchmark.py --config configs/long.json --out local/new-run1",
+             "python src/benchmark.py --config configs/long.json --out local/new-run2",
              "python analysis/report.py local/new-run1 local/new-run2 --out local/new-report", "```", "",
              "Output directories must be new. `COMPLETE` is written only after all cases pass. Raw numeric samples stay in ignored `local/`; reviewed manifests, summaries, CSV and charts can be published. Source/configuration SHA256 values identify the measured experiment. Add later kernels through `implementations.build`, keep the operation and protocol fixed, and include both eager and compiled baselines in each new run.", ""]
     (args.out / "report.md").write_text("\n".join(text))

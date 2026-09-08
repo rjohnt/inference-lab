@@ -1,11 +1,10 @@
 """Paired, deterministic RMSNorm benchmark. Raw samples stay in ignored local/."""
 import argparse
-import csv
 from datetime import datetime, timezone
 import gc
 import hashlib
 import json
-import os
+import math
 from pathlib import Path
 import platform
 import random
@@ -23,7 +22,9 @@ SMI = "/usr/lib/wsl/lib/nvidia-smi" if Path("/usr/lib/wsl/lib/nvidia-smi").exist
 
 
 def save(path, value):
-    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
+    temporary.replace(path)
 
 
 def gpu_state():
@@ -107,11 +108,15 @@ def stats(values):
             "rounds": len(values)}
 
 
-def ratio_stats(a, b, seed):
+def ratio_stats(a, b, seed, block_size=1):
     # Paired bootstrap of rounds estimates within-run uncertainty, not day-to-day drift.
     generator = np.random.default_rng(seed)
-    indexes = generator.integers(0, len(a), size=(2000, len(a)))
-    ratios = np.median(np.asarray(a)[indexes], axis=1) / np.median(np.asarray(b)[indexes], axis=1)
+    ratios = []
+    # Circular paired block bootstrap; chunking bounds memory on long runs.
+    for offset in range(0, 2000, 50):
+        starts = generator.integers(0, len(a), size=(50, math.ceil(len(a) / block_size)))
+        indexes = ((starts[..., None] + np.arange(block_size)) % len(a)).reshape(50, -1)[:, :len(a)]
+        ratios.extend(np.median(np.asarray(a)[indexes], axis=1) / np.median(np.asarray(b)[indexes], axis=1))
     return {"speedup": float(np.median(a) / np.median(b)),
             "ci95_low": float(np.percentile(ratios, 2.5)),
             "ci95_high": float(np.percentile(ratios, 97.5))}
@@ -142,39 +147,77 @@ def run_case(case, cfg, rng, samples_file):
                                    **cfg["tolerances"][dtype_name])
     samples = {metric: {name: [] for name in cfg["methods"]}
                for metric in ["graph_gpu", "wall"]}
-    # Equal first/second position counts, with randomized paired order per metric.
+    seconds = {metric: {name: 0.0 for name in cfg["methods"]} for metric in samples}
+    calls = {"wall": {name: cfg["wall_batch_calls"] for name in functions},
+             "graph_gpu": {name: cfg["graph_replays_per_round"] * cfg["graph_batch_calls"] for name in functions}}
+    if cfg.get("target_sample_ms"):
+        for name, fn in functions.items():
+            # Sustained warmup and calibration are excluded from measured samples.
+            until = time.monotonic() + cfg.get("warmup_seconds", 0)
+            while time.monotonic() < until:
+                measure_wall(fn, data, cfg["wall_batch_calls"])
+            wall_us = np.median([measure_wall(fn, data, cfg["wall_batch_calls"]) for _ in range(5)])
+            gpu_us = np.median([measure_graph(graphs[name][0], cfg) for _ in range(5)])
+            calls["wall"][name] = max(1, math.ceil(cfg["target_sample_ms"] * 1000 / wall_us))
+            calls["graph_gpu"][name] = max(1, math.ceil(cfg["target_sample_ms"] * 1000 / gpu_us / cfg["graph_batch_calls"])) * cfg["graph_batch_calls"]
+    minimum_seconds = cfg.get("min_measured_seconds", 0)
+    index = 0
     orders = {}
-    for metric in samples:
-        orders[metric] = [cfg["methods"][i % len(cfg["methods"]):] + cfg["methods"][:i % len(cfg["methods"]) ]
-                          for i in range(cfg["rounds"])]
-        rng.shuffle(orders[metric])
-    for index in range(cfg["rounds"]):
+    last_progress = time.monotonic()
+    while True:
+        # Stop only at a complete balanced-order cycle. Both sample-count AND
+        # measured-duration floors must hold for every implementation and metric.
+        if index % len(functions) == 0:
+            if index >= cfg["rounds"] and all(v >= minimum_seconds for m in seconds.values() for v in m.values()):
+                break
+            if index >= cfg.get("max_rounds", cfg["rounds"]):
+                raise RuntimeError("Maximum rounds reached before all duration floors; run is incomplete")
+            for metric in samples:
+                orders[metric] = [cfg["methods"][i:] + cfg["methods"][:i] for i in range(len(functions))]
+                rng.shuffle(orders[metric])
         metrics = list(samples)
         rng.shuffle(metrics)
         for metric in metrics:
-            for name in orders[metric][index]:
+            for name in orders[metric][index % len(functions)]:
+                batch_calls = calls[metric][name]
                 if metric == "wall":
-                    elapsed = measure_wall(functions[name], data, cfg["wall_batch_calls"])
+                    elapsed = measure_wall(functions[name], data, batch_calls)
                 else:
-                    elapsed = measure_graph(graphs[name][0], cfg)
+                    elapsed = measure_graph(graphs[name][0], dict(cfg, graph_replays_per_round=batch_calls // cfg["graph_batch_calls"]))
                 samples[metric][name].append(elapsed)
+                seconds[metric][name] += elapsed * batch_calls / 1e6
                 samples_file.write(json.dumps({"case": label, "round": index,
-                                               "metric": metric, "method": name, "us": elapsed}) + "\n")
+                                               "metric": metric, "method": name, "us": elapsed,
+                                               "calls": batch_calls, "batch_us": elapsed * batch_calls}) + "\n")
         samples_file.flush()
+        index += 1
+        if time.monotonic() - last_progress >= 10:
+            progress = {"case": label, "rounds": index, "minimum_rounds": cfg["rounds"],
+                        "measured_seconds": seconds, "calls_per_sample": calls}
+            save(samples_file_path(samples_file) / "progress.json", progress)
+            print(json.dumps({"progress": progress}), flush=True)
+            last_progress = time.monotonic()
     result = {"case": label, "rows": rows, "width": width, "dtype": dtype_name,
               "correctness": checks, "first_call_seconds_including_compile": first_call,
-              "gpu_before": before, "gpu_after": gpu_state(), "metrics": {}}
+              "gpu_before": before, "gpu_after": gpu_state(), "actual_rounds": index,
+              "calls_per_sample": calls, "metrics": {}}
     for metric, methods in samples.items():
-        result["metrics"][metric] = {name: stats(v) for name, v in methods.items()}
+        result["metrics"][metric] = {name: dict(stats(v), measured_seconds=seconds[metric][name],
+                                                measured_calls=len(v) * calls[metric][name])
+                                      for name, v in methods.items()}
         result["metrics"][metric]["versus_eager"] = {
-            name: ratio_stats(methods["eager"], v, cfg["seed"])
+            name: ratio_stats(methods["eager"], v, cfg["seed"], cfg.get("bootstrap_block_rounds", 1))
             for name, v in methods.items() if name != "eager"}
     return result
 
 
+def samples_file_path(stream):
+    return Path(stream.name).parent
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=Path, default=ROOT / "configs/baseline.json")
+    parser.add_argument("--config", type=Path, default=ROOT / "configs/long.json")
     parser.add_argument("--out", type=Path, required=True, help="New output directory; never overwritten")
     parser.add_argument("--methods", nargs="+", help="Override registry implementations; include eager")
     args = parser.parse_args()

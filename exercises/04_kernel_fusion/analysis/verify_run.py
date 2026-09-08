@@ -18,6 +18,8 @@ def verify(path):
     assert len(summaries) == len(expected_cases)
     assert {row["case"] for row in summaries} == expected_cases
     groups = defaultdict(dict)
+    duration = defaultdict(float)
+    call_counts = defaultdict(int)
     raw = (path / "samples.jsonl").read_bytes()
     for line in raw.splitlines():
         sample = json.loads(line)
@@ -25,8 +27,15 @@ def verify(path):
         assert sample["round"] not in groups[key], "Duplicate measured round"
         assert np.isfinite(sample["us"]) and sample["us"] > 0
         groups[key][sample["round"]] = sample["us"]
+        if "calls" in sample:
+            assert isinstance(sample["calls"], int) and sample["calls"] > 0
+            assert np.isclose(sample["batch_us"], sample["us"] * sample["calls"], rtol=1e-12)
+            duration[key] += sample["batch_us"] / 1e6
+            call_counts[key] += sample["calls"]
     assert len(groups) == len(expected_cases) * 2 * len(cfg["methods"])
     for row in summaries:
+        rounds = row.get("actual_rounds", cfg["rounds"])
+        assert rounds >= cfg["rounds"]
         assert set(row["correctness"]) == set(cfg["methods"])
         for name, checks in row["correctness"].items():
             assert [c["seed"] for c in checks] == cfg["correctness_seeds"] + [None]
@@ -34,10 +43,16 @@ def verify(path):
         for metric in ["graph_gpu", "wall"]:
             for method in cfg["methods"]:
                 samples = groups[row["case"], metric, method]
-                assert set(samples) == set(range(cfg["rounds"]))
+                assert set(samples) == set(range(rounds))
                 values = list(samples.values())
                 compact = row["metrics"][metric][method]
-                assert compact["rounds"] == cfg["rounds"]
+                assert compact["rounds"] == rounds
+                if cfg.get("min_measured_seconds"):
+                    key = row["case"], metric, method
+                    assert duration[key] >= cfg["min_measured_seconds"], "Measured duration floor not met"
+                    assert np.isclose(compact["measured_seconds"], duration[key], rtol=1e-12)
+                    assert compact["measured_calls"] == call_counts[key]
+                    assert call_counts[key] == rounds * row["calls_per_sample"][metric][method]
                 for field, actual in [("p50_us", np.median(values)), ("p95_us", np.percentile(values, 95)),
                                       ("min_us", min(values)), ("max_us", max(values))]:
                     assert np.isclose(compact[field], actual, rtol=1e-12, atol=1e-12)
@@ -48,7 +63,9 @@ def verify(path):
             "sample_count": sum(len(v) for v in groups.values()),
             "samples_sha256": hashlib.sha256(raw).hexdigest(),
             "checks": ["completion marker", "configuration hash", "case coverage", "round uniqueness",
-                       "finite positive samples", "correctness seed coverage", "summary percentiles", "speedup ratios"]}
+                       "finite positive samples", "correctness seed coverage", "summary percentiles", "speedup ratios"]
+                      + (["minimum rounds", "minimum measured duration", "measured call counts"]
+                         if cfg.get("min_measured_seconds") else [])}
 
 
 if __name__ == "__main__":
