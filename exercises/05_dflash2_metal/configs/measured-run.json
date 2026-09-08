@@ -1,0 +1,32 @@
+{
+  "model": "Qwen3.8-27B Q4_K_M",
+  "draft": "DFlash 2 Q4_K_M",
+  "source_revision": "0f3a71be1",
+  "context": 16384,
+  "ubatch": 128,
+  "repeats": 10,
+  "thinking": "off",
+  "modes": [
+    "none",
+    "draft-dflash"
+  ],
+  "draft_max": 7,
+  "max_tokens": 1536,
+  "temperature": 0,
+  "seed": 42,
+  "cache_prompt": false,
+  "prompts_sha256": "e861b5ffed04cde197b61ad1b2de2ae74cbd89d5da2b3833f5bc9929f406c52c",
+  "models": {
+    "target": {
+      "filename": "Qwen3.8-27B-Q4_K_M.gguf",
+      "bytes": 17106775008,
+      "sha256": "7e78da5d7e3ae28d178121f58646953305f3e5bd3cb46f4a75584e8b6c6fe169"
+    },
+    "draft": {
+      "filename": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+      "bytes": 1143006816,
+      "sha256": "1a25c56858e1ebe93f2718ac1d49d1151f9323325c1bbfd6209370f4db131ebd"
+    }
+  },
+  "server_version": "version: 0.3.0-dev (build 0, commit unknown)\nbuilt with AppleClang 21.0.0.21000101 for Darwin arm64\n"
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Qwen3.8 27B with DFlash 2 for OpenCode
+After=network-online.target
+
+[Service]
+Type=simple
+Environment=LD_LIBRARY_PATH=/usr/local/lib/ollama:/usr/local/lib/ollama/cuda_v13:/usr/lib/wsl/lib
+Environment=GGML_BACKEND_PATH=/usr/local/lib/ollama/cuda_v13/libggml-cuda.so
+ExecStart=/usr/local/lib/ollama/llama-server -m /path/to/data/gpustation-benchmarks/dflash2/models/Qwen3.8-27B-UD-IQ2_S.gguf --alias qwen3.8-27b-dflash2 --host 127.0.0.1 --port 18082 -c 16384 -np 1 -ngl all --fit off -fa on -ctk q8_0 -ctv q8_0 -b 512 -ub 128 --jinja --reasoning-format deepseek --reasoning off --metrics --cache-ram 0 --load-mode dio --log-verbosity 4 --spec-type draft-dflash -md /path/to/data/gpustation-benchmarks/dflash2/models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf --spec-draft-ngl all --spec-draft-n-max 7 --spec-draft-type-k q8_0 --spec-draft-type-v q8_0 --api-key-file /path/to/remote-home/.config/dflash2/api-key
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

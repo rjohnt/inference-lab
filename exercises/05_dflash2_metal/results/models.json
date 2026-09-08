@@ -1,0 +1,14 @@
+{
+  "target": {
+    "path": "/path/to/local-home/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/4a03c640833598c0fb5ddd11e846135e906eb764/Qwen3.8-27B-Q4_K_M.gguf",
+    "filename": "Qwen3.8-27B-Q4_K_M.gguf",
+    "bytes": 17106775008,
+    "sha256": "7e78da5d7e3ae28d178121f58646953305f3e5bd3cb46f4a75584e8b6c6fe169"
+  },
+  "draft": {
+    "path": "/path/to/local-home/benchmarks/macbook/qwen38/models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+    "filename": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+    "bytes": 1143006816,
+    "sha256": "1a25c56858e1ebe93f2718ac1d49d1151f9323325c1bbfd6209370f4db131ebd"
+  }
+}

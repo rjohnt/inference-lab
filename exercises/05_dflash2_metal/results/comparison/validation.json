@@ -1,0 +1,1202 @@
+[
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "chat_short"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_512"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_2048"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "document_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "code_512"
+  },
+  {
+    "mode": "none",
+    "rep": 1,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 2,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 3,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 4,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 5,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 6,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 7,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 8,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 9,
+    "case": "code_8192"
+  },
+  {
+    "mode": "none",
+    "rep": 10,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "chat_short"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_2048"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "document_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "code_512"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 1,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 2,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 3,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 4,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 5,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 6,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 7,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 8,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 9,
+    "case": "code_8192"
+  },
+  {
+    "mode": "draft-dflash",
+    "rep": 10,
+    "case": "code_8192"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "model": "Qwen3.8-27B UD-IQ2_S",
+  "draft": "DFlash 2 Q4_K_M",
+  "context": 16384,
+  "ubatch": 128,
+  "repeats": 10,
+  "thinking": "off",
+  "modes": [
+    "none",
+    "draft-dflash"
+  ],
+  "draft_max": 7,
+  "max_tokens": 1536,
+  "temperature": 0,
+  "seed": 42,
+  "cache_prompt": false,
+  "prompts_sha256": "e861b5ffed04cde197b61ad1b2de2ae74cbd89d5da2b3833f5bc9929f406c52c",
+  "models": {
+    "target": {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+      "filename": "Qwen3.8-27B-UD-IQ2_S.gguf",
+      "bytes": 8371970048,
+      "sha256": "7897d2c5a5cee46aef50895141b2c8a0803c1185f3d03c4fda4cd137a7ad77fe"
+    },
+    "draft": {
+      "repo": "z-lab/Qwen3.8-27B-DFlash2-GGUF",
+      "revision": "2d9571f8ce46e151f61c6499c99dee6079e1d610",
+      "filename": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+      "bytes": 1143006816,
+      "sha256": "1a25c56858e1ebe93f2718ac1d49d1151f9323325c1bbfd6209370f4db131ebd"
+    }
+  },
+  "server_version": ""
+}

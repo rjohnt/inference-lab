@@ -1,0 +1,272 @@
+[
+  {
+    "case": "document_8192",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-dflash",
+    "rep": 1
+  },
+  {
+    "case": "document_8192",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "document_512",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "document_2048",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "code_512",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "chat_short",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "code_8192",
+    "mode": "none",
+    "rep": 1
+  },
+  {
+    "case": "document_8192",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-eagle3",
+    "rep": 1
+  },
+  {
+    "case": "code_8192",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "code_512",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "document_8192",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "document_512",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "document_2048",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "chat_short",
+    "mode": "none",
+    "rep": 2
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "document_8192",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-eagle3",
+    "rep": 2
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "document_8192",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-dflash",
+    "rep": 2
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "document_8192",
+    "mode": "draft-eagle3",
+    "rep": 3
+  },
+  {
+    "case": "document_2048",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "document_512",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "code_8192",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "chat_short",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "code_512",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "document_8192",
+    "mode": "draft-dflash",
+    "rep": 3
+  },
+  {
+    "case": "document_2048",
+    "mode": "none",
+    "rep": 3
+  },
+  {
+    "case": "document_512",
+    "mode": "none",
+    "rep": 3
+  },
+  {
+    "case": "code_8192",
+    "mode": "none",
+    "rep": 3
+  },
+  {
+    "case": "chat_short",
+    "mode": "none",
+    "rep": 3
+  },
+  {
+    "case": "code_512",
+    "mode": "none",
+    "rep": 3
+  },
+  {
+    "case": "document_8192",
+    "mode": "none",
+    "rep": 3
+  }
+]

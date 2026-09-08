@@ -1,0 +1,67 @@
+# Inference Lab
+
+A public, evidence-first curriculum for LLM inference and performance engineering.
+
+This repository records reproducible experiments across the inference stack: GPU
+fundamentals, PyTorch execution, custom kernels, model serving, capacity planning,
+and distributed inference. The goal is to build engineering judgment, not merely
+collect implementations. Every completed exercise should answer a concrete
+performance question with measurements and an explanation.
+
+## How this repository is organized
+
+| Location | Purpose |
+| --- | --- |
+| [`docs/roadmap.md`](docs/roadmap.md) | Curriculum stages, outcomes, and hardware plan |
+| [`docs/experiment-contract.md`](docs/experiment-contract.md) | Definition of a complete experiment |
+| [`SECURITY.md`](SECURITY.md) | Credential handling, scanning, and public-release procedure |
+| [`exercises/`](exercises/) | Runnable code and per-exercise instructions |
+| [`reports/`](reports/) | Concise, reviewable performance studies |
+| [`artifacts/`](artifacts/) | Generated charts and small derived results (not raw profiler captures) |
+
+## Operating principles
+
+- Benchmark correctness and reproducibility before optimization.
+- Predict the bottleneck or outcome before running an experiment.
+- Change one meaningful variable at a time and preserve the environment details.
+- Report distributions and throughput together; a single average is not enough.
+- Treat profiling evidence as a prompt for a hypothesis, not as the conclusion.
+- Keep raw traces, model weights, credentials, and machine-specific configuration
+  out of version control.
+
+See [`SECURITY.md`](SECURITY.md) before adding a service integration, cloud
+workload, or a new configuration file.
+
+## Experiment catalog
+
+Each experiment has its own directory containing its code, README, configuration,
+and reviewed results. Start with the experiment that interests you:
+
+| Exercise | Status / evidence |
+| --- | --- |
+| [Ollama streaming baseline](exercises/00_ollama_baseline/) | Cold/warm TTFT and response timing |
+| [C++ GPU extension](exercises/03_cpp_extension/) | Small PyTorch extension and CUDA check |
+| [Kernel fusion](exercises/04_kernel_fusion/) | PyTorch/Triton verified on RTX 4070 SUPER; fusion study planned |
+| [Qwen3 8B speculative decoding](exercises/05_speculative_decoding/) | Baseline, EAGLE-3, DFlash and n-gram experiments |
+| [DFlash 2 on CUDA](exercises/05_dflash2_cuda/) | 120 requests, reports, checks and summaries |
+| [DFlash 2 on Metal](exercises/05_dflash2_metal/) | Metal run and 240-response combined report |
+| [On-demand model router](exercises/05_on_demand_router/) | Authentication, serialization, idle unloading and wake checks |
+| [vLLM streaming benchmark](exercises/05_single_node_serving/) | Existing remote-serving harness |
+
+See [import notes](docs/import-notes.md) for provenance and historical-script
+limitations. Raw captures and machine-specific settings remain outside Git.
+
+## Progress
+
+| Stage | Status |
+| --- | --- |
+| 00 — Measurement foundations | Baseline imported |
+| 01 — GPU runtime and data movement | Planned |
+| 02 — CUDA execution and memory behavior | Planned |
+| 03 — PyTorch and transformer execution | C++ extension imported |
+| 04 — Triton kernels and fusion | Environment verified; fusion study planned |
+| 05 — Single-node LLM serving | Multiple experiments imported |
+| 06 — Capacity, KV cache, and quantization | Planned |
+| 07 — Production operations | Planned |
+| 08 — Multi-GPU inference | Planned |
+| 09 — Capstone | Planned |

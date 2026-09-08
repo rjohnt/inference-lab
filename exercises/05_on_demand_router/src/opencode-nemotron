@@ -1,0 +1,4 @@
+#!/bin/zsh
+set -eu
+export OPENCODE_CONFIG_CONTENT='{"small_model":"gpustation-nemotron/nemotron-nano-9b-v2"}'
+exec "$HOME/.opencode/bin/opencode" -m gpustation-nemotron/nemotron-nano-9b-v2 "$@"

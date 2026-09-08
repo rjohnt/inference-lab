@@ -1,0 +1,14 @@
+{
+  "python": "3.12.3",
+  "torch": "2.13.0+cu130",
+  "triton": "3.7.1",
+  "cuda_runtime": "13.0",
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "compute_capability": [
+    8,
+    9
+  ],
+  "triton_add_fp32_fp16_bf16": "PASS",
+  "compile_and_first_run_seconds": 14.799540289997822,
+  "torch_compile_fullgraph": "PASS"
+}

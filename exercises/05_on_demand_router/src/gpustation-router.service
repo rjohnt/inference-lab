@@ -1,0 +1,16 @@
+[Unit]
+Description=GPUStation on-demand model router for OpenCode
+After=network-online.target nemotron.service dflash2.service
+Conflicts=nemotron.service dflash2.service
+
+[Service]
+Type=simple
+Environment=LD_LIBRARY_PATH=/usr/local/lib/ollama:/usr/local/lib/ollama/cuda_v13:/usr/lib/wsl/lib
+Environment=GGML_BACKEND_PATH=/usr/local/lib/ollama/cuda_v13/libggml-cuda.so
+ExecStart=/usr/bin/python3 /path/to/data/gpustation-models/nemotron/router.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+
+[Install]
+WantedBy=default.target

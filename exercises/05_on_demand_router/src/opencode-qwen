@@ -1,0 +1,4 @@
+#!/bin/zsh
+set -eu
+export OPENCODE_CONFIG_CONTENT='{"small_model":"gpustation-dflash2/qwen3.8-27b-dflash2"}'
+exec "$HOME/.opencode/bin/opencode" -m gpustation-dflash2/qwen3.8-27b-dflash2 "$@"
