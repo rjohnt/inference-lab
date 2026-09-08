@@ -1,0 +1,29 @@
+{
+  "batch": 1,
+  "context": 8192,
+  "sms": 132,
+  "event_count": 32585,
+  "trace_span_us": 3584.736,
+  "event_counts_by_operation": {
+    "attn_combine": 196,
+    "attn_decode": 1152,
+    "attn_drain": 780,
+    "ffn_down": 64,
+    "ffn_upgate_act": 48,
+    "lm_head": 4096,
+    "moe_combine": 48,
+    "moe_down": 6885,
+    "moe_gather": 48,
+    "moe_upgate_act": 4370,
+    "oproj": 6272,
+    "qkv": 7760,
+    "rmsnorm": 49,
+    "route_finalize": 48,
+    "router": 721,
+    "router_topk": 48
+  },
+  "non_profile_cuda_ms": 3.42,
+  "profiled_cuda_ms": 3.616,
+  "reported_trace_span_ms": 3.585,
+  "instrumentation_overhead_percent": 5.73
+}

@@ -1,0 +1,19 @@
+{
+  "source_repository": "https://github.com/cohere-ai/cohere-megakernel",
+  "source_revision": "67d0b9ca22ea3652796b715d1d1863459e0e2c3c",
+  "model": "CohereLabs/North-Mini-Code-1.0",
+  "model_revision": "d11e61a842617a22dc328552fa5bb86231ee4f37",
+  "baseline_version": "0.24.0",
+  "dtype": "bfloat16",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "num_sms": 132,
+  "batch_sizes": [1, 2, 4, 8],
+  "context_lengths": [1024, 8192, 32768],
+  "output_tokens": 512,
+  "repetitions": 3,
+  "seed": 42,
+  "prefill": "excluded in decode benchmark; included in serving benchmark",
+  "kv_fill_mean": 0.0,
+  "kv_fill_std": 0.01,
+  "routing": "real checkpoint, no simulated routing"
+}

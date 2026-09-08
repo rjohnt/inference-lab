@@ -1,0 +1,35 @@
+{
+  "token_callback": {
+    "passed": 15,
+    "total": 15
+  },
+  "kv_bindings": {
+    "passed": 15,
+    "total": 15
+  },
+  "decode_layers": {
+    "cases": 48,
+    "passed": 48,
+    "tensor_comparisons": 128,
+    "min_cosine": 0.996137,
+    "max_absolute_error": 0.11914,
+    "min_expert_overlap": 0.938,
+    "batch_sizes": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "sequence_lengths": [
+      128,
+      1024,
+      4096,
+      8192
+    ],
+    "thresholds": {
+      "cosine_min": 0.99,
+      "max_abs": 0.5,
+      "expert_overlap_min": 0.75
+    }
+  }
+}

@@ -65,6 +65,7 @@ and reviewed results. Start with the experiment that interests you:
 | [DFlash 2 on Metal](exercises/05_dflash2_metal/) | Metal run and 240-response combined report |
 | [On-demand model router](exercises/05_on_demand_router/) | Authentication, serialization, idle unloading and wake checks |
 | [vLLM streaming benchmark](exercises/05_single_node_serving/) | Existing remote-serving harness |
+| [Cohere megakernel on H100](exercises/06_cohere_megakernel/) | North Mini Code BF16 versus vLLM 0.24; correctness, decode, serving, and measured SM trace |
 
 See [import notes](docs/import-notes.md) for provenance and historical-script
 limitations. Raw captures and machine-specific settings remain outside Git.
