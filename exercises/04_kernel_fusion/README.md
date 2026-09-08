@@ -3,9 +3,27 @@
 Question: how much can a custom Triton kernel improve a transformer normalization
 operation over eager and compiled PyTorch on an RTX 4070 SUPER?
 
-Status: environment ready and verified on September 8, 2026. The fusion kernel
-and performance study are planned; the vector-add check is infrastructure
-validation only.
+Status: **eager versus `torch.compile` baseline complete**, September 8, 2026.
+Two independent runs × 16 cases × 40 rounds per method and timing mode passed
+correctness and result audits. The custom Triton fusion kernel is the next step.
+
+[Full baseline report](results/baseline-v1/report.md) ·
+[CSV timings](results/baseline-v1/timings.csv) ·
+[SVG comparison](results/baseline-v1/speedups.svg) ·
+[PNG comparison](results/baseline-v1/speedups.png)
+
+![Eager versus compiled speedups](results/baseline-v1/speedups.svg)
+
+Measured GPU execution speedups were **1.86–11.44×** in run 1. Ordinary Python-call
+speedups ranged from **0.75× to 6.83×**: six FP32 cases regressed despite faster
+GPU execution. The two runs' speedup ratios differed by at most 0.8% for GPU timing
+and 3.8% for Python timing. These are warm-cache operation microbenchmarks, not
+end-to-end model speedups.
+
+For BF16 `[4096, 4096]`, GPU median time fell from 1,692.42 to 222.90 µs;
+Python-call median fell from 1,710.96 to 250.63 µs. Separate profiling found
+10 eager GPU kernels versus 1 compiled kernel in both checked BF16 shapes.
+See [profile counts](results/baseline-v1/profile.json).
 
 Verified: Python 3.12.3, PyTorch 2.13.0+cu130, Triton 3.7.1, CUDA runtime 13.0,
 RTX 4070 SUPER (compute capability 8.9), host NVIDIA driver 591.74. Dependency
@@ -26,7 +44,7 @@ python src/smoke_test.py
 
 Setup creates `.venv/` here, installs PyTorch 2.13.0 with CUDA 13.0 and the Triton
 version required by that wheel, plus NumPy, pandas, Matplotlib, pytest, and Ninja.
-`requirements.lock.txt` records the resolved versions. Compiler caches also stay
+`requirements.lock.txt` pins the measured dependency versions; setup installs those pins without rewriting them. Compiler caches also stay
 inside this directory and are ignored by Git.
 
 Write and review source on the development machine; copy this exercise directory
@@ -39,20 +57,60 @@ expression on two different inputs. Results go to `results/environment-check.jso
 The first-call duration includes compilation and must not be reported as latency
 of a warmed kernel. `KERNEL_CHECK_OUTPUT` can redirect the check result.
 
-## Planned experiment
+## Repeat the benchmark
 
-1. Define the residual + RMSNorm reference and numerical tolerances.
-2. Establish eager PyTorch and `torch.compile` baselines.
-3. Write a correct fused Triton kernel; preserve that first implementation.
-4. Tune block sizes and warp counts, recording every measured variant.
-5. Compare latency distributions, speedups, and memory traffic across shapes.
+Run on the GPU host with other compute workloads idle:
 
-Use fixed seeds, matching dtypes and semantics, correctness checks, separate
-warmups, synchronized GPU timing, and randomized or alternating method order.
-Include small decode-like and larger prefill-like workloads. Record regressions
-as well as improvements. Profile representative cases to test the hypothesis:
-fewer launches and intermediate memory transfers should help memory-bound cases.
-Beating compiled PyTorch is an empirical question, not an assumption.
+```bash
+source env.sh
+python src/benchmark.py --config configs/baseline.json --out local/repeat1
+python src/benchmark.py --config configs/baseline.json --out local/repeat2
+python analysis/verify_run.py local/repeat1
+python analysis/verify_run.py local/repeat2
+python analysis/report.py local/repeat1 local/repeat2 --out local/repeat-report
+python analysis/profile_kernels.py --out local/repeat-profile.json
+```
 
-Keep future kernel source, shape configurations, compact measurements, charts,
-and the final report in this directory.
+Output directories must not already exist. A run writes `COMPLETE` only after
+all cases pass. Run the profiler after timing is finished so it does not compete
+with measurements. Original numeric samples stay under ignored `local/`; this
+repository includes reviewed manifests, summaries, audits, CSV, and charts.
+The report can also be regenerated from the published `results/baseline-v1/run1`
+and `run2` directories (raw samples are needed only for the independent audit).
+
+The [configuration](configs/baseline.json) freezes seeds, epsilon, shapes, dtypes,
+warmup, rounds, batching, and correctness tolerances. Every run records its exact
+configuration, source hashes, environment and GPU-state snapshots. Compilation
+and graph capture are outside timing. GPU timing uses identical CUDA Graph
+capture for both methods; Python timing uses ordinary calls. All p95 values are
+**p95 of per-call batch averages**, not per-request tail latency.
+
+## Operation and extension contract
+
+`src/implementations.py` defines the operation: add the residual in input dtype,
+round that sum to input dtype, normalize and multiply by the weight in FP32, then
+cast the normalized result back to input dtype. It returns only that result and
+must not modify inputs. This weighted operation is more complete than the
+unweighted setup smoke test. Forward inference, contiguous tensors, fixed shapes,
+and finite random/zero inputs are the current scope.
+
+To evaluate a later kernel, add a factory branch to `implementations.build` and
+run it beside both controls:
+
+```bash
+# After implementing the `triton_fused` branch:
+python src/benchmark.py --methods eager compiled triton_fused --out local/fusion1
+```
+
+Keep the operation contract and protocol fixed. Each implementation passes the
+same FP64-reference and input-immutability checks before timing. Preserve earlier
+run directories; publish a new results directory for each optimization. A changed
+implementation has a new source hash. Repeat-run reports deliberately require
+matching configurations and source hashes; compare optimizations using the
+co-run eager/compiled controls and retain environment differences in the report.
+
+The harness measures compilation/first-call time separately, but compiler caches
+are persistent, so that number is not a controlled cold-compilation benchmark.
+GPU clocks are unlocked and WSL shares the display GPU. Warm reused inputs may
+fit in cache at small shapes; streaming-memory and end-to-end model tests remain
+future work.

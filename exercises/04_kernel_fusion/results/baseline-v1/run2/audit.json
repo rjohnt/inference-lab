@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "cases": 16,
+  "methods": [
+    "eager",
+    "compiled"
+  ],
+  "sample_count": 2560,
+  "samples_sha256": "0bdcece99f7ef50e281e904f3241f957c7a63535b49619c58d30e5000e46ec06",
+  "checks": [
+    "completion marker",
+    "configuration hash",
+    "case coverage",
+    "round uniqueness",
+    "finite positive samples",
+    "correctness seed coverage",
+    "summary percentiles",
+    "speedup ratios"
+  ]
+}

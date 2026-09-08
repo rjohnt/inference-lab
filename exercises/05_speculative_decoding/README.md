@@ -13,3 +13,11 @@ Imported September 8, 2026 from the completed local experiments.
 These are historical imports, not fresh reruns. Machine-specific paths and addresses were replaced with examples. Configure paths and endpoints before running the historical scripts; do not execute administration scripts without reviewing their host changes. Raw requests, generated responses, logs, model weights, build trees, and personal configuration remain outside Git. Some historical report links refer to those local captures.
 
 The source scripts generate new raw outputs; keep these in ignored local storage and publish only reviewed summaries. Model revisions and checksums are retained where captured.
+
+## Comparison charts
+
+| Run | SVG | PNG |
+|---|---|---|
+| Three repetitions | [SVG](results/results-20260907T224213Z/throughput-comparison.svg) | [PNG](results/results-20260907T224213Z/throughput-comparison.png) |
+| Ten repetitions | [SVG](results/results-20260907T225751Z/throughput-comparison.svg) | [PNG](results/results-20260907T225751Z/throughput-comparison.png) |
+| Thinking-off follow-up | [SVG](results/results-20260908T010140Z/throughput-comparison.svg) | [PNG](results/results-20260908T010140Z/throughput-comparison.png) |

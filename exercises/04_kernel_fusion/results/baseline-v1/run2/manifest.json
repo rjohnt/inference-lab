@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-09-08T18:25:34.631342+00:00",
+  "config": {
+    "schema_version": 1,
+    "operation": "residual_rmsnorm_weighted_v1",
+    "seed": 20260908,
+    "epsilon": 1e-06,
+    "rows": [
+      1,
+      32,
+      512,
+      4096
+    ],
+    "widths": [
+      1024,
+      4096
+    ],
+    "dtypes": [
+      "float32",
+      "bfloat16"
+    ],
+    "methods": [
+      "eager",
+      "compiled"
+    ],
+    "warmup_calls": 50,
+    "rounds": 40,
+    "wall_batch_calls": 32,
+    "graph_batch_calls": 32,
+    "graph_replays_per_round": 4,
+    "correctness_seeds": [
+      42,
+      123,
+      20260908
+    ],
+    "tolerances": {
+      "float32": {
+        "rtol": 2e-05,
+        "atol": 2e-06
+      },
+      "bfloat16": {
+        "rtol": 0.008,
+        "atol": 0.002
+      }
+    }
+  },
+  "config_sha256": "5aefc363e191fc11ffe2af9d1121ab9543ef48b2bcda39b65cbc182175bb31a6",
+  "source_sha256": {
+    "benchmark.py": "ca72d3211f07592508819a68ce2b48baf99faf27d00496fb84f54d73e49e22e4",
+    "implementations.py": "1f4a45daab5fc82f69dc878ed6529e6c986124d817f13990cf348bf5b994feaf",
+    "smoke_test.py": "d3563ca5449dd488acb086e1613ee06cc5e41158dcce2d098b40cb775caa194e"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "os": "Linux",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2",
+    "cpu": "AMD Ryzen 7 5800X 8-Core Processor",
+    "ram_kib": 8087200,
+    "torch": "2.13.0+cu130",
+    "triton": "3.7.1",
+    "cuda_runtime": "13.0",
+    "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+    "vram_bytes": 12878086144,
+    "multiprocessors": 56,
+    "compute_capability": [
+      8,
+      9
+    ],
+    "torch_cpu_threads": 1,
+    "gpu_initial": {
+      "driver_version": "591.74",
+      "memory.used": "501",
+      "utilization.gpu": "0",
+      "temperature.gpu": "50",
+      "clocks.sm": "2520",
+      "clocks.mem": "10501",
+      "power.draw": "34.00",
+      "power.limit": "220.00"
+    }
+  },
+  "compiler": {
+    "backend": "inductor",
+    "fullgraph": true,
+    "dynamic": false,
+    "triton.cudagraphs": false,
+    "cache": "persistent; first call excluded"
+  },
+  "case_order": [
+    [
+      512,
+      1024,
+      "float32"
+    ],
+    [
+      512,
+      1024,
+      "bfloat16"
+    ],
+    [
+      512,
+      4096,
+      "bfloat16"
+    ],
+    [
+      32,
+      4096,
+      "float32"
+    ],
+    [
+      512,
+      4096,
+      "float32"
+    ],
+    [
+      1,
+      1024,
+      "bfloat16"
+    ],
+    [
+      1,
+      1024,
+      "float32"
+    ],
+    [
+      32,
+      1024,
+      "float32"
+    ],
+    [
+      4096,
+      1024,
+      "float32"
+    ],
+    [
+      4096,
+      4096,
+      "bfloat16"
+    ],
+    [
+      4096,
+      4096,
+      "float32"
+    ],
+    [
+      1,
+      4096,
+      "float32"
+    ],
+    [
+      32,
+      1024,
+      "bfloat16"
+    ],
+    [
+      1,
+      4096,
+      "bfloat16"
+    ],
+    [
+      4096,
+      1024,
+      "bfloat16"
+    ],
+    [
+      32,
+      4096,
+      "bfloat16"
+    ]
+  ],
+  "finished_utc": "2026-09-08T18:26:38.700525+00:00"
+}
