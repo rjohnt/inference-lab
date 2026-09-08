@@ -3,6 +3,8 @@
 This repository is the canonical home for the user's inference, GPU profiling,
 and kernel experiments. Each exercise gets one directory under `exercises/`.
 Keep its README, runnable code, configs, compact results, and charts together.
+Embed generated comparison charts in the exercise README using relative PNG
+image links so GitHub displays them inline; retain links to SVG versions.
 Use `src/`, `configs/`, `results/`, and `analysis/` as useful; do not split a new
 exercise's report across unrelated top-level directories.
 

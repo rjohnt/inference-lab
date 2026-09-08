@@ -4,7 +4,7 @@ Completed 120 matched requests on an RTX 4070 SUPER. DFlash 2 decode speedups ra
 
 [Report](notes/results-16k/report.md) · [Code review](notes/results-16k/code-review.md) · [Measured configuration](configs/measured-run.json)
 
-![CUDA throughput comparison](results/results-16k/throughput-comparison.svg)
+![CUDA throughput comparison](results/results-16k/throughput-comparison.png)
 
 Imported September 8, 2026 from the completed local experiments.
 

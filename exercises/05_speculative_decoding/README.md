@@ -16,8 +16,20 @@ The source scripts generate new raw outputs; keep these in ignored local storage
 
 ## Comparison charts
 
-| Run | SVG | PNG |
-|---|---|---|
-| Three repetitions | [SVG](results/results-20260907T224213Z/throughput-comparison.svg) | [PNG](results/results-20260907T224213Z/throughput-comparison.png) |
-| Ten repetitions | [SVG](results/results-20260907T225751Z/throughput-comparison.svg) | [PNG](results/results-20260907T225751Z/throughput-comparison.png) |
-| Thinking-off follow-up | [SVG](results/results-20260908T010140Z/throughput-comparison.svg) | [PNG](results/results-20260908T010140Z/throughput-comparison.png) |
+### Three repetitions
+
+![Three repetitions throughput comparison](results/results-20260907T224213Z/throughput-comparison.png)
+
+[SVG comparison](results/results-20260907T224213Z/throughput-comparison.svg)
+
+### Ten repetitions
+
+![Ten repetitions throughput comparison](results/results-20260907T225751Z/throughput-comparison.png)
+
+[SVG comparison](results/results-20260907T225751Z/throughput-comparison.svg)
+
+### Thinking-off follow-up
+
+![Thinking-off follow-up throughput comparison](results/results-20260908T010140Z/throughput-comparison.png)
+
+[SVG comparison](results/results-20260908T010140Z/throughput-comparison.svg)

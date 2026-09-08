@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "cases": 16,
+  "methods": [
+    "eager",
+    "compiled"
+  ],
+  "sample_count": 137040,
+  "samples_sha256": "e00c0ea76fa17eea8b8a5faff06427578cef7fd316895419d2e88b22382b5742",
+  "checks": [
+    "completion marker",
+    "configuration hash",
+    "case coverage",
+    "round uniqueness",
+    "finite positive samples",
+    "correctness seed coverage",
+    "summary percentiles",
+    "speedup ratios",
+    "minimum rounds",
+    "minimum measured duration",
+    "measured call counts"
+  ]
+}

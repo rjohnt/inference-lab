@@ -4,7 +4,7 @@ Completed the corresponding 120-request Metal study and a combined report coveri
 
 [Combined report](notes/comparison/report.md) · [Measured configuration](configs/measured-run.json)
 
-![Independent within-device comparisons](results/comparison/throughput-comparison.svg)
+![Independent within-device comparisons](results/comparison/throughput-comparison.png)
 
 Imported September 8, 2026 from the completed local experiments.
 

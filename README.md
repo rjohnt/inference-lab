@@ -41,7 +41,7 @@ and reviewed results. Start with the experiment that interests you:
 | --- | --- |
 | [Ollama streaming baseline](exercises/00_ollama_baseline/) | Cold/warm TTFT and response timing |
 | [C++ GPU extension](exercises/03_cpp_extension/) | Small PyTorch extension and CUDA check |
-| [Kernel fusion](exercises/04_kernel_fusion/) | Eager/compiled baseline: 32 case-runs, correctness checks, SVG/PNG charts |
+| [Kernel fusion](exercises/04_kernel_fusion/) | Sustained eager/compiled baseline: 270.8M calls, correctness checks, inline charts |
 | [Nsight Compute RMSNorm profiling](exercises/04_ncu_rmsnorm/) | Prepared for a future NVTX-filtered kernel study; not executed |
 | [Qwen3 8B speculative decoding](exercises/05_speculative_decoding/) | Baseline, EAGLE-3, DFlash and n-gram experiments |
 | [DFlash 2 on CUDA](exercises/05_dflash2_cuda/) | 120 requests, reports, checks and summaries |

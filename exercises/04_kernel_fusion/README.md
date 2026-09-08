@@ -4,26 +4,47 @@ Question: how much can a custom Triton kernel improve a transformer normalizatio
 operation over eager and compiled PyTorch on an RTX 4070 SUPER?
 
 Status: **eager versus `torch.compile` baseline complete**, September 8, 2026.
+The sustained run covered 16 cases with **2,000–2,212 samples per method and timing
+mode**, totaling **137,040 timed samples and 270,771,482 operation calls**.
+Correctness and the independent result audit passed. The custom Triton fusion
+kernel is the next step.
+
+[Full sustained baseline report](results/baseline-v2/report.md) ·
+[CSV timings](results/baseline-v2/timings.csv) ·
+[SVG comparison](results/baseline-v2/speedups.svg)
+
+![Sustained eager versus compiled speedups](results/baseline-v2/speedups.png)
+
+GPU execution improved in all 16 cases, by **1.86–11.58×**. Ordinary Python-call
+speedups ranged from **0.76× to 7.09×**, improving in 10 of 16 cases; six FP32
+cases regressed despite faster GPU execution. These are warm-cache operation
+microbenchmarks, not end-to-end model speedups.
+
+The run took **38.67 minutes**, including **36.55 minutes of measured batches**.
+The largest absolute change between first-quarter and last-quarter median latency
+was **1.23%** across the 64 case/method/timing combinations. This describes drift
+within this run; it does not establish repeat-run variability or zero observer effect.
+
+![Sustained-run latency drift](results/baseline-v2/stability.png)
+
+[SVG drift chart](results/baseline-v2/stability.svg) ·
+[CSV drift measurements](results/baseline-v2/stability.csv)
+
+## Initial exploratory baseline (v1)
+
 Two independent runs × 16 cases × 40 rounds per method and timing mode passed
-correctness and result audits. The custom Triton fusion kernel is the next step.
+correctness and result audits. GPU speedups were **1.86–11.44×** in run 1;
+Python-call speedups were **0.75–6.83×**. The runs' speedup ratios differed by at
+most 0.8% for GPU timing and 3.8% for Python timing.
 
-[Full baseline report](results/baseline-v1/report.md) ·
+![Initial two-run eager versus compiled comparison](results/baseline-v1/speedups.png)
+
+[Initial report](results/baseline-v1/report.md) ·
 [CSV timings](results/baseline-v1/timings.csv) ·
-[SVG comparison](results/baseline-v1/speedups.svg) ·
-[PNG comparison](results/baseline-v1/speedups.png)
+[SVG comparison](results/baseline-v1/speedups.svg)
 
-![Eager versus compiled speedups](results/baseline-v1/speedups.svg)
-
-Measured GPU execution speedups were **1.86–11.44×** in run 1. Ordinary Python-call
-speedups ranged from **0.75× to 6.83×**: six FP32 cases regressed despite faster
-GPU execution. The two runs' speedup ratios differed by at most 0.8% for GPU timing
-and 3.8% for Python timing. These are warm-cache operation microbenchmarks, not
-end-to-end model speedups.
-
-For BF16 `[4096, 4096]`, GPU median time fell from 1,692.42 to 222.90 µs;
-Python-call median fell from 1,710.96 to 250.63 µs. Separate profiling found
-10 eager GPU kernels versus 1 compiled kernel in both checked BF16 shapes.
-See [profile counts](results/baseline-v1/profile.json).
+Separate profiling found 10 eager GPU kernels versus 1 compiled kernel in both
+checked BF16 shapes. See [profile counts](results/baseline-v1/profile.json).
 
 Verified: Python 3.12.3, PyTorch 2.13.0+cu130, Triton 3.7.1, CUDA runtime 13.0,
 RTX 4070 SUPER (compute capability 8.9), host NVIDIA driver 591.74. Dependency
@@ -79,7 +100,8 @@ does not turn it into an end-to-end model or streaming-memory workload.
 
 The duration controller passed a GPU smoke check and an independent sample audit.
 The audit also rejects increased duration/sample requirements that the saved
-smoke run did not satisfy. Long-run results will be published separately from v1.
+smoke run did not satisfy. The completed long-run results are preserved in
+[baseline-v2](results/baseline-v2/report.md), separately from v1.
 
 ## Repeat the benchmark
 
@@ -99,8 +121,8 @@ Output directories must not already exist. A run writes `COMPLETE` only after
 all cases pass. Run the profiler after timing is finished so it does not compete
 with measurements. Original numeric samples stay under ignored `local/`; this
 repository includes reviewed manifests, summaries, audits, CSV, and charts.
-The report can also be regenerated from the published `results/baseline-v1/run1`
-and `run2` directories (raw samples are needed only for the independent audit).
+The report can also be regenerated from the published `results/baseline-v2/run1`
+directory. Raw samples are needed for the independent audit and drift analysis.
 
 The [long-run configuration](configs/long.json) freezes seeds, epsilon, shapes, dtypes,
 warmup, rounds, batching, and correctness tolerances. Every run records its exact
@@ -145,7 +167,7 @@ Elapsed-time checks, sample writes, and progress updates happen between timed
 batches, after synchronization. They are excluded directly from per-call timing,
 but can alter overall duty cycle or compete for host resources. SSH status reads
 and GPU driver queries are also potential indirect disturbances, particularly
-for the Python wall-clock metric. The current sustained run was checked
+for the Python wall-clock metric. The published sustained run was checked
 occasionally over SSH; GPU-state polling was stopped during the remaining
 measurements after discussing observer overhead. No claim of zero observer
 effect is made. A logging-disabled, unobserved repeat would be needed to measure
