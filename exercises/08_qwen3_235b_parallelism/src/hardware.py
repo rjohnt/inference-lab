@@ -29,6 +29,8 @@ for _ in range(3):
     torch.cuda.synchronize(0); torch.cuda.synchronize(1)
     times.append(time.perf_counter()-start)
 d={'gpu_names':[p.name for p in props],'memory_bytes':[p.total_memory for p in props],
+   'driver_versions':subprocess.check_output(['nvidia-smi','--query-gpu=driver_version','--format=csv,noheader'],text=True).splitlines(),
+   'power_limits_w':[float(x) for x in subprocess.check_output(['nvidia-smi','--query-gpu=power.limit','--format=csv,noheader,nounits'],text=True).splitlines()],
    'sm_counts':[p.multi_processor_count for p in props],'peer_access':peer,
    'torch':torch.__version__,'cuda':torch.version.cuda,
    'peer_copy_bytes':nbytes,'peer_copy_iterations':32,'peer_copy_wall_s':times,

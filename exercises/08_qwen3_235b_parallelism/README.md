@@ -15,7 +15,27 @@ runtime footprint. KV cache, quantization workspaces, CUDA graphs, and per-rank
 imbalance must still fit. The candidate revision is pinned to
 `38e8e75808020b2c9be573c19629a4d02cd8e8aa`. The TP pilot loaded the model with
 57.92 GiB of reported model memory per GPU using Marlin AWQ/MoE kernels and
-FlashAttention. Full-context TP, PP, and EP measurements are still pending.
+FlashAttention. Full-context TP measurements are underway; PP and EP follow.
+
+## Provisional TP results
+
+The current [numeric snapshot](results/progress.json) contains **18 measured runs and 576 timed requests**.
+The sweep is still running. These are TP results only; PP, EP, and the 32K
+workload are pending. Values below are medians of three measured repetitions.
+The final archive verification and cross-mode conclusions will follow completion.
+
+| Input/output tokens | Concurrency | Output tok/s | Mean TTFT (s) | Mean TPOT (ms) | Preemptions/run |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 968 / 1,024 | 1 | 66.51 | 0.233 | 14.82 | 0 |
+| 968 / 1,024 | 4 | 200.26 | 0.643 | 19.36 | 0 |
+| 968 / 1,024 | 16 | 479.94 | 1.554 | 31.85 | 0 |
+| 8,136 / 512 | 1 | 53.46 | 1.698 | 15.41 | 0 |
+| 8,136 / 512 | 4 | 117.20 | 3.903 | 26.52 | 0 |
+| 8,136 / 512 | 16 | 158.56 | 7.521 | 82.06 | 4 |
+
+The 8K/concurrency-16 runs show cache pressure: each recorded four preemptions.
+This is part of the measured serving behavior at the selected memory budget.
+The workload limitations below apply to all these results.
 
 ## Why this candidate
 
@@ -69,7 +89,11 @@ three workload shapes: up to 1K input/1K output, 8K input/512 output, and
 32K input/128 output. Full runs use a 33,792-token context limit, 16 maximum
 sequences, a 4K batch budget, and 90% GPU-memory utilization. Each measured
 run submits `max(16, 4 * concurrency)` requests; one separate warmup run
-precedes three measured repetitions per cell.
+precedes three measured repetitions per cell. The offered request rate is
+`inf` with a client concurrency cap: this is a closed-loop load test. Latency
+starts when the client dispatches each request, excluding its wait for a client
+concurrency slot. With 16 or 64 requests per run, tail percentiles are descriptive
+of these small runs and do not establish production tail-latency guarantees.
 
 Report output tokens/s, completed requests/s, TTFT, TPOT, streaming inter-token
 latency, end-to-end latency, errors, and per-GPU memory/utilization. Record any
@@ -83,7 +107,7 @@ These are custom Qwen serving measurements, not official MLPerf results.
 The private input builder selects documents from LongBench's `qasper`,
 `gov_report`, and `hotpotqa` tasks at pinned revision
 `5e628be450b7e67fb7ae6e201bd6d8f7056f7672`. It truncates context to the target
-budget while preserving a task instruction and the model's chat template. It
+budget while retaining the source row's input field and the model's chat template. It
 records actual token lengths, source counts, and file hashes. These modified,
 forced-length prompts are serving workloads, not a scored LongBench evaluation.
 The source pool is repeated if fewer than 64 eligible documents are available;
@@ -91,7 +115,18 @@ prefix caching is disabled in every mode. CLI seed 42 fixes request shuffling.
 The prepared inputs contain 968, 8,136, and 32,712 tokens respectively. The
 first two shapes use 64 distinct source documents each; the longest shape has
 only three eligible documents, repeated to fill the 64-request pool. That limits
-its content diversity; it is a controlled long-context stress test.
+its content diversity; it is a controlled long-context stress test. Each mode
+uses identical inputs within a workload cell. The source pool differs across
+length profiles, so cross-profile changes cannot be attributed solely to length.
+
+The source `gov_report` rows have empty `input` fields. This builder retains that
+empty task under its generic document instruction: 28/64 short, 23/64 intermediate,
+and all 64 long prompts have no explicit source question. A long-prompt smoke
+output consequently asks for a task clarification. These results characterize
+fixed-length document serving and do not measure successful summarization or
+answer quality. Inputs are kept fixed across modes; a future task-oriented
+workload should supply the missing summarization instruction before collecting
+its baseline.
 
 ## Execution and evidence
 
@@ -125,7 +160,9 @@ After the preceding study is archived, provide enough storage for the
 124 GB checkpoint, environment, and private captures. This run uses a symlink
 from the model directory to a shared-memory filesystem (233 GiB capacity),
 avoiding slow persistent-volume reads. Weights are disposable and pinned for
-redownload; all result captures remain on persistent storage. Copy `src/` to
+redownload; all result captures remain on persistent storage. This filesystem
+only supplies checkpoint files during loading. CPU weight offload is disabled;
+the serving model weights reside on the GPUs. Copy `src/` to
 `/workspace/qwen235b/`. These scripts use the recorded vLLM environment at
 `/opt/disagg/venv`; install the environment before running on a fresh node.
 

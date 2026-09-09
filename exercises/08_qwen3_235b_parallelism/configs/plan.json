@@ -1,5 +1,5 @@
 {
-  "status": "TP pilot passed; full TP/PP/EP sweep running",
+  "status": "in progress: 18 TP measured runs captured; 32K TP, PP and EP pending",
   "candidate_model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
   "model_revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
   "quantization": "AWQ INT4, group_size=128, asymmetric zero points; TP pilot verified with Marlin",
@@ -32,7 +32,7 @@
     }
   ],
   "resources_provisioned": true,
-  "measurements_collected": false,
+  "measurements_collected": true,
   "initial_max_model_len": 9216,
   "initial_max_num_seqs": 4,
   "benchmark": {
@@ -62,7 +62,7 @@
       "request errors",
       "per-GPU memory and utilization"
     ],
-    "workload_matrix_status": "prepared; pilot checks precede full execution",
+    "workload_matrix_status": "running",
     "raw_results": "private; publish reviewed numeric summaries and charts",
     "quality_checks": "six fixed-input greedy agreement checks per full mode; no scored quality evaluation in this timing study",
     "dataset": {
@@ -100,12 +100,17 @@
     ],
     "full_max_model_len": 33792,
     "full_max_num_seqs": 16,
-    "custom_output_len": -1
+    "custom_output_len": -1,
+    "request_rate": "inf",
+    "load_model": "closed loop with client concurrency cap"
   },
   "checkpoint_storage": {
     "kind": "shared-memory filesystem",
     "capacity_gib": 233,
     "persistent": false,
     "results_storage": "persistent volume plus local archive"
-  }
+  },
+  "cpu_offload_gb": 0,
+  "dtype": "bfloat16",
+  "kv_cache_dtype": "auto (bfloat16)"
 }

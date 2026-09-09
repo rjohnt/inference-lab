@@ -11,7 +11,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 p=argparse.ArgumentParser();p.add_argument('raw',type=Path);p.add_argument('--output',type=Path,default=Path(__file__).resolve().parents[1]/'results');a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
-fields=['duration','completed','failed','total_input_tokens','total_output_tokens','request_throughput','output_throughput','mean_ttft_ms','median_ttft_ms','p95_ttft_ms','p99_ttft_ms','mean_tpot_ms','median_tpot_ms','p95_tpot_ms','p99_tpot_ms','mean_itl_ms','p95_itl_ms','p99_itl_ms','mean_e2el_ms','p95_e2el_ms','p99_e2el_ms']
+fields=['duration','completed','failed','preemptions','total_input_tokens','total_output_tokens','request_throughput','output_throughput','mean_ttft_ms','median_ttft_ms','p95_ttft_ms','p99_ttft_ms','mean_tpot_ms','median_tpot_ms','p95_tpot_ms','p99_tpot_ms','mean_itl_ms','p95_itl_ms','p99_itl_ms','mean_e2el_ms','p95_e2el_ms','p99_e2el_ms']
 runs=[];requests=[];checks={};validation={};activity=[];samples=[]
 for row in csv.reader((a.raw/'gpu-monitor.csv').open()):
     if len(row)!=6:continue
@@ -19,6 +19,9 @@ for row in csv.reader((a.raw/'gpu-monitor.csv').open()):
     samples.append({'time':ts,'gpu':int(row[1]),'util':float(row[2]),'memory_mib':float(row[4]),'power_w':float(row[5])})
 anchor=json.loads((a.raw/'clock-anchor-start.json').read_text())
 clock_offset=anchor['unix_s']-anchor['perf_s']
+def metric_counter(metrics,name):
+    pattern=r'^'+re.escape(name)+r'(?:\{[^}]*\})?\s+([-+0-9.eE]+)$'
+    return sum(float(x) for x in re.findall(pattern,metrics,re.M))
 def request_window(data):
     starts=data['start_times']
     ends=[start+ttft+sum(gaps) for start,ttft,gaps in zip(starts,data['ttfts'],data['itls'])]
@@ -38,7 +41,9 @@ for mode in ('tp','pp','ep'):
         expected={'decode':1024,'intermediate':512,'prefill':128}[meta['profile']]
         assert data['total_output_tokens']==expected*data['completed'],(mode,meta_path.name,data['total_output_tokens'])
         row={k:meta[k] for k in ['mode','profile','concurrency','rep','num_prompts']}
-        row.update({k:data[k] for k in fields if k in data and isinstance(data[k],(int,float))});runs.append(row)
+        row.update({k:data[k] for k in fields if k in data and isinstance(data[k],(int,float))})
+        row['preemptions']=metric_counter(meta['metrics_after'],'vllm:num_preemptions_total')-metric_counter(meta['metrics_before'],'vllm:num_preemptions_total')
+        runs.append(row)
         assert all(len(data[k])==data['completed'] for k in ('input_lens','output_lens','ttfts','itls'))
         for i,(inp,out,ttft,gaps) in enumerate(zip(data['input_lens'],data['output_lens'],data['ttfts'],data['itls'])):
             requests.append({**{k:row[k] for k in ['mode','profile','concurrency','rep']},'request':i,'input_tokens':inp,'output_tokens':out,'ttft_ms':ttft*1000,'tpot_ms':1000*sum(gaps)/(out-1) if out>1 else 0})
@@ -75,7 +80,11 @@ for name,rows in [('runs',runs),('requests',requests),('gpu-activity',activity)]
 for name,data in [('summary',summary),('correctness',checks),('validation',validation)]:
     (a.output/f'{name}.json').write_text(json.dumps(data,indent=2)+'\n')
 manifest=json.loads((a.raw/'dataset-manifest.json').read_text())
-for v in manifest['profiles'].values():v.pop('sources',None)
+for profile,v in manifest['profiles'].items():
+    inputs=[json.loads(x) for x in (a.raw/f'inputs-{profile}.jsonl').read_text().splitlines()]
+    v['rows_with_empty_source_task']=sum('Task: \nDocument:\n' in x['prompt'] for x in inputs)
+    sources=v.pop('sources',[])
+    v['unique_source_task_counts']={task:sum(x['task']==task for x in sources) for task in sorted(set(x['task'] for x in sources))}
 (a.output/'dataset.json').write_text(json.dumps(manifest,indent=2)+'\n')
 hardware=json.loads((a.raw/'hardware.json').read_text())
 clean={k:v for k,v in hardware.items() if k!='topology'}
@@ -101,6 +110,12 @@ for mode in ('tp','pp','ep'):
     startup[mode]=record
 (a.output/'environment.json').write_text(json.dumps({'packages':packages,'startup':startup},indent=2)+'\n')
 
+pilot_runs=[]
+for path in sorted((a.raw/'tp-pilot').glob('pilot-*-r1.json')):
+    data=json.loads(path.read_text())
+    pilot_runs.append({'profile':'intermediate' if 'intermediate' in path.name else 'decode',**{key:data[key] for key in fields if key in data and isinstance(data[key],(int,float))}})
+pilot_metrics=(a.raw/'tp-pilot/final-metrics.txt').read_text()
+(a.output/'pilot.json').write_text(json.dumps({'max_model_len':9216,'max_num_seqs':4,'concurrency':1,'measured_repetitions':1,'runs':pilot_runs,'successful_requests_including_checks':metric_counter(pilot_metrics,'vllm:request_success_total'),'generated_tokens_including_checks':metric_counter(pilot_metrics,'vllm:generation_tokens_total'),'preemptions':metric_counter(pilot_metrics,'vllm:num_preemptions_total'),'used_in_full_comparison':False},indent=2)+'\n')
 plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,'svg.fonttype':'none'})
 fig,axes=plt.subplots(3,3,figsize=(14,11),layout='constrained')
 for axrow,profile in zip(axes,('decode','intermediate','prefill')):
