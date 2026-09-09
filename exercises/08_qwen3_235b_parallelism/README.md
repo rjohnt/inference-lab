@@ -227,5 +227,10 @@ Raw text and private connection details are excluded from Git. The public
 artifacts contain reviewed numeric results and charts generated from these tests.
 Exercise 07 also retains the user's losslessly cropped/redacted screenshots.
 
-The rental is awaiting the reviewed final-results push; teardown follows that
-push as authorized. The preceding H100 rental was already terminated.
+The final results were pushed in `a51d5df` before terminating the rental.
+Runpod confirmed deletion, and a subsequent lookup returned `not_found`/404 on
+2026-09-09 at 10:43:20 UTC. [Lifecycle verification](results/lifecycle.json).
+The shared exercise 07/08 rental lasted approximately 10.63 hours, or
+$33.81 at the quoted combined $3.18/hour GPU rate, including setup and idle
+time. This excludes storage and is not a billing statement. The preceding H100
+rental had already been terminated.

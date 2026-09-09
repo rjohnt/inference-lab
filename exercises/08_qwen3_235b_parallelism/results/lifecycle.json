@@ -1,0 +1,12 @@
+{
+  "status": "terminated",
+  "verified_utc": "2026-09-09T10:43:20.499673+00:00",
+  "verification": "Runpod delete returned deleted=true; subsequent pod lookup returned not_found/404",
+  "results_pushed_before_teardown": "a51d5df",
+  "shared_with_exercise": "07_disaggregated_serving",
+  "rental_start_utc": "2026-09-09T00:05:30+00:00",
+  "approximate_rental_hours": 10.631,
+  "quoted_combined_gpu_usd_per_hour": 3.18,
+  "estimated_gpu_cost_usd": 33.81,
+  "cost_note": "Estimate through deletion verification for shared exercise 07/08 rental, including setup and idle time; excludes storage and is not a billing statement."
+}

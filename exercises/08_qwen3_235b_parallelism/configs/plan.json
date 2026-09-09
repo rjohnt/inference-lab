@@ -112,5 +112,6 @@
   },
   "cpu_offload_gb": 0,
   "dtype": "bfloat16",
-  "kv_cache_dtype": "auto (bfloat16)"
+  "kv_cache_dtype": "auto (bfloat16)",
+  "resource_status": "terminated after verified archive and final results push"
 }

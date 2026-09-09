@@ -410,8 +410,10 @@ local copy had matching SHA-256 checksums before any infrastructure change.
 [Capture verification](results/capture.json). Reviewed figures and numeric
 summaries are retained here; the raw archive remains outside Git.
 
-The rental was retained for the separately authorized
-[235B parallelism study](../08_qwen3_235b_parallelism/), with storage expansion
-scheduled only after this archive was verified. Final shutdown follows capture
-and publication of both studies. The earlier H100 megakernel rental had already
-been terminated.
+The rental was reused for the separately authorized
+[235B parallelism study](../08_qwen3_235b_parallelism/). Planned storage expansion
+was not performed; that study loaded its checkpoint from shared-memory storage.
+After both studies were archived and their results pushed, the dual-A100 rental
+was terminated and its absence verified through Runpod on September 9, 2026.
+[Lifecycle record](../08_qwen3_235b_parallelism/results/lifecycle.json).
+The earlier H100 megakernel rental had already been terminated.
