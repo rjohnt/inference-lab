@@ -1,17 +1,38 @@
 {
   "status": "queued; finish exercise 07 before execution",
-  "candidate_model": "AIDXteam/Qwen3-235B-A22B-Thinking-2507-AWQ",
-  "model_revision": null,
-  "quantization": "AWQ 4-bit candidate; compatibility unverified",
-  "declared_tensor_bytes": 123142620032,
+  "candidate_model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
+  "model_revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
+  "quantization": "AWQ INT4, group_size=128, asymmetric zero points; runtime not yet verified",
+  "declared_tensor_bytes": 124055313408,
   "gpu_count": 2,
   "gpu_model": "NVIDIA A100-SXM4-80GB",
   "topology": "one dual-GPU node; verify NVLink after provisioning",
   "candidate_modes": [
-    {"tensor_parallel_size": 2, "pipeline_parallel_size": 1},
-    {"tensor_parallel_size": 1, "pipeline_parallel_size": 2},
-    {"expert_parallel_size": 2, "status": "verify exact quantized backend and attention arrangement first"}
+    {
+      "tensor_parallel_size": 2,
+      "pipeline_parallel_size": 1,
+      "enable_expert_parallel": false
+    },
+    {
+      "tensor_parallel_size": 1,
+      "pipeline_parallel_size": 2,
+      "enable_expert_parallel": false
+    },
+    {
+      "tensor_parallel_size": 2,
+      "pipeline_parallel_size": 1,
+      "enable_expert_parallel": true,
+      "status": "TP attention plus EP experts; validate A100 dispatch backend"
+    },
+    {
+      "tensor_parallel_size": 1,
+      "data_parallel_size": 2,
+      "enable_expert_parallel": true,
+      "status": "optional DP attention plus shared EP experts; check memory and dispatch compatibility"
+    }
   ],
   "resources_provisioned": false,
-  "measurements_collected": false
+  "measurements_collected": false,
+  "initial_max_model_len": 8192,
+  "initial_max_num_seqs": 4
 }
