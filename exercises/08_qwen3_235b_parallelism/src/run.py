@@ -19,6 +19,7 @@ cmd=[cli,'serve',str(root/'model'),'--served-model-name','qwen235b','--host','12
  '--pipeline-parallel-size','2' if a.mode=='pp' else '1']
 if a.mode=='ep':cmd+=['--enable-expert-parallel']
 (raw/'launch-command.json').write_text(json.dumps(cmd,indent=2)+'\n')
+server_started=time.time()
 log=(raw/'server.log').open('w');proc=subprocess.Popen(cmd,env=env,stdout=log,stderr=log,start_new_session=True)
 def get(path):
     with urllib.request.urlopen(base+path,timeout=10) as r:return r.read()
@@ -33,6 +34,7 @@ try:
         except Exception:
             if time.monotonic()>deadline:raise TimeoutError('Server startup exceeded 30 minutes')
             time.sleep(3)
+    (raw/'startup.json').write_text(json.dumps({'mode':a.mode,'pilot':a.pilot_only,'started_unix_s':server_started,'ready_unix_s':time.time(),'ready_elapsed_s':time.time()-server_started},indent=2)+'\n')
     print(a.mode+' SERVER_READY',flush=True)
     (raw/'initial-metrics.txt').write_bytes(get('/metrics'))
     checks=[]
@@ -51,13 +53,15 @@ try:
                 if a.pilot_only:name='pilot-'+name
                 bench=[cli,'bench','serve','--backend','openai','--base-url',base,'--endpoint','/v1/completions',
                     '--model',str(root/'model'),'--served-model-name','qwen235b','--tokenizer',str(root/'model'),
-                    '--dataset-name','custom','--dataset-path',str(root/'raw'/f'inputs-{profile}.jsonl'),'--skip-chat-template',
+                    '--dataset-name','custom','--custom-output-len','-1','--dataset-path',str(root/'raw'/f'inputs-{profile}.jsonl'),'--skip-chat-template',
                     '--num-prompts',str(n),'--max-concurrency',str(concurrency),'--request-rate','inf','--seed','42',
                     '--ignore-eos','--temperature','0','--percentile-metrics','ttft,tpot,itl,e2el','--metric-percentiles','50,95,99',
                     '--save-result','--save-detailed','--result-dir',str(raw),'--result-filename',name+'.json']
                 before=get('/metrics').decode();start=time.time()
                 with (raw/(name+'.log')).open('w') as output:subprocess.run(bench,env=env,stdout=output,stderr=output,check=True,timeout=3600)
                 result=json.loads((raw/(name+'.json')).read_text());assert result['completed']==n,(name,result.get('completed'))
+                expected_output={'decode':1024,'intermediate':512,'prefill':128}[profile]
+                assert result['total_output_tokens']==n*expected_output,(name,result.get('total_output_tokens'),n*expected_output)
                 (raw/(name+'-run.json')).write_text(json.dumps({'mode':a.mode,'profile':profile,'concurrency':concurrency,'rep':rep,'num_prompts':n,'pilot':a.pilot_only,'started_unix_s':start,'ended_unix_s':time.time(),'command':bench,'metrics_before':before,'metrics_after':get('/metrics').decode()},indent=2)+'\n')
                 print(name+' COMPLETE '+json.dumps({k:result[k] for k in ('completed','output_throughput','mean_ttft_ms','mean_tpot_ms') if k in result}),flush=True)
     (raw/'final-metrics.txt').write_bytes(get('/metrics'))

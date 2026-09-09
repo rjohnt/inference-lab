@@ -2,8 +2,9 @@
 
 **Authorized follow-up to the [disaggregated-serving exercise](../07_disaggregated_serving/).**
 The workflow waits for the preceding measurements and verified archive, then
-expands storage and runs this study on the same two-GPU rental. Preparation is
-complete; results below will distinguish successful modes from failed attempts.
+runs this study on the same two-GPU rental. The checkpoint is downloaded and
+the corrected TP pilot passed. The full sweep is running; results will distinguish
+successful modes from failed attempts.
 
 Host one quantized Qwen3-235B-A22B model across two A100-SXM4-80GB GPUs and compare
 parallelism modes that fit its architecture and serving backend. The candidate is
@@ -12,7 +13,9 @@ Its safetensors index declares 124,055,313,408 bytes of tensors (124.06 GB;
 115.54 GiB). This is an initial storage/memory feasibility check, not a verified
 runtime footprint. KV cache, quantization workspaces, CUDA graphs, and per-rank
 imbalance must still fit. The candidate revision is pinned to
-`38e8e75808020b2c9be573c19629a4d02cd8e8aa`; runtime compatibility is still unverified.
+`38e8e75808020b2c9be573c19629a4d02cd8e8aa`. The TP pilot loaded the model with
+57.92 GiB of reported model memory per GPU using Marlin AWQ/MoE kernels and
+FlashAttention. Full-context TP, PP, and EP measurements are still pending.
 
 ## Why this candidate
 
@@ -85,16 +88,21 @@ records actual token lengths, source counts, and file hashes. These modified,
 forced-length prompts are serving workloads, not a scored LongBench evaluation.
 The source pool is repeated if fewer than 64 eligible documents are available;
 prefix caching is disabled in every mode. CLI seed 42 fixes request shuffling.
+The prepared inputs contain 968, 8,136, and 32,712 tokens respectively. The
+first two shapes use 64 distinct source documents each; the longest shape has
+only three eligible documents, repeated to fill the 64-request pool. That limits
+its content diversity; it is a controlled long-context stress test.
 
 ## Execution and evidence
 
 1. Complete exercise 07 and retain its results before starting this study.
 2. Pin model, quantization, engine, and container; provision sufficient storage
-   for the roughly 124 GB checkpoint plus environment and captures. The current
-   exercise's storage allocation is not a suitable assumption for this model.
+   for the roughly 124 GB checkpoint plus environment and captures. This run uses
+   a shared-memory filesystem with 233 GiB capacity for weights; captures remain
+   on persistent storage and are copied locally.
 3. Verify actual NVLink topology, peer access, per-rank allocation, and supported
-   parallelism before starting timed work. Use a rental deadline and retrieve
-   artifacts before teardown.
+   parallelism before starting timed work. Retrieve and verify artifacts, then
+   publish reviewed results before teardown.
 4. Check fixed greedy outputs across supported modes, retaining any differences.
 5. Compare the same prompt/output lengths and concurrency at equal GPU cost.
    Report TTFT, output-token latency, throughput, errors, and per-GPU memory and
@@ -113,12 +121,16 @@ Additional sources: [vLLM supported models](https://docs.vllm.ai/en/v0.24.0/mode
 
 ## Run the prepared workflow
 
-After the preceding study is archived, use a volume large enough for the
-124 GB checkpoint, environment, and private captures. Copy `src/` to
+After the preceding study is archived, provide enough storage for the
+124 GB checkpoint, environment, and private captures. This run uses a symlink
+from the model directory to a shared-memory filesystem (233 GiB capacity),
+avoiding slow persistent-volume reads. Weights are disposable and pinned for
+redownload; all result captures remain on persistent storage. Copy `src/` to
 `/workspace/qwen235b/`. These scripts use the recorded vLLM environment at
 `/opt/disagg/venv`; install the environment before running on a fresh node.
 
 ```bash
+uv pip install --python /opt/disagg/venv/bin/python 'vllm[bench]==0.24.0'
 cd /workspace/qwen235b
 bash experiment.sh
 ```
@@ -134,3 +146,13 @@ Import completed modes locally with:
 ```bash
 python3 analysis/summarize.py /path/to/private/raw
 ```
+
+The initial TP launch loaded the model and passed four 64-token smoke checks,
+but the first benchmark client exited before timed requests because the
+benchmark extras were missing. Installing `vllm[bench]` preserved vLLM 0.24.0
+and PyTorch 2.11.0. During setup review, the command was also corrected to use
+`--custom-output-len -1`: this CLI otherwise overrides dataset output budgets
+with its 256-token default. The corrected harness asserts both completed
+request count and total output-token count for every run. Failed setup logs
+and the initial GPU trace are retained privately; they are excluded from
+measured serving results.

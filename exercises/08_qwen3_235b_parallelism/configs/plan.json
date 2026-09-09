@@ -1,12 +1,12 @@
 {
-  "status": "authorized; launch automatically after exercise 07 capture and storage expansion",
+  "status": "TP pilot passed; full TP/PP/EP sweep running",
   "candidate_model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
   "model_revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
-  "quantization": "AWQ INT4, group_size=128, asymmetric zero points; runtime not yet verified",
+  "quantization": "AWQ INT4, group_size=128, asymmetric zero points; TP pilot verified with Marlin",
   "declared_tensor_bytes": 124055313408,
   "gpu_count": 2,
   "gpu_model": "NVIDIA A100-SXM4-80GB",
-  "topology": "one dual-GPU node; verify NVLink after provisioning",
+  "topology": "same dual-A100 node as exercise 07; NV12 and bidirectional peer access verified",
   "candidate_modes": [
     {
       "tensor_parallel_size": 2,
@@ -31,7 +31,7 @@
       "status": "optional DP attention plus shared EP experts; check memory and dispatch compatibility"
     }
   ],
-  "resources_provisioned": false,
+  "resources_provisioned": true,
   "measurements_collected": false,
   "initial_max_model_len": 9216,
   "initial_max_num_seqs": 4,
@@ -60,12 +60,11 @@
       "streaming ITL distribution",
       "end-to-end latency distribution",
       "request errors",
-      "goodput at explicitly recorded latency targets",
       "per-GPU memory and utilization"
     ],
     "workload_matrix_status": "prepared; pilot checks precede full execution",
     "raw_results": "private; publish reviewed numeric summaries and charts",
-    "quality_checks": "separate fixed-input agreement and scored evaluation from forced-length timing runs",
+    "quality_checks": "six fixed-input greedy agreement checks per full mode; no scored quality evaluation in this timing study",
     "dataset": {
       "name": "zai-org/LongBench",
       "revision": "5e628be450b7e67fb7ae6e201bd6d8f7056f7672",
@@ -100,6 +99,13 @@
       }
     ],
     "full_max_model_len": 33792,
-    "full_max_num_seqs": 16
+    "full_max_num_seqs": 16,
+    "custom_output_len": -1
+  },
+  "checkpoint_storage": {
+    "kind": "shared-memory filesystem",
+    "capacity_gib": 233,
+    "persistent": false,
+    "results_storage": "persistent volume plus local archive"
   }
 }

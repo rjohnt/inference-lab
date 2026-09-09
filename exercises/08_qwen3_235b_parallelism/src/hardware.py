@@ -1,6 +1,7 @@
 """Check two equal GPUs and measure a local peer-copy control before serving."""
 import argparse
 import json
+from pathlib import Path
 import subprocess
 import time
 import torch
@@ -8,6 +9,7 @@ import torch
 p=argparse.ArgumentParser()
 p.add_argument('--output',required=True)
 a=p.parse_args()
+Path(a.output).with_name('clock-anchor-start.json').write_text(json.dumps({'unix_s':time.time(),'perf_s':time.perf_counter()})+'\n')
 assert torch.cuda.device_count()==2
 props=[torch.cuda.get_device_properties(i) for i in range(2)]
 assert props[0].name==props[1].name
