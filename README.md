@@ -66,8 +66,8 @@ and reviewed results. Start with the experiment that interests you:
 | [On-demand model router](exercises/05_on_demand_router/) | Authentication, serialization, idle unloading and wake checks |
 | [vLLM streaming benchmark](exercises/05_single_node_serving/) | Existing remote-serving harness |
 | [Cohere megakernel on H100](exercises/06_cohere_megakernel/) | North Mini Code BF16 versus vLLM 0.24; correctness, decode, serving, and measured SM trace |
-| [Prefill/decode disaggregation](exercises/07_disaggregated_serving/) | Same two A100 80GB GPUs: original 48-run comparison complete; workload-shape and scheduling controls in progress |
-| [Qwen3-235B parallelism](exercises/08_qwen3_235b_parallelism/) | Queued feasibility and TP/PP/EP study; no GPU tests yet |
+| [Prefill/decode disaggregation](exercises/07_disaggregated_serving/) | 1,920 timed requests on two A100 80GB GPUs; shapes, tuning, actual overlap diagrams; P/D trades throughput for smooth long-prompt decoding |
+| [Qwen3-235B parallelism](exercises/08_qwen3_235b_parallelism/) | Authorized QuantTrio AWQ TP/PP/EP study using vLLM bench serve; workflow prepared |
 
 See [import notes](docs/import-notes.md) for provenance and historical-script
 limitations. Raw captures and machine-specific settings remain outside Git.

@@ -1,5 +1,5 @@
 {
-  "status": "queued_after_tuning",
+  "status": "complete; 18 measured runs and 576 timed requests",
   "model": "Qwen/Qwen3-8B",
   "hardware": "2 x A100-SXM4-80GB on one node",
   "modes_in_order": [

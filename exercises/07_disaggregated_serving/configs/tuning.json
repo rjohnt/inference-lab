@@ -1,5 +1,5 @@
 {
-  "status": "prepared; run after original comparison",
+  "status": "complete; 36 measured runs and 576 timed requests",
   "profiles": [
     "32k",
     "mixed"

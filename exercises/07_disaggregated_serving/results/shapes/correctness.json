@@ -1,0 +1,42 @@
+[
+  {
+    "context": 128,
+    "index": 0,
+    "exact_text_match": true
+  },
+  {
+    "context": 128,
+    "index": 1,
+    "exact_text_match": true
+  },
+  {
+    "context": 1024,
+    "index": 0,
+    "exact_text_match": true
+  },
+  {
+    "context": 1024,
+    "index": 1,
+    "exact_text_match": true
+  },
+  {
+    "context": 8192,
+    "index": 0,
+    "exact_text_match": true
+  },
+  {
+    "context": 8192,
+    "index": 1,
+    "exact_text_match": true
+  },
+  {
+    "context": 32768,
+    "index": 0,
+    "exact_text_match": true
+  },
+  {
+    "context": 32768,
+    "index": 1,
+    "exact_text_match": true
+  }
+]

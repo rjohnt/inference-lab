@@ -1,0 +1,326 @@
+[
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 29,
+    "mean_gpu_util_pct": 5.551724137931035,
+    "mean_power_w": 100.77103448275862
+  },
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 29,
+    "mean_gpu_util_pct": 96.55172413793103,
+    "mean_power_w": 316.3941379310345
+  },
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 29,
+    "mean_gpu_util_pct": 10.517241379310345,
+    "mean_power_w": 114.99068965517242
+  },
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 29,
+    "mean_gpu_util_pct": 96.55172413793103,
+    "mean_power_w": 316.581724137931
+  },
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 29,
+    "mean_gpu_util_pct": 6.896551724137931,
+    "mean_power_w": 109.50689655172414
+  },
+  {
+    "mode": "pd",
+    "profile": "1k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 29,
+    "mean_gpu_util_pct": 96.55172413793103,
+    "mean_power_w": 312.4303448275862
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 31,
+    "mean_gpu_util_pct": 56.58064516129032,
+    "mean_power_w": 288.79548387096776
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 31,
+    "mean_gpu_util_pct": 96.7741935483871,
+    "mean_power_w": 331.9151612903226
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 31,
+    "mean_gpu_util_pct": 68.38709677419355,
+    "mean_power_w": 292.95193548387095
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 31,
+    "mean_gpu_util_pct": 96.7741935483871,
+    "mean_power_w": 337.3048387096774
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 32,
+    "mean_gpu_util_pct": 63.4375,
+    "mean_power_w": 265.7490625
+  },
+  {
+    "mode": "pd",
+    "profile": "8k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 32,
+    "mean_gpu_util_pct": 95.90625,
+    "mean_power_w": 327.5978125
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 120,
+    "mean_gpu_util_pct": 98.10833333333333,
+    "mean_power_w": 394.22025
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 120,
+    "mean_gpu_util_pct": 50.86666666666667,
+    "mean_power_w": 195.0265
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 120,
+    "mean_gpu_util_pct": 97.525,
+    "mean_power_w": 391.9004166666667
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 120,
+    "mean_gpu_util_pct": 50.93333333333333,
+    "mean_power_w": 196.38275
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 119,
+    "mean_gpu_util_pct": 99.15966386554622,
+    "mean_power_w": 395.1065546218487
+  },
+  {
+    "mode": "pd",
+    "profile": "32k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 119,
+    "mean_gpu_util_pct": 50.285714285714285,
+    "mean_power_w": 189.41008403361346
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 25,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 337.9768
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 25,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 303.552
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 26,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 331.6276923076923
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 26,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 306.47076923076924
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 26,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 341.1765384615385
+  },
+  {
+    "mode": "replicas",
+    "profile": "1k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 26,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 314.3776923076923
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 27,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 381.59
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 27,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 361.22925925925927
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 27,
+    "mean_gpu_util_pct": 96.29629629629629,
+    "mean_power_w": 374.57814814814816
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 27,
+    "mean_gpu_util_pct": 98.51851851851852,
+    "mean_power_w": 359.3611111111111
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 27,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 380.9403703703704
+  },
+  {
+    "mode": "replicas",
+    "profile": "8k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 27,
+    "mean_gpu_util_pct": 100.0,
+    "mean_power_w": 361.3562962962963
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 1,
+    "gpu": 0,
+    "samples": 72,
+    "mean_gpu_util_pct": 98.61111111111111,
+    "mean_power_w": 393.21999999999997
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 1,
+    "gpu": 1,
+    "samples": 72,
+    "mean_gpu_util_pct": 97.22222222222223,
+    "mean_power_w": 389.40319444444447
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 2,
+    "gpu": 0,
+    "samples": 72,
+    "mean_gpu_util_pct": 98.61111111111111,
+    "mean_power_w": 394.3954166666667
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 2,
+    "gpu": 1,
+    "samples": 72,
+    "mean_gpu_util_pct": 97.51388888888889,
+    "mean_power_w": 386.9270833333333
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 3,
+    "gpu": 0,
+    "samples": 72,
+    "mean_gpu_util_pct": 98.65277777777777,
+    "mean_power_w": 393.9738888888889
+  },
+  {
+    "mode": "replicas",
+    "profile": "32k",
+    "rep": 3,
+    "gpu": 1,
+    "samples": 72,
+    "mean_gpu_util_pct": 97.22222222222223,
+    "mean_power_w": 387.8544444444444
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "sha256": "896d1182496d376e47442c4760109bd234fd9136bad2ef9f5e5119a3a5442716",
+  "bytes": 10001140,
+  "verified_unix_s": 1788918925.582183,
+  "status": "remote/local SHA-256 match verified before volume resize",
+  "measured_runs": 102,
+  "timed_requests": 1920
+}

@@ -1,0 +1,118 @@
+{
+  "kv128": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 136,
+    "metrics": {
+      "gpu0": {
+        "vllm:nixl_xfer_time_seconds_count": 0.0,
+        "vllm:nixl_xfer_time_seconds_sum": 0.0,
+        "vllm:nixl_post_time_seconds_count": 0.0,
+        "vllm:nixl_post_time_seconds_sum": 0.0,
+        "vllm:nixl_bytes_transferred_count": 0.0,
+        "vllm:nixl_bytes_transferred_sum": 0.0,
+        "vllm:nixl_num_descriptors_count": 0.0,
+        "vllm:nixl_num_descriptors_sum": 0.0,
+        "vllm:nixl_num_failed_transfers_total": 0.0,
+        "vllm:nixl_num_failed_notifications_total": 0.0,
+        "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:nixl_xfer_time_seconds_count": 136.0,
+        "vllm:nixl_xfer_time_seconds_sum": 10.677924999999998,
+        "vllm:nixl_post_time_seconds_count": 136.0,
+        "vllm:nixl_post_time_seconds_sum": 9.592426000000003,
+        "vllm:nixl_bytes_transferred_count": 136.0,
+        "vllm:nixl_bytes_transferred_sum": 481107640320.0,
+        "vllm:nixl_num_descriptors_count": 136.0,
+        "vllm:nixl_num_descriptors_sum": 1835208.0,
+        "vllm:nixl_num_failed_transfers_total": 0.0,
+        "vllm:nixl_num_failed_notifications_total": 0.0,
+        "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  },
+  "kv128replicas": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 0,
+    "metrics": {
+      "gpu0": {
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  },
+  "prefill16k": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 136,
+    "metrics": {
+      "gpu0": {
+        "vllm:nixl_xfer_time_seconds_count": 0.0,
+        "vllm:nixl_xfer_time_seconds_sum": 0.0,
+        "vllm:nixl_post_time_seconds_count": 0.0,
+        "vllm:nixl_post_time_seconds_sum": 0.0,
+        "vllm:nixl_bytes_transferred_count": 0.0,
+        "vllm:nixl_bytes_transferred_sum": 0.0,
+        "vllm:nixl_num_descriptors_count": 0.0,
+        "vllm:nixl_num_descriptors_sum": 0.0,
+        "vllm:nixl_num_failed_transfers_total": 0.0,
+        "vllm:nixl_num_failed_notifications_total": 0.0,
+        "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:nixl_xfer_time_seconds_count": 136.0,
+        "vllm:nixl_xfer_time_seconds_sum": 10.238935000000001,
+        "vllm:nixl_post_time_seconds_count": 136.0,
+        "vllm:nixl_post_time_seconds_sum": 9.176231999999997,
+        "vllm:nixl_bytes_transferred_count": 136.0,
+        "vllm:nixl_bytes_transferred_sum": 481107640320.0,
+        "vllm:nixl_num_descriptors_count": 136.0,
+        "vllm:nixl_num_descriptors_sum": 1835208.0,
+        "vllm:nixl_num_failed_transfers_total": 0.0,
+        "vllm:nixl_num_failed_notifications_total": 0.0,
+        "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  },
+  "batch16k": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 0,
+    "metrics": {
+      "gpu0": {
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  },
+  "batch1k": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 0,
+    "metrics": {
+      "gpu0": {
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  },
+  "balanced": {
+    "completed_requests_including_warmup_and_checks": 136,
+    "requests_with_transfer_metadata": 0,
+    "metrics": {
+      "gpu0": {
+        "vllm:num_preemptions_total": 0.0
+      },
+      "gpu1": {
+        "vllm:num_preemptions_total": 0.0
+      }
+    }
+  }
+}

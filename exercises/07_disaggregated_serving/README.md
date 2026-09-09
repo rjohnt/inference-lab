@@ -10,8 +10,10 @@ At 32K prompts and concurrency 16, mean time per output token fell from
 **135.7 ms to 13.8 ms**, while output throughput fell from **56.7 to 32.8 tokens/s**
 and mean TTFT rose from **18.0 to 32.8 seconds**.
 
-The original comparison and greedy-output diagnostic are complete. Targeted
-scheduling controls and a sustained workload-shape comparison are in progress.
+The study is complete: **102 measured runs and 1,920 timed requests**, covering
+the original sweep, six tuning configurations, and three longer workload-shape
+comparisons. No tested shape produced a P/D throughput win at this fixed
+one-prefill/one-decode GPU allocation.
 Use Qwen3-8B in BF16 with vLLM 0.24.0 and NIXL 1.2.0. The checkpoint revision
 is pinned in [the configuration](configs/experiment.json). A dense model with
 ordinary attention makes KV-transfer behavior easier to interpret than adding
@@ -95,13 +97,44 @@ This is a connector measurement, separate from the PyTorch peer-copy control.
 
 [SVG](results/tuning/transfer-overhead.svg) · [Numeric results](results/tuning/transfer-probe.json)
 
-The P/D serving improvement was much smaller: roughly 2% on the 32K/concurrency-16
-workload. Faster transfer cannot remove the dominant prefill computation. A
-replica control with the same 128-token blocks, larger and smaller batch budgets,
-and prompt-weighted routing is being measured separately. UCX protocol logs
-confirmed a CUDA IPC zero-copy path for GPU-buffer transfers; the logs remain
-private. The V2 worker's cross-layer KV-layout support was marked unimplemented
-in the installed code, so that option was not tested.
+The P/D serving improvement was much smaller: 2.2% on the 32K/concurrency-16
+workload. Faster transfer cannot remove the dominant prefill computation.
+UCX protocol logs confirmed a CUDA IPC zero-copy path for GPU-buffer transfers;
+the logs remain private. The V2 worker's cross-layer KV-layout support was marked
+unimplemented in the installed code, so that option was not tested.
+
+![Cache-block serving controls](results/tuning/cache-blocks.png)
+
+[SVG](results/tuning/cache-blocks.svg)
+
+Six tuning configurations added 36 measured runs and 576 timed requests. Each
+used 128-token KV blocks and tested 32K and mixed prompts at concurrency 16,
+with 16 requests and 128 output tokens per run. All completed without recorded
+preemptions or connector failures. Exact agreement against the original replica
+outputs ranged from 6/8 to 8/8 across configurations; this remains a serving
+performance study with limited agreement checks, not proven numerical equivalence.
+
+![Measured scheduling controls](results/tuning/scheduling.png)
+
+[SVG](results/tuning/scheduling.svg) · [Summary](results/tuning/summary.json) ·
+[Agreement](results/tuning/correctness.json) · [Validation](results/tuning/validation.json)
+
+| Configuration | 32K output tok/s | Mixed output tok/s | 32K mean TPOT (ms) | Mixed mean TPOT (ms) |
+| --- | ---: | ---: | ---: | ---: |
+| Replicas, 4K batch | 57.2 | 107.8 | 134.3 | 70.7 |
+| P/D, 4K batch | 33.5 | 63.8 | 13.9 | 15.9 |
+| P/D, 16K prefill batch | 34.3 | 65.3 | 13.8 | 14.4 |
+| Replicas, 16K batch | 60.8 | 93.2 | 123.5 | 65.5 |
+| Replicas, 1K batch | 48.1 | 76.6 | 116.7 | 74.0 |
+| Replicas, prompt-weighted router | 57.2 | 107.6 | 134.3 | 72.5 |
+
+Larger prefill batches improved P/D modestly but did not close the throughput
+gap. Replica tuning also changed latency behavior: a 16K batch budget reduced
+the mixed workload's median run-level p95 text-chunk gap from 479 to 28 ms,
+while median throughput fell from 108 to 93 tokens/s. Chunk-gap statistics must
+be read with TPOT and TTFT because text chunks are not individual model tokens.
+The weighted router produced a tighter mixed throughput range in these three
+runs, without a higher median than the request-count router.
 
 ## Concurrent stages and workload shape
 
@@ -119,6 +152,71 @@ claim that token counts translate to equal compute. We record actual HTTP-stage
 intervals to distinguish concurrent requests from a globally serialized loop;
 those intervals include queueing and KV transfer and are not GPU kernel traces.
 [Workload configuration](configs/shapes.json).
+
+## Which shapes made sense here?
+
+![Measured workload-shape comparison](results/shapes/comparison.png)
+
+[SVG](results/shapes/comparison.svg) · [Numeric summary](results/shapes/summary.json)
+
+The follow-up ran P/D first, then replicas, with identical 128-token KV blocks
+and 4K batch budgets. Values are medians of three measured runs, each with
+32 requests at concurrency 16. TTFT and TPOT show **replicas → P/D**.
+
+| Input / output tokens | Replicas tok/s | P/D tok/s | P/D throughput ratio | Mean TTFT (s) | Mean TPOT (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1,024 / 1,024 | 1261.4 | 1134.9 | 0.90× | 0.446 → 0.571 | 12.21 → 13.33 |
+| 8,192 / 512 | 603.9 | 521.0 | 0.86× | 2.312 → 3.119 | 21.84 → 20.87 |
+| 32,768 / 128 | 56.9 | 34.1 | 0.60× | 11.752 → 44.418 | 185.79 → 13.86 |
+
+**Decode-heavy:** replicas won throughput, TTFT, and TPOT. The dedicated prefill
+GPU averaged only 7.7% sampled activity, while the decoder averaged 96.6%.
+Dedicating half the GPU budget to this small prefill workload left capacity idle.
+
+**Intermediate:** the prefill/decode GPUs averaged 62.8%/96.5% activity. The
+pipeline had more overlap, but replicas still delivered 16% more throughput
+and faster TTFT. P/D's small mean-TPOT improvement did not extend to the p95
+text-chunk gap, which increased from 17.8 to 23.7 ms. This case did not establish
+a generally better latency tradeoff.
+
+**Prefill-heavy:** P/D kept generation much smoother: mean TPOT fell 92.5%,
+and the median run-level p95 text-chunk gap fell from 641 to 14.3 ms. The cost
+was 40% lower throughput and much longer TTFT. The prefill GPU averaged 98.3%
+activity and the decoder 50.7%. This is useful evidence for strict generation
+smoothness requirements, but not a throughput improvement or a universal serving
+recommendation. We did not select an application SLO or measure SLO goodput.
+
+![Observed request-stage overlap](results/shapes/stage-overlap.png)
+
+[SVG](results/shapes/stage-overlap.svg) · [Reviewed relative timestamps](results/shapes/timelines.json)
+
+The actual request intervals confirm that prefill for one request overlaps a
+decode call for another. In measured repeat 2, at least one P call and one D
+call were simultaneously in flight for 2.13/28.87 seconds in the decode-heavy
+case, 18.88/31.45 seconds in the intermediate case, and 60.36/120.03 seconds in
+the prefill-heavy case. These HTTP intervals include queueing and KV transfer;
+they do not isolate kernel overlap. The long orange intervals on queued requests
+are not per-request GPU compute durations. All 32 request rows are shown.
+
+![Measured GPU activity for the three shapes](results/shapes/gpu-activity.png)
+
+[SVG](results/shapes/gpu-activity.svg) · [Sample aggregates](results/shapes/gpu-activity.json)
+
+The follow-up added 576 timed requests over 18 measured runs. Including warmups
+and checks, each mode served 392 logical requests. The P/D decoder recorded 392
+transfers and 804,840,800,256 bytes, with no recorded transfer failures, failed
+notifications, expired KV requests, or preemptions. The paired eight greedy
+checks matched 8/8 in this follow-up; that does not erase the original 7/8 result
+or the variation across tuning configurations.
+[Validation](results/shapes/validation.json) · [Agreement](results/shapes/correctness.json).
+
+For this model, engine and hardware allocation, the measured choice is two
+replicas for throughput and initial responsiveness. P/D is a latency-isolation
+tradeoff on prefill-heavy traffic. Three shape points do not locate a precise
+break-even boundary. Different worker ratios, longer mixed traffic, open-loop
+arrival-rate sweeps, prefix caching, or another model could change the result.
+The finite 32-request workload spans two initial concurrency-sized groups; it is
+more sustained than a single burst, but not a long-running production load test.
 
 ## What we are comparing
 
@@ -303,3 +401,17 @@ The original requests, generated text, model files, machine metadata, worker
 logs, and connection configuration are excluded from Git. Public result files
 contain reviewed numeric aggregates and request timings. Screenshots require
 the separate private originals and the lossless cropping script above.
+
+## Capture and lifecycle
+
+Raw inputs/outputs, server logs, connector counters, one-second GPU monitoring,
+and executed source snapshots were archived privately. The remote archive and
+local copy had matching SHA-256 checksums before any infrastructure change.
+[Capture verification](results/capture.json). Reviewed figures and numeric
+summaries are retained here; the raw archive remains outside Git.
+
+The rental was retained for the separately authorized
+[235B parallelism study](../08_qwen3_235b_parallelism/), with storage expansion
+scheduled only after this archive was verified. Final shutdown follows capture
+and publication of both studies. The earlier H100 megakernel rental had already
+been terminated.
