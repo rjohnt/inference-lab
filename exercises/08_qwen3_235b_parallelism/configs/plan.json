@@ -1,5 +1,5 @@
 {
-  "status": "queued; finish exercise 07 before execution",
+  "status": "authorized; launch automatically after exercise 07 capture and storage expansion",
   "candidate_model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
   "model_revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
   "quantization": "AWQ INT4, group_size=128, asymmetric zero points; runtime not yet verified",
@@ -33,7 +33,7 @@
   ],
   "resources_provisioned": false,
   "measurements_collected": false,
-  "initial_max_model_len": 8192,
+  "initial_max_model_len": 9216,
   "initial_max_num_seqs": 4,
   "benchmark": {
     "harness": "vllm bench serve",
@@ -63,8 +63,43 @@
       "goodput at explicitly recorded latency targets",
       "per-GPU memory and utilization"
     ],
-    "workload_matrix_status": "finalize after capacity pilot; include short-input/long-output, long-input/short-output, and intermediate shapes",
+    "workload_matrix_status": "prepared; pilot checks precede full execution",
     "raw_results": "private; publish reviewed numeric summaries and charts",
-    "quality_checks": "separate fixed-input agreement and scored evaluation from forced-length timing runs"
+    "quality_checks": "separate fixed-input agreement and scored evaluation from forced-length timing runs",
+    "dataset": {
+      "name": "zai-org/LongBench",
+      "revision": "5e628be450b7e67fb7ae6e201bd6d8f7056f7672",
+      "tasks": [
+        "qasper",
+        "gov_report",
+        "hotpotqa"
+      ],
+      "use": "truncated document prompts for fixed-length serving timing; not a scored LongBench evaluation"
+    },
+    "full_concurrency": [
+      1,
+      4,
+      16
+    ],
+    "full_requests_per_run": "max(16, 4 * concurrency)",
+    "full_shapes": [
+      {
+        "profile": "decode",
+        "max_input_tokens": 1024,
+        "output_tokens": 1024
+      },
+      {
+        "profile": "intermediate",
+        "max_input_tokens": 8192,
+        "output_tokens": 512
+      },
+      {
+        "profile": "prefill",
+        "max_input_tokens": 32768,
+        "output_tokens": 128
+      }
+    ],
+    "full_max_model_len": 33792,
+    "full_max_num_seqs": 16
   }
 }

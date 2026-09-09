@@ -1,9 +1,9 @@
 # Qwen3-235B across two A100 80GB GPUs
 
-**Queued follow-up. Do not start before the
-[disaggregated-serving exercise](../07_disaggregated_serving/) is complete.**
-No model download, GPU allocation, serving test, or benchmark has been performed
-for this exercise.
+**Authorized follow-up to the [disaggregated-serving exercise](../07_disaggregated_serving/).**
+The workflow waits for the preceding measurements and verified archive, then
+expands storage and runs this study on the same two-GPU rental. Preparation is
+complete; results below will distinguish successful modes from failed attempts.
 
 Host one quantized Qwen3-235B-A22B model across two A100-SXM4-80GB GPUs and compare
 parallelism modes that fit its architecture and serving backend. The candidate is
@@ -19,7 +19,7 @@ imbalance must still fit. The candidate revision is pinned to
 The checkpoint has 235B total parameters, 22B active per token, 94 layers and
 128 experts. Its AWQ configuration uses 4-bit weights, 128-element groups and
 asymmetric zero points. The tensor index reports about 57.77 GiB per GPU if
-perfectly balanced, before runtime allocations. Start with an 8K context limit
+perfectly balanced, before runtime allocations. Start with a 9,216-token context limit (room for an 8K prompt plus output)
 and four sequences; measure each rank's real memory before expanding either.
 
 vLLM 0.24 documents Qwen3MoE pipeline support, and this checkpoint's publisher
@@ -61,9 +61,12 @@ on these two devices.
 Use **`vllm bench serve`**, with **TP=2** as the baseline for PP=2 and
 TP=2 with expert parallel enabled. Keep the checkpoint, tokenizer, request
 sample/order, input/output budgets, and offered load fixed in each paired
-comparison. Warm each configuration before three measured repetitions. Finalize
-the workload sizes and concurrency sweep after the capacity pilot; include
-short-input/long-output, long-input/short-output, and intermediate workloads.
+comparison. Warm each configuration before three measured repetitions. Run a small TP pilot first, then test concurrency 1, 4, and 16 on
+three workload shapes: up to 1K input/1K output, 8K input/512 output, and
+32K input/128 output. Full runs use a 33,792-token context limit, 16 maximum
+sequences, a 4K batch budget, and 90% GPU-memory utilization. Each measured
+run submits `max(16, 4 * concurrency)` requests; one separate warmup run
+precedes three measured repetitions per cell.
 
 Report output tokens/s, completed requests/s, TTFT, TPOT, streaming inter-token
 latency, end-to-end latency, errors, and per-GPU memory/utilization. Record any
@@ -73,6 +76,15 @@ consistently across modes. Pin the CLI version and capture its effective options
 retain raw benchmark JSON privately and publish reviewed summaries and charts.
 These are custom Qwen serving measurements, not official MLPerf results.
 [Benchmark documentation](https://github.com/vllm-project/vllm/blob/main/docs/benchmarking/cli.md).
+
+The private input builder selects documents from LongBench's `qasper`,
+`gov_report`, and `hotpotqa` tasks at pinned revision
+`5e628be450b7e67fb7ae6e201bd6d8f7056f7672`. It truncates context to the target
+budget while preserving a task instruction and the model's chat template. It
+records actual token lengths, source counts, and file hashes. These modified,
+forced-length prompts are serving workloads, not a scored LongBench evaluation.
+The source pool is repeated if fewer than 64 eligible documents are available;
+prefix caching is disabled in every mode. CLI seed 42 fixes request shuffling.
 
 ## Execution and evidence
 
@@ -98,3 +110,27 @@ Additional sources: [vLLM supported models](https://docs.vllm.ai/en/v0.24.0/mode
 [Ampere quantization support](https://docs.vllm.ai/en/stable/features/quantization/),
 [expert parallel deployment](https://docs.vllm.ai/en/v0.24.0/serving/expert_parallel_deployment/),
 [MiniMax AWQ tensor index](https://huggingface.co/QuantTrio/MiniMax-M2.5-AWQ/blob/main/model.safetensors.index.json).
+
+## Run the prepared workflow
+
+After the preceding study is archived, use a volume large enough for the
+124 GB checkpoint, environment, and private captures. Copy `src/` to
+`/workspace/qwen235b/`. These scripts use the recorded vLLM environment at
+`/opt/disagg/venv`; install the environment before running on a fresh node.
+
+```bash
+cd /workspace/qwen235b
+bash experiment.sh
+```
+
+The workflow downloads the pinned checkpoint, prepares private inputs, verifies
+the TP pilot, then runs TP, PP and EP in separate server processes. Each phase
+retains its exit status and logs. A failed full phase does not prevent trying
+the remaining modes. `EXPERIMENT_COMPLETE` is written only if all three succeed.
+Keep the rental until raw archives are verified and reviewed results are pushed.
+
+Import completed modes locally with:
+
+```bash
+python3 analysis/summarize.py /path/to/private/raw
+```
