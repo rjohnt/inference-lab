@@ -1,0 +1,34 @@
+{
+  "status": "queued_after_tuning",
+  "model": "Qwen/Qwen3-8B",
+  "hardware": "2 x A100-SXM4-80GB on one node",
+  "modes_in_order": [
+    "pd",
+    "replicas"
+  ],
+  "kv_block_tokens": 128,
+  "max_batched_tokens": 4096,
+  "max_num_seqs": 16,
+  "concurrency": 16,
+  "requests_per_run": 32,
+  "warmup_runs": 1,
+  "measured_runs": 3,
+  "profiles": [
+    {
+      "name": "decode-heavy",
+      "input_tokens": 1024,
+      "output_tokens": 1024
+    },
+    {
+      "name": "intermediate",
+      "input_tokens": 8192,
+      "output_tokens": 512
+    },
+    {
+      "name": "prefill-heavy",
+      "input_tokens": 32768,
+      "output_tokens": 128
+    }
+  ],
+  "interpretation": "The intermediate case is a candidate for stage balance; token ratios do not establish equal GPU service time. HTTP stage intervals include queueing and transfer. Finite closed-loop traffic, not an open-loop saturation test."
+}

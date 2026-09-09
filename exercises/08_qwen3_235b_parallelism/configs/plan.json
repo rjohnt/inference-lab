@@ -1,0 +1,17 @@
+{
+  "status": "queued; finish exercise 07 before execution",
+  "candidate_model": "AIDXteam/Qwen3-235B-A22B-Thinking-2507-AWQ",
+  "model_revision": null,
+  "quantization": "AWQ 4-bit candidate; compatibility unverified",
+  "declared_tensor_bytes": 123142620032,
+  "gpu_count": 2,
+  "gpu_model": "NVIDIA A100-SXM4-80GB",
+  "topology": "one dual-GPU node; verify NVLink after provisioning",
+  "candidate_modes": [
+    {"tensor_parallel_size": 2, "pipeline_parallel_size": 1},
+    {"tensor_parallel_size": 1, "pipeline_parallel_size": 2},
+    {"expert_parallel_size": 2, "status": "verify exact quantized backend and attention arrangement first"}
+  ],
+  "resources_provisioned": false,
+  "measurements_collected": false
+}

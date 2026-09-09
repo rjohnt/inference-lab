@@ -1,0 +1,44 @@
+{
+  "replicas": {
+    "gpu0": {
+      "vllm:num_preemptions_total": 0.0,
+      "vllm:request_success_total": 256.0
+    },
+    "gpu1": {
+      "vllm:num_preemptions_total": 0.0,
+      "vllm:request_success_total": 264.0
+    }
+  },
+  "pd": {
+    "gpu0": {
+      "vllm:nixl_xfer_time_seconds_count": 0.0,
+      "vllm:nixl_xfer_time_seconds_sum": 0.0,
+      "vllm:nixl_post_time_seconds_count": 0.0,
+      "vllm:nixl_post_time_seconds_sum": 0.0,
+      "vllm:nixl_bytes_transferred_count": 0.0,
+      "vllm:nixl_bytes_transferred_sum": 0.0,
+      "vllm:nixl_num_descriptors_count": 0.0,
+      "vllm:nixl_num_descriptors_sum": 0.0,
+      "vllm:nixl_num_failed_transfers_total": 0.0,
+      "vllm:nixl_num_failed_notifications_total": 0.0,
+      "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+      "vllm:num_preemptions_total": 0.0,
+      "vllm:request_success_total": 520.0
+    },
+    "gpu1": {
+      "vllm:nixl_xfer_time_seconds_count": 520.0,
+      "vllm:nixl_xfer_time_seconds_sum": 180.26344500000022,
+      "vllm:nixl_post_time_seconds_count": 520.0,
+      "vllm:nixl_post_time_seconds_sum": 144.7109129999999,
+      "vllm:nixl_bytes_transferred_count": 520.0,
+      "vllm:nixl_bytes_transferred_sum": 1123742121984.0,
+      "vllm:nixl_num_descriptors_count": 520.0,
+      "vllm:nixl_num_descriptors_sum": 34293888.0,
+      "vllm:nixl_num_failed_transfers_total": 0.0,
+      "vllm:nixl_num_failed_notifications_total": 0.0,
+      "vllm:nixl_num_kv_expired_reqs_total": 0.0,
+      "vllm:num_preemptions_total": 0.0,
+      "vllm:request_success_total": 520.0
+    }
+  }
+}

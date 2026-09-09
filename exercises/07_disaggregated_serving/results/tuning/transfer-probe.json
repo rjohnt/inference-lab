@@ -1,0 +1,22 @@
+[
+  {
+    "block_tokens": 16,
+    "measured_transfers": 4,
+    "context_tokens": 32768,
+    "bytes_per_transfer": 4831838208.0,
+    "descriptors_per_transfer": 147456.0,
+    "mean_transfer_ms": 706.2165,
+    "mean_post_ms": 619.6094999999999,
+    "effective_gb_s": 6.841865359985217
+  },
+  {
+    "block_tokens": 128,
+    "measured_transfers": 4,
+    "context_tokens": 32768,
+    "bytes_per_transfer": 4831838208.0,
+    "descriptors_per_transfer": 18432.0,
+    "mean_transfer_ms": 102.39149999999997,
+    "mean_post_ms": 91.86350000000054,
+    "effective_gb_s": 47.18983712515201
+  }
+]

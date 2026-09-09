@@ -1,0 +1,36 @@
+{
+  "gpu_names": [
+    "NVIDIA A100-SXM4-80GB",
+    "NVIDIA A100-SXM4-80GB"
+  ],
+  "memory_bytes": [
+    85093777408,
+    85093777408
+  ],
+  "sm_counts": [
+    108,
+    108
+  ],
+  "peer_access": [
+    true,
+    true
+  ],
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "peer_copy_bytes": 268435456,
+  "peer_copy_iterations": 32,
+  "peer_copy_wall_s": [
+    0.0318083930760622,
+    0.031877693720161915,
+    0.031884416937828064
+  ],
+  "peer_copy_gb_s": [
+    270.05245349739033,
+    269.4653718492521,
+    269.40855179348745
+  ],
+  "topology_gpu0_gpu1": "NV12",
+  "peer_copy_direction": "GPU 0 to GPU 1",
+  "roundtrip_equality_passed": true,
+  "driver": "580.159.04"
+}

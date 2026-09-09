@@ -1,0 +1,18 @@
+{
+  "replicas": {
+    "completed_requests": 520,
+    "requests_with_transfer_metadata": 0,
+    "worker_counts": {
+      "0": 256,
+      "1": 264
+    }
+  },
+  "pd": {
+    "completed_requests": 520,
+    "requests_with_transfer_metadata": 520,
+    "worker_counts": {
+      "0": 0,
+      "1": 520
+    }
+  }
+}

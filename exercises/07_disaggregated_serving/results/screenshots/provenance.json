@@ -1,0 +1,34 @@
+{
+  "processing": "lossless PNG crop and opaque redaction; no resampling or generative editing",
+  "verification": "all retained RGB pixels outside redaction masks equal original pixels",
+  "captures": [
+    {
+      "file": "nvidia-smi-setup.png",
+      "source": "user-provided",
+      "phase": "idle setup"
+    },
+    {
+      "file": "nvtop-setup.png",
+      "source": "user-provided",
+      "phase": "idle setup"
+    },
+    {
+      "file": "replicas-load.png",
+      "source": "user-provided",
+      "timestamp_utc": "2026-09-09T00:23:37Z",
+      "mode": "replicas",
+      "profile": "32k",
+      "concurrency": 4,
+      "measured_repetition": 2
+    },
+    {
+      "file": "pd-load.png",
+      "source": "user-provided",
+      "timestamp_utc": "2026-09-09T00:37:02Z",
+      "mode": "pd",
+      "profile": "32k",
+      "concurrency": 4,
+      "measured_repetition": 2
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "cuda-python": "13.3.1",
+  "fastapi": "0.136.3",
+  "flashinfer-python": "0.6.12",
+  "httpx": "0.28.1",
+  "nixl": "1.2.0",
+  "nixl-cu12": "1.2.0",
+  "nixl-cu13": "1.2.0",
+  "numpy": "2.3.5",
+  "tokenizers": "0.23.2",
+  "torch": "2.11.0",
+  "transformers": "5.16.1",
+  "triton": "3.6.0",
+  "uvicorn": "0.52.4",
+  "vllm": "0.24.0"
+}

@@ -1,0 +1,45 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "dtype": "bfloat16",
+  "vllm_version": "0.24.0",
+  "nixl_version": "1.2.0",
+  "gpu_count": 2,
+  "tensor_parallel_size_per_worker": 1,
+  "worker_roles": [
+    "prefill",
+    "decode"
+  ],
+  "baseline": "two independent full-serving replicas, same GPUs",
+  "topology": "two single-GPU workers on one dual-A100 SXM node; NV12 observed",
+  "prefix_caching": false,
+  "kv_load_failure_policy": "fail",
+  "planned_context_lengths": [
+    1024,
+    8192,
+    32768
+  ],
+  "planned_output_tokens": 128,
+  "status": "original sweep complete; 48 measured runs and 768 timed requests",
+  "gpu_model": "NVIDIA A100-SXM4-80GB",
+  "vllm_source_revision": "ee0da84ab9e04ac7610e28580af62c365e898389",
+  "planned_concurrency": [
+    4,
+    16
+  ],
+  "requests_per_run": 16,
+  "measured_repetitions": 3,
+  "warmup_repetitions": 1,
+  "baseline_router": "least outstanding requests",
+  "max_model_len": 33792,
+  "max_num_seqs": 16,
+  "max_num_batched_tokens": 4096,
+  "gpu_memory_utilization": 0.85,
+  "seed": 42,
+  "kv_cache_dtype": "auto (BF16)",
+  "nixl_backends": [
+    "UCX"
+  ],
+  "ucx_tls": "all",
+  "kv_block_tokens": 16
+}

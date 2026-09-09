@@ -1,0 +1,56 @@
+{
+  "status": "prepared; run after original comparison",
+  "profiles": [
+    "32k",
+    "mixed"
+  ],
+  "concurrency": 16,
+  "requests_per_run": 16,
+  "warmup_repetitions": 1,
+  "measured_repetitions": 3,
+  "output_tokens": 128,
+  "variants": [
+    {
+      "name": "kv128",
+      "mode": "pd",
+      "block_size": 128,
+      "prefill_batch_tokens": 4096,
+      "decode_batch_tokens": 4096
+    },
+    {
+      "name": "kv128replicas",
+      "mode": "replicas",
+      "block_size": 128,
+      "batch_tokens": 4096,
+      "router": "least outstanding requests"
+    },
+    {
+      "name": "prefill16k",
+      "mode": "pd",
+      "block_size": 128,
+      "prefill_batch_tokens": 16384,
+      "decode_batch_tokens": 4096
+    },
+    {
+      "name": "batch16k",
+      "mode": "replicas",
+      "block_size": 128,
+      "batch_tokens": 16384,
+      "router": "least outstanding requests"
+    },
+    {
+      "name": "batch1k",
+      "mode": "replicas",
+      "block_size": 128,
+      "batch_tokens": 1024,
+      "router": "least outstanding requests"
+    },
+    {
+      "name": "balanced",
+      "mode": "replicas",
+      "block_size": 128,
+      "batch_tokens": 4096,
+      "router": "least outstanding prompt tokens"
+    }
+  ]
+}

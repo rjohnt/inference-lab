@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 700">
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width=".5"/></pattern>
+<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
+<marker id="kv" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#a78bfa"/></marker>
+</defs><style>text {font-family: 'SF Mono', 'DejaVu Sans Mono', monospace;}</style>
+<rect width="1080" height="700" fill="#0f172a"/><rect width="1080" height="700" fill="url(#grid)"/>
+
+<text x="30" y="35" font-size="22" fill="#e2e8f0" text-anchor="start">Qwen3-8B: disaggregation versus two replicas</text>
+<text x="30" y="60" font-size="13" fill="#94a3b8" text-anchor="start">Same 2 × A100-SXM4-80GB • BF16 • TP=1 per worker • vLLM 0.24.0</text>
+<rect x="30" y="95" width="495" height="490" rx="12" fill="none" stroke="#fbbf24" stroke-dasharray="8 4"/>
+<text x="50" y="122" font-size="13" fill="#fbbf24" text-anchor="start">BASELINE · TWO FULL-SERVING REPLICAS</text>
+<rect x="555" y="95" width="495" height="490" rx="12" fill="none" stroke="#fbbf24" stroke-dasharray="8 4"/>
+<text x="575" y="122" font-size="13" fill="#fbbf24" text-anchor="start">EXPERIMENT · PREFILL / DECODE</text>
+<path d="M 277 215 V 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 277 323 V 368 H 160 V 415" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 277 368 H 390 V 415" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 802 215 V 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 730 323 V 365 H 680 V 415" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 874 323 V 365 H 925 V 415" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 775 450 H 830" fill="none" stroke="#a78bfa" stroke-width="2" marker-end="url(#kv)"/>
+<rect x="152" y="150" width="250" height="65" rx="8" fill="#0f172a"/>
+<rect x="152" y="150" width="250" height="65" rx="8" fill="#22d3ee" fill-opacity=".12" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="277.0" y="177" font-size="14" fill="#e2e8f0" text-anchor="middle">Streaming benchmark client</text>
+<text x="277.0" y="198" font-size="10" fill="#94a3b8" text-anchor="middle">1K / 8K / 32K / mixed prompts</text>
+<rect x="152" y="258" width="250" height="65" rx="8" fill="#0f172a"/>
+<rect x="152" y="258" width="250" height="65" rx="8" fill="#fb923c" fill-opacity=".12" stroke="#fb923c" stroke-width="1.5"/>
+<text x="277.0" y="285" font-size="14" fill="#e2e8f0" text-anchor="middle">Least-outstanding router</text>
+<text x="277.0" y="306" font-size="10" fill="#94a3b8" text-anchor="middle">Each request stays on one replica</text>
+<rect x="65" y="415" width="190" height="65" rx="8" fill="#0f172a"/>
+<rect x="65" y="415" width="190" height="65" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399" stroke-width="1.5"/>
+<text x="160.0" y="442" font-size="14" fill="#e2e8f0" text-anchor="middle">GPU 0 · replica</text>
+<text x="160.0" y="463" font-size="10" fill="#94a3b8" text-anchor="middle">Full prefill + full decode</text>
+<rect x="295" y="415" width="190" height="65" rx="8" fill="#0f172a"/>
+<rect x="295" y="415" width="190" height="65" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399" stroke-width="1.5"/>
+<text x="390.0" y="442" font-size="14" fill="#e2e8f0" text-anchor="middle">GPU 1 · replica</text>
+<text x="390.0" y="463" font-size="10" fill="#94a3b8" text-anchor="middle">Full prefill + full decode</text>
+<rect x="677" y="150" width="250" height="65" rx="8" fill="#0f172a"/>
+<rect x="677" y="150" width="250" height="65" rx="8" fill="#22d3ee" fill-opacity=".12" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="802.0" y="177" font-size="14" fill="#e2e8f0" text-anchor="middle">Same benchmark client</text>
+<text x="802.0" y="198" font-size="10" fill="#94a3b8" text-anchor="middle">Concurrency 4 / 16; 128 tokens</text>
+<rect x="677" y="258" width="250" height="65" rx="8" fill="#0f172a"/>
+<rect x="677" y="258" width="250" height="65" rx="8" fill="#fb923c" fill-opacity=".12" stroke="#fb923c" stroke-width="1.5"/>
+<text x="802.0" y="285" font-size="14" fill="#e2e8f0" text-anchor="middle">P/D request router</text>
+<text x="802.0" y="306" font-size="10" fill="#94a3b8" text-anchor="middle">Prefill response → decode request</text>
+<rect x="585" y="415" width="190" height="65" rx="8" fill="#0f172a"/>
+<rect x="585" y="415" width="190" height="65" rx="8" fill="#34d399" fill-opacity=".12" stroke="#34d399" stroke-width="1.5"/>
+<text x="680.0" y="442" font-size="14" fill="#e2e8f0" text-anchor="middle">GPU 0 · prefill</text>
+<text x="680.0" y="463" font-size="10" fill="#94a3b8" text-anchor="middle">Full Qwen3-8B model</text>
+<rect x="830" y="415" width="190" height="65" rx="8" fill="#0f172a"/>
+<rect x="830" y="415" width="190" height="65" rx="8" fill="#a78bfa" fill-opacity=".12" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="925.0" y="442" font-size="14" fill="#e2e8f0" text-anchor="middle">GPU 1 · decode</text>
+<text x="925.0" y="463" font-size="10" fill="#94a3b8" text-anchor="middle">Full Qwen3-8B model</text>
+<text x="680" y="390" font-size="11" fill="#94a3b8" text-anchor="middle">1. Prompt</text>
+<text x="930" y="390" font-size="11" fill="#94a3b8" text-anchor="middle">2. Prompt + metadata</text>
+<text x="802" y="505" font-size="13" fill="#a78bfa" text-anchor="middle">NIXL / UCX pulls GPU KV cache</text>
+<text x="802" y="530" font-size="12" fill="#94a3b8" text-anchor="middle">Peer topology: NV12</text>
+<text x="277" y="525" font-size="13" fill="#94a3b8" text-anchor="middle">No inter-worker KV transfer</text>
+<text x="277" y="550" font-size="12" fill="#94a3b8" text-anchor="middle">Each GPU holds the full model</text>
+<text x="30" y="624" font-size="13" fill="#e2e8f0" text-anchor="start">Validation: greedy output comparison + required transfer metadata + NIXL counters</text>
+<text x="30" y="650" font-size="13" fill="#94a3b8" text-anchor="start">Timing: client TTFT, time/output token, chunk gaps, aggregate output tokens/s</text>
+<text x="30" y="676" font-size="11" fill="#94a3b8" text-anchor="start">PyTorch peer-copy bandwidth is a separate control; it is not NIXL transfer bandwidth.</text>
+</svg>

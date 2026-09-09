@@ -1,0 +1,8 @@
+{
+  "logical_requests_including_warmup_and_correctness": 520,
+  "sum_prompt_tokens": 7620864,
+  "bf16_kv_bytes_per_token": 147456,
+  "expected_total_kv_bytes": 1123742121984,
+  "observed_nixl_bytes": 1123742121984,
+  "exact_byte_count_match": true
+}

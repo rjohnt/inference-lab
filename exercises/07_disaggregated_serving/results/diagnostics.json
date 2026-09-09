@@ -1,0 +1,29 @@
+{
+  "context_tokens": 8192,
+  "output_tokens": 64,
+  "repetitions": 3,
+  "within_path_repeat_agreement": {
+    "pd": true,
+    "local_decode_gpu": true,
+    "local_prefill_gpu": true
+  },
+  "comparisons": {
+    "local_decode_gpu": {
+      "exact_token_sequence_match": false,
+      "common_prefix_tokens": 35,
+      "common_prefix_probe": {
+        "same_argmax": false,
+        "shared_top5_tokens": 5,
+        "max_abs_shared_logprob_delta": 0.38279151916503906,
+        "top1_top2_logprob_margin": {
+          "pd": 0.25,
+          "local_decode_gpu": 0.0
+        }
+      }
+    },
+    "local_prefill_gpu": {
+      "exact_token_sequence_match": true,
+      "common_prefix_tokens": 64
+    }
+  }
+}
