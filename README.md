@@ -58,7 +58,7 @@ and reviewed results. Start with the experiment that interests you:
 | [Sequential, streams, and batching](exercises/01_compute_streams/) | 54 measured cases; sequential vs four streams vs batching, plus CUDA Graph replay |
 | [C++ GPU extension](exercises/03_cpp_extension/) | Small PyTorch extension and CUDA check |
 | [Kernel fusion](exercises/04_kernel_fusion/) | Three-method comparison complete: 504.5M calls; custom Triton beats compiled in 5/16 GPU and 15/16 Python-call cases |
-| [LayerNorm vs RMSNorm — training-lab](https://github.com/rjohnt/training-lab/tree/main/exercises/01_layernorm_vs_rmsnorm) | Planned training-memory study, forward-only controls and shared-axis charts |
+| [LayerNorm vs RMSNorm — training-lab](https://github.com/rjohnt/training-lab/tree/main/exercises/01_layernorm_vs_rmsnorm) | Measured training-memory study: 288 cases, forward/backward timing, saved storage and shared-axis charts |
 | [Nsight Compute RMSNorm profiling](exercises/04_ncu_rmsnorm/) | Prepared for a future NVTX-filtered kernel study; not executed |
 | [Qwen3 8B speculative decoding](exercises/05_speculative_decoding/) | Baseline, EAGLE-3, DFlash and n-gram experiments |
 | [DFlash 2 on CUDA](exercises/05_dflash2_cuda/) | 120 requests, reports, checks and summaries |
