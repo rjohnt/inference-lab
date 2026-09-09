@@ -34,5 +34,37 @@
   "resources_provisioned": false,
   "measurements_collected": false,
   "initial_max_model_len": 8192,
-  "initial_max_num_seqs": 4
+  "initial_max_num_seqs": 4,
+  "benchmark": {
+    "harness": "vllm bench serve",
+    "baseline": "TP=2, PP=1, expert parallel disabled",
+    "comparison_modes": [
+      "TP=2",
+      "PP=2 with TP=1",
+      "TP=2 with expert parallel enabled"
+    ],
+    "seed": 42,
+    "warmup_excluded": true,
+    "measured_repetitions": 3,
+    "controls": [
+      "same checkpoint revision and tokenizer",
+      "same request dataset, order and input/output token budgets",
+      "same client concurrency or offered request rate for paired comparisons",
+      "same context limit and supported serving settings where possible"
+    ],
+    "metrics": [
+      "output tokens/s",
+      "completed requests/s",
+      "TTFT distribution",
+      "TPOT distribution",
+      "streaming ITL distribution",
+      "end-to-end latency distribution",
+      "request errors",
+      "goodput at explicitly recorded latency targets",
+      "per-GPU memory and utilization"
+    ],
+    "workload_matrix_status": "finalize after capacity pilot; include short-input/long-output, long-input/short-output, and intermediate shapes",
+    "raw_results": "private; publish reviewed numeric summaries and charts",
+    "quality_checks": "separate fixed-input agreement and scored evaluation from forced-length timing runs"
+  }
 }

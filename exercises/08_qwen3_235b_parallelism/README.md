@@ -56,6 +56,24 @@ weights must remain available; active parameter count is not its weight-memory
 requirement. Two independent full-model GPU replicas do not fit this checkpoint
 on these two devices.
 
+## Benchmark harness
+
+Use **`vllm bench serve`**, with **TP=2** as the baseline for PP=2 and
+TP=2 with expert parallel enabled. Keep the checkpoint, tokenizer, request
+sample/order, input/output budgets, and offered load fixed in each paired
+comparison. Warm each configuration before three measured repetitions. Finalize
+the workload sizes and concurrency sweep after the capacity pilot; include
+short-input/long-output, long-input/short-output, and intermediate workloads.
+
+Report output tokens/s, completed requests/s, TTFT, TPOT, streaming inter-token
+latency, end-to-end latency, errors, and per-GPU memory/utilization. Record any
+latency targets explicitly when reporting goodput. Keep forced-length performance
+runs separate from answer-quality checks, and count generated reasoning tokens
+consistently across modes. Pin the CLI version and capture its effective options;
+retain raw benchmark JSON privately and publish reviewed summaries and charts.
+These are custom Qwen serving measurements, not official MLPerf results.
+[Benchmark documentation](https://github.com/vllm-project/vllm/blob/main/docs/benchmarking/cli.md).
+
 ## Execution and evidence
 
 1. Complete exercise 07 and retain its results before starting this study.
