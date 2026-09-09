@@ -19,6 +19,12 @@ for row in csv.reader((a.raw/'gpu-monitor.csv').open()):
     samples.append({'time':ts,'gpu':int(row[1]),'util':float(row[2]),'memory_mib':float(row[4]),'power_w':float(row[5])})
 anchor=json.loads((a.raw/'clock-anchor-start.json').read_text())
 clock_offset=anchor['unix_s']-anchor['perf_s']
+end_anchor_path=a.raw/'clock-anchor-end.json'
+if end_anchor_path.exists():
+    end_anchor=json.loads(end_anchor_path.read_text())
+    drift=(end_anchor['unix_s']-end_anchor['perf_s'])-clock_offset
+    assert abs(drift)<0.1, 'Clock offset drift exceeds timeline tolerance'
+    (a.output/'clock-validation.json').write_text(json.dumps({'offset_drift_s':drift,'gpu_sample_interval_s':1,'alignment':'monotonic request timestamps mapped to UTC using start anchor'},indent=2)+'\n')
 def metric_counter(metrics,name):
     pattern=r'^'+re.escape(name)+r'(?:\{[^}]*\})?\s+([-+0-9.eE]+)$'
     return sum(float(x) for x in re.findall(pattern,metrics,re.M))
@@ -38,7 +44,10 @@ for mode in ('tp','pp','ep'):
     for meta_path in sorted(folder.glob('*-r[123]-run.json')):
         meta=json.loads(meta_path.read_text());data=json.loads(meta_path.with_name(meta_path.name.replace('-run.json','.json')).read_text())
         assert data['completed']==meta['num_prompts']
+        assert data['failed']==0
         expected={'decode':1024,'intermediate':512,'prefill':128}[meta['profile']]
+        assert all(n==expected for n in data['output_lens'])
+        assert all(n=={'decode':968,'intermediate':8136,'prefill':32712}[meta['profile']] for n in data['input_lens'])
         assert data['total_output_tokens']==expected*data['completed'],(mode,meta_path.name,data['total_output_tokens'])
         row={k:meta[k] for k in ['mode','profile','concurrency','rep','num_prompts']}
         row.update({k:data[k] for k in fields if k in data and isinstance(data[k],(int,float))})
@@ -108,7 +117,7 @@ for mode in ('tp','pp','ep'):
     record['logged_available_kv_memory_gib']=[float(x) for x in re.findall(r'Available KV cache memory: ([0-9.]+) GiB',log)]
     record['logged_gpu_kv_cache_tokens']=[int(x.replace(',','')) for x in re.findall(r'GPU KV cache size: ([0-9,]+) tokens',log)]
     startup[mode]=record
-(a.output/'environment.json').write_text(json.dumps({'packages':packages,'startup':startup},indent=2)+'\n')
+(a.output/'runtime.json').write_text(json.dumps({'packages':packages,'startup':startup},indent=2)+'\n')
 
 pilot_runs=[]
 for path in sorted((a.raw/'tp-pilot').glob('pilot-*-r1.json')):

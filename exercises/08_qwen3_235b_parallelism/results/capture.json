@@ -1,0 +1,8 @@
+{
+  "sha256": "85e0aad7c2eea84cc57311fee628b65ba84777d1f3c8d6a9241251ab6f732657",
+  "bytes": 21537805,
+  "verified_unix_s": 1788950490.091894,
+  "remote_local_sha256_match": true,
+  "contains": "complete raw TP pilot and TP/PP/EP benchmarks, logs, counters, source snapshots and clock anchors",
+  "raw_archive_published": false
+}

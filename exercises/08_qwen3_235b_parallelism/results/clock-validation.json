@@ -1,0 +1,5 @@
+{
+  "offset_drift_s": 1.430511474609375e-06,
+  "gpu_sample_interval_s": 1,
+  "alignment": "monotonic request timestamps mapped to UTC using start anchor"
+}

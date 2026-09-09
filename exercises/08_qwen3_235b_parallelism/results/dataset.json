@@ -1,0 +1,49 @@
+{
+  "dataset": "zai-org/LongBench",
+  "revision": "5e628be450b7e67fb7ae6e201bd6d8f7056f7672",
+  "archive_sha256": "cb45b11a4133c6bc1d6a44b0f8e701335ff1e543195db1103472e575857f7f64",
+  "seed": 42,
+  "scored_evaluation": false,
+  "profiles": {
+    "decode": {
+      "requests_available": 64,
+      "unique_sources": 64,
+      "input_token_min": 968,
+      "input_token_max": 968,
+      "output_tokens": 1024,
+      "sha256": "205caa5dca34ecd0b5fb8a753ea1abed1f7222eb49806d4ae133702d05c952dc",
+      "rows_with_empty_source_task": 28,
+      "unique_source_task_counts": {
+        "gov_report": 28,
+        "hotpotqa": 23,
+        "qasper": 13
+      }
+    },
+    "intermediate": {
+      "requests_available": 64,
+      "unique_sources": 64,
+      "input_token_min": 8136,
+      "input_token_max": 8136,
+      "output_tokens": 512,
+      "sha256": "074bf20dc8d737b253d407d8e064fc80240bfdf52a97f219022896f02a299332",
+      "rows_with_empty_source_task": 23,
+      "unique_source_task_counts": {
+        "gov_report": 23,
+        "hotpotqa": 39,
+        "qasper": 2
+      }
+    },
+    "prefill": {
+      "requests_available": 64,
+      "unique_sources": 3,
+      "input_token_min": 32712,
+      "input_token_max": 32712,
+      "output_tokens": 128,
+      "sha256": "981882338bbec6a5df02eb81a08beb76b4f6e405233146a52206f2c5b4efddd1",
+      "rows_with_empty_source_task": 64,
+      "unique_source_task_counts": {
+        "gov_report": 3
+      }
+    }
+  }
+}

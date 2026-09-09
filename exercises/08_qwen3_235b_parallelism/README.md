@@ -1,108 +1,152 @@
 # Qwen3-235B across two A100 80GB GPUs
 
-**Authorized follow-up to the [disaggregated-serving exercise](../07_disaggregated_serving/).**
-The workflow waits for the preceding measurements and verified archive, then
-runs this study on the same two-GPU rental. The checkpoint is downloaded and
-the corrected TP pilot passed. The full sweep is running; results will distinguish
-successful modes from failed attempts.
+**Completed: 81 measured runs, 2,592 timed requests, zero failed timed requests.**
+QuantTrio Qwen3-235B-A22B Thinking AWQ served successfully with TP=2, PP=2,
+and TP=2 plus expert parallelism on the same two A100-SXM4-80GB GPUs.
+TP had the highest output throughput in all nine workload cells. EP was
+2.4–5.9% slower than TP; PP was 8.5–43.4% slower. These are results for this
+checkpoint, runtime, node and workload, not a universal ranking of parallelism.
 
-Host one quantized Qwen3-235B-A22B model across two A100-SXM4-80GB GPUs and compare
-parallelism modes that fit its architecture and serving backend. The candidate is
-[QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ](https://huggingface.co/QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ).
-Its safetensors index declares 124,055,313,408 bytes of tensors (124.06 GB;
-115.54 GiB). This is an initial storage/memory feasibility check, not a verified
-runtime footprint. KV cache, quantization workspaces, CUDA graphs, and per-rank
-imbalance must still fit. The candidate revision is pinned to
-`38e8e75808020b2c9be573c19629a4d02cd8e8aa`. The TP pilot loaded the model with
-57.92 GiB of reported model memory per GPU using Marlin AWQ/MoE kernels and
-FlashAttention. Full-context TP measurements are underway; PP and EP follow.
+This is the capacity and parallelism follow-up to
+[exercise 07: prefill/decode disaggregation versus replicas](../07_disaggregated_serving/).
+That experiment used two complete 8B model workers; this one distributes a
+single 235B model across both GPUs. The baseline here is tensor parallelism,
+not replicas or the Cohere megakernel. The repository records reproducible
+inference experiments, including failures, controls and limits on conclusions.
 
-## Provisional TP results
+## Measured performance
 
-The current [numeric snapshot](results/progress.json) contains **18 measured runs and 576 timed requests**.
-The sweep is still running. These are TP results only; PP, EP, and the 32K
-workload are pending. Values below are medians of three measured repetitions.
-The final archive verification and cross-mode conclusions will follow completion.
+All values below are medians of three measured repetitions. Output throughput
+includes prompt processing and request drain time; it is not isolated decode
+kernel throughput. Every mode uses both GPUs at the same rental cost.
 
-| Input/output tokens | Concurrency | Output tok/s | Mean TTFT (s) | Mean TPOT (ms) | Preemptions/run |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| 968 / 1,024 | 1 | 66.51 | 0.233 | 14.82 | 0 |
-| 968 / 1,024 | 4 | 200.26 | 0.643 | 19.36 | 0 |
-| 968 / 1,024 | 16 | 479.94 | 1.554 | 31.85 | 0 |
-| 8,136 / 512 | 1 | 53.46 | 1.698 | 15.41 | 0 |
-| 8,136 / 512 | 4 | 117.20 | 3.903 | 26.52 | 0 |
-| 8,136 / 512 | 16 | 158.56 | 7.521 | 82.06 | 4 |
+| Input/output tokens | Concurrency | TP tok/s | PP tok/s | EP tok/s |
+| --- | ---: | ---: | ---: | ---: |
+| 968 / 1,024 | 1 | 66.51 | 57.78 | 62.56 |
+| 968 / 1,024 | 4 | 200.26 | 141.49 | 190.27 |
+| 968 / 1,024 | 16 | 479.94 | 307.28 | 467.11 |
+| 8,136 / 512 | 1 | 53.46 | 44.87 | 50.59 |
+| 8,136 / 512 | 4 | 117.20 | 75.95 | 112.25 |
+| 8,136 / 512 | 16 | 158.56 | 96.52 | 153.42 |
+| 32,712 / 128 | 1 | 10.44 | 9.55 | 10.12 |
+| 32,712 / 128 | 4 | 11.31 | 6.46 | 11.03 |
+| 32,712 / 128 | 16 | 11.24 | 6.35 | 10.97 |
 
-The 8K/concurrency-16 runs show cache pressure: each recorded four preemptions.
-This is part of the measured serving behavior at the selected memory budget.
-The workload limitations below apply to all these results.
+![Measured TP, PP and EP throughput and latency](results/parallelism.png)
 
-## Why this candidate
+[SVG](results/parallelism.svg) · [All run metrics](results/runs.csv) ·
+[Cell medians and min/max](results/summary.json) · [Per-request timings](results/requests.csv)
 
-The checkpoint has 235B total parameters, 22B active per token, 94 layers and
-128 experts. Its AWQ configuration uses 4-bit weights, 128-element groups and
-asymmetric zero points. The tensor index reports about 57.77 GiB per GPU if
-perfectly balanced, before runtime allocations. Start with a 9,216-token context limit (room for an 8K prompt plus output)
-and four sequences; measure each rank's real memory before expanding either.
+At concurrency 16 with 968 input / 1,024 output tokens, TP reached **479.94 tok/s**,
+EP 467.11 and PP 307.28. Mean TTFT was 1.55 / 1.57 / 2.64 seconds and mean
+TPOT was 31.85 / 32.71 / 49.52 ms for TP / EP / PP respectively.
 
-vLLM 0.24 documents Qwen3MoE pipeline support, and this checkpoint's publisher
-provides an expert-parallel vLLM example. Inspection of the installed Marlin MoE
-backend confirms INT4 support and no general rejection of expert parallelism;
-it does reject specific FlashInfer NVLink backends. These are compatibility
-signals, not a successful two-A100 serving test. Select and verify a compatible
-collective backend during execution.
+The long-input workload saturated early: TP rose from 10.44 tok/s at concurrency
+1 to 11.31 at concurrency 4, then remained at 11.24 at concurrency 16. Its mean
+TTFT nevertheless rose from 10.12 to 18.74 to 135.16 seconds. More queued work
+therefore bought little throughput while substantially increasing latency.
+PP throughput actually fell from 9.55 to 6.46 to 6.35 tok/s over the same sweep.
+The traces do not isolate a kernel or collective cause for that regression.
 
-The initially considered AIDX checkpoint is a distinct `compressed-tensors`
-INT4 representation despite its AWQ repository name (123.14 GB of tensors).
-The QuantTrio checkpoint provides standard AWQ metadata and an explicit EP
-example, making it the first candidate for this parallelism comparison.
-MiniMax-M2.5 AWQ is an alternative near 229B parameters, but its QuantTrio tensor
-index is larger at 130.21 GB; it does not improve our parameter-capacity target.
-A hypothetical 300B model already requires 150 GB at exactly four bits per
-parameter before scales, unquantized tensors, KV cache or runtime workspaces.
-That is a tighter capacity experiment, not an established drop-in alternative.
+TP and EP each recorded four preemptions in every measured 8K/concurrency-16
+run: 12 measured preemptions per mode, plus one during warmup. PP recorded none,
+yet remained slower. This is observed cache/scheduler behavior under the fixed
+memory and batching settings; absence of preemption alone did not predict speed.
+EP had slightly lower mean TTFT than TP in the 8K/concurrency-4 cell, so TP's
+throughput lead should not be read as winning every latency statistic.
 
-## Comparisons to validate
+## What ran and what we verified
 
-| Mode | Proposed arrangement | Question |
-| --- | --- | --- |
-| Tensor parallel | TP=2, PP=1 | Can the quantized model serve reliably, and at what latency and throughput? |
-| Pipeline parallel | TP=1, PP=2 | Does splitting layers improve or worsen the balance of memory, communication, and pipeline idle time? |
-| Tensor + expert parallel | TP=2 with EP enabled | Compare expert sharding against TP-sharded experts, keeping attention TP=2 |
-| Data + expert parallel (optional) | Attention DP=2, TP=1; experts EP=2 | Compare replicated attention with partitioned experts if memory and collectives permit |
+The pinned checkpoint is
+[QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ](https://huggingface.co/QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ/tree/38e8e75808020b2c9be573c19629a4d02cd8e8aa),
+revision `38e8e75808020b2c9be573c19629a4d02cd8e8aa`.
+It has 235B total parameters, approximately 22B active per token, 94 layers,
+128 experts and eight selected experts per token. All expert weights must be
+available despite the smaller active parameter count. The tensor index contains
+124,055,313,408 bytes (124.06 GB / 115.54 GiB), across 25 safetensors shards.
+AWQ uses INT4 weights, group size 128 and asymmetric zero points. Activations
+and KV cache are BF16. CPU weight offload is disabled.
 
-Expert-parallel support for this exact AWQ implementation must be checked first.
-If unsupported, record the limitation rather than silently switching checkpoint
-or quantization. A different supported quantization would be a separate control.
-Qwen3-235B has approximately 22B active parameters per token, but all expert
-weights must remain available; active parameter count is not its weight-memory
-requirement. Two independent full-model GPU replicas do not fit this checkpoint
-on these two devices.
+| Mode | Executed arrangement | Logged model allocation (GiB) | Logical KV capacity (tokens) |
+| --- | --- | ---: | ---: |
+| TP | TP=2, PP=1, EP disabled | 57.92 | 132,000 |
+| PP | TP=1, PP=2, EP disabled | 58.99 | 121,760 |
+| EP | TP=2, PP=1, EP enabled | 57.92 | 131,824 |
 
-## Benchmark harness
+Model allocation is the worker load message available in the captured logs,
+not a sum across GPUs or a complete per-rank memory decomposition. Logical KV
+capacity is the engine-reported usable capacity, not a sum of duplicate rank
+counts. EP startup explicitly confirmed linear expert placement and 64 of 128
+experts local to rank 0. Attention retained TP=2. This was not a DP=2 expert
+parallel deployment; that optional arrangement was not run. Collective traffic
+was not separately profiled, so no all-to-all bandwidth claim is made.
 
-Use **`vllm bench serve`**, with **TP=2** as the baseline for PP=2 and
-TP=2 with expert parallel enabled. Keep the checkpoint, tokenizer, request
-sample/order, input/output budgets, and offered load fixed in each paired
-comparison. Warm each configuration before three measured repetitions. Run a small TP pilot first, then test concurrency 1, 4, and 16 on
-three workload shapes: up to 1K input/1K output, 8K input/512 output, and
-32K input/128 output. Full runs use a 33,792-token context limit, 16 maximum
-sequences, a 4K batch budget, and 90% GPU-memory utilization. Each measured
-run submits `max(16, 4 * concurrency)` requests; one separate warmup run
-precedes three measured repetitions per cell. The offered request rate is
-`inf` with a client concurrency cap: this is a closed-loop load test. Latency
-starts when the client dispatches each request, excluding its wait for a client
-concurrency slot. With 16 or 64 requests per run, tail percentiles are descriptive
-of these small runs and do not establish production tail-latency guarantees.
+All three modes selected FlashAttention, Marlin MoE and Marlin AutoAWQ linear
+kernels under vLLM 0.24.0, PyTorch 2.11.0 with CUDA 13.0, and Transformers 5.16.1.
+The driver was 580.159.04. Both GPUs have 80 GiB and a 400 W power limit.
+The topology probe verified NV12 connectivity and peer access in both directions;
+a separate 256 MiB copy control measured about 273 GB/s in direction GPU 0 to
+GPU 1. This control is not inference communication bandwidth.
 
-Report output tokens/s, completed requests/s, TTFT, TPOT, streaming inter-token
-latency, end-to-end latency, errors, and per-GPU memory/utilization. Record any
-latency targets explicitly when reporting goodput. Keep forced-length performance
-runs separate from answer-quality checks, and count generated reasoning tokens
-consistently across modes. Pin the CLI version and capture its effective options;
-retain raw benchmark JSON privately and publish reviewed summaries and charts.
-These are custom Qwen serving measurements, not official MLPerf results.
-[Benchmark documentation](https://github.com/vllm-project/vllm/blob/main/docs/benchmarking/cli.md).
+[Hardware](results/hardware.json) · [Environment and startup](results/runtime.json) ·
+[Checkpoint metadata](results/checkpoint.json) · [Executed settings](configs/plan.json)
+
+Every mode completed 27 measured runs and 864 timed requests. Including separate
+warmups and six smoke checks, each server's final counters reconciled to exactly
+942 successful requests and 519,552 generated tokens. The full sweep generated
+1,437,696 tokens in timed requests. All phase exit codes were zero and the
+experiment completion marker was present. Both GPUs were empty and no serving
+processes remained at final inspection. See [validation](results/validation.json).
+
+The six 64-token greedy checks showed **PP matching TP in 1/6 cases and EP in
+4/6 cases**. These differences are retained in [agreement results](results/correctness.json).
+They prevent claiming identical outputs or numerical equivalence. Their cause
+was not diagnosed, and no reference-answer accuracy evaluation was performed.
+Forced-length throughput can be compared, but these checks do not establish
+interchangeable answer quality.
+
+## Actual GPU activity
+
+![GPU activity from matched measured requests](results/gpu-timeline.png)
+
+[SVG](results/gpu-timeline.svg) · [Per-run GPU measurements](results/gpu-activity.csv)
+
+These are actual one-second samples for the second measured 8K/concurrency-16
+run in each mode. Each panel spans first request dispatch through last streamed
+token and has its own time scale. PP takes longer despite both devices reporting
+high activity for much of the run. GPU utilization includes time that can be
+spent in communication or waiting inside kernels; it is not FLOP efficiency and
+does not prove pipeline overlap. No kernel-level trace was collected here.
+The benchmark's monotonic clock was aligned to wall time using a captured anchor;
+the final anchor differed in offset by about 1.4 microseconds, far below the
+one-second sampling interval.
+
+## Benchmark controls and limits
+
+The harness is **`vllm bench serve`**, using the OpenAI completions backend and
+custom documents. Each mode runs separately on the same node. Full servers use
+a 33,792-token context limit, 16 maximum sequences, 4,096 batched tokens,
+90% GPU memory utilization, chunked prefill and disabled prefix caching.
+Seed 42, temperature zero, `--ignore-eos` and `--custom-output-len -1` hold
+request order and output budgets fixed. Effective commands and source snapshots
+are preserved privately; [run.py](src/run.py) contains the launch and client flags.
+
+For each shape and concurrency (1, 4, 16), one separate warmup precedes three
+measured repetitions. Each measured run submits `max(16, 4 * concurrency)`
+requests, giving 16, 16 and 64 requests respectively. Request rate is `inf`
+with a client concurrency cap: a closed-loop load test. TTFT and end-to-end
+latency exclude waiting for a client concurrency slot, while aggregate run
+duration includes dispatch and drain. Reported TTFT/TPOT cells are medians of
+three run means; min/max bars show repeat spread, not confidence intervals.
+Streaming ITL and end-to-end percentiles are retained in the numeric files.
+No latency SLO was set, so throughput is not SLO-qualified goodput.
+
+Modes ran in TP, PP, EP order, without locked clocks or randomized mode order.
+This is one host with three repetitions, not a multi-host statistical study.
+Small request counts limit tail-latency conclusions. The corrected pilot used
+a shorter context limit and is excluded from this comparison; see
+[pilot measurements](results/pilot.json). These are custom serving measurements,
+not official MLPerf results or a scored LongBench evaluation.
 
 The private input builder selects documents from LongBench's `qasper`,
 `gov_report`, and `hotpotqa` tasks at pinned revision
@@ -128,35 +172,9 @@ answer quality. Inputs are kept fixed across modes; a future task-oriented
 workload should supply the missing summarization instruction before collecting
 its baseline.
 
-## Execution and evidence
+## Reproduce the study
 
-1. Complete exercise 07 and retain its results before starting this study.
-2. Pin model, quantization, engine, and container; provision sufficient storage
-   for the roughly 124 GB checkpoint plus environment and captures. This run uses
-   a shared-memory filesystem with 233 GiB capacity for weights; captures remain
-   on persistent storage and are copied locally.
-3. Verify actual NVLink topology, peer access, per-rank allocation, and supported
-   parallelism before starting timed work. Retrieve and verify artifacts, then
-   publish reviewed results before teardown.
-4. Check fixed greedy outputs across supported modes, retaining any differences.
-5. Compare the same prompt/output lengths and concurrency at equal GPU cost.
-   Report TTFT, output-token latency, throughput, errors, and per-GPU memory and
-   activity. Separate cold load/compile from warmed serving.
-6. Publish reviewed results, actual-test diagrams, complete commands/configs,
-   and limitations here. Preserve raw captures privately and terminate rentals.
-
-Sources: [checkpoint tensor index](https://huggingface.co/QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ/blob/main/model.safetensors.index.json),
-[Qwen3-235B model architecture](https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507),
-[vLLM parallelism](https://docs.vllm.ai/en/v0.24.0/serving/parallelism_scaling/).
-
-Additional sources: [vLLM supported models](https://docs.vllm.ai/en/v0.24.0/models/supported_models/),
-[Ampere quantization support](https://docs.vllm.ai/en/stable/features/quantization/),
-[expert parallel deployment](https://docs.vllm.ai/en/v0.24.0/serving/expert_parallel_deployment/),
-[MiniMax AWQ tensor index](https://huggingface.co/QuantTrio/MiniMax-M2.5-AWQ/blob/main/model.safetensors.index.json).
-
-## Run the prepared workflow
-
-After the preceding study is archived, provide enough storage for the
+Provide enough storage for the
 124 GB checkpoint, environment, and private captures. This run uses a symlink
 from the model directory to a shared-memory filesystem (233 GiB capacity),
 avoiding slow persistent-volume reads. Weights are disposable and pinned for
@@ -193,3 +211,21 @@ with its 256-token default. The corrected harness asserts both completed
 request count and total output-token count for every run. Failed setup logs
 and the initial GPU trace are retained privately; they are excluded from
 measured serving results.
+
+TP and EP logs also contain EngineDeadError messages after the harness sent
+SIGTERM for server teardown, following final metrics capture. They were not timed
+request failures. The shutdown warnings and failed initial setup remain in the
+private archive rather than being discarded.
+
+## Capture and lifecycle
+
+The complete raw benchmark JSON, prompts and outputs, server logs, launch
+commands, counters, GPU samples, clock anchors and executed source snapshots
+were archived and copied locally. Remote and local SHA-256 checksums matched;
+[verification metadata](results/capture.json) identifies the private archive.
+Raw text and private connection details are excluded from Git. The public
+artifacts contain reviewed numeric results and charts generated from these tests.
+Exercise 07 also retains the user's losslessly cropped/redacted screenshots.
+
+The rental is awaiting the reviewed final-results push; teardown follows that
+push as authorized. The preceding H100 rental was already terminated.

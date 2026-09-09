@@ -1,8 +1,8 @@
 {
-  "status": "in progress: 18 TP measured runs captured; 32K TP, PP and EP pending",
+  "status": "complete: 81 measured runs, 2592 timed requests, all TP/PP/EP modes passed",
   "candidate_model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
   "model_revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
-  "quantization": "AWQ INT4, group_size=128, asymmetric zero points; TP pilot verified with Marlin",
+  "quantization": "AWQ INT4, group_size=128, asymmetric zero points; all modes verified with Marlin",
   "declared_tensor_bytes": 124055313408,
   "gpu_count": 2,
   "gpu_model": "NVIDIA A100-SXM4-80GB",
@@ -22,13 +22,13 @@
       "tensor_parallel_size": 2,
       "pipeline_parallel_size": 1,
       "enable_expert_parallel": true,
-      "status": "TP attention plus EP experts; validate A100 dispatch backend"
+      "status": "completed: TP attention plus 64 local experts per rank"
     },
     {
       "tensor_parallel_size": 1,
       "data_parallel_size": 2,
       "enable_expert_parallel": true,
-      "status": "optional DP attention plus shared EP experts; check memory and dispatch compatibility"
+      "status": "optional; not run"
     }
   ],
   "resources_provisioned": true,
@@ -62,7 +62,7 @@
       "request errors",
       "per-GPU memory and utilization"
     ],
-    "workload_matrix_status": "running",
+    "workload_matrix_status": "complete",
     "raw_results": "private; publish reviewed numeric summaries and charts",
     "quality_checks": "six fixed-input greedy agreement checks per full mode; no scored quality evaluation in this timing study",
     "dataset": {

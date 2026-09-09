@@ -1,0 +1,102 @@
+{
+  "packages": {
+    "compressed-tensors": "0.17.0",
+    "datasets": "5.0.1",
+    "flashinfer-cubin": "0.6.12",
+    "flashinfer-python": "0.6.12",
+    "huggingface-hub": "1.30.0",
+    "pandas": "3.0.5",
+    "safetensors": "0.8.0",
+    "torch": "2.11.0",
+    "transformers": "5.16.1",
+    "triton": "3.6.0",
+    "vllm": "0.24.0",
+    "xgrammar": "0.2.3"
+  },
+  "startup": {
+    "tp": {
+      "mode": "tp",
+      "pilot": false,
+      "started_unix_s": 1788920490.3511262,
+      "ready_unix_s": 1788920697.4617944,
+      "ready_elapsed_s": 207.1106686592102,
+      "observed_attention_backends": [
+        "FLASH_ATTN"
+      ],
+      "observed_moe_backends": [
+        "MARLIN"
+      ],
+      "observed_linear_kernels": [
+        "MarlinLinearKernel"
+      ],
+      "logged_model_loads": [
+        {
+          "memory_gib": 57.92,
+          "seconds": 56.34717
+        }
+      ],
+      "logged_available_kv_memory_gib": [
+        11.83
+      ],
+      "logged_gpu_kv_cache_tokens": [
+        132000
+      ]
+    },
+    "pp": {
+      "mode": "pp",
+      "pilot": false,
+      "started_unix_s": 1788927710.6696613,
+      "ready_unix_s": 1788927848.7260492,
+      "ready_elapsed_s": 138.0563886165619,
+      "observed_attention_backends": [
+        "FLASH_ATTN"
+      ],
+      "observed_moe_backends": [
+        "MARLIN"
+      ],
+      "observed_linear_kernels": [
+        "MarlinLinearKernel"
+      ],
+      "logged_model_loads": [
+        {
+          "memory_gib": 58.99,
+          "seconds": 38.818727
+        }
+      ],
+      "logged_available_kv_memory_gib": [
+        10.92
+      ],
+      "logged_gpu_kv_cache_tokens": [
+        121760
+      ]
+    },
+    "ep": {
+      "mode": "ep",
+      "pilot": false,
+      "started_unix_s": 1788938293.956601,
+      "ready_unix_s": 1788938477.0165236,
+      "ready_elapsed_s": 183.05992317199707,
+      "observed_attention_backends": [
+        "FLASH_ATTN"
+      ],
+      "observed_moe_backends": [
+        "MARLIN"
+      ],
+      "observed_linear_kernels": [
+        "MarlinLinearKernel"
+      ],
+      "logged_model_loads": [
+        {
+          "memory_gib": 57.92,
+          "seconds": 43.046468
+        }
+      ],
+      "logged_available_kv_memory_gib": [
+        11.82
+      ],
+      "logged_gpu_kv_cache_tokens": [
+        131824
+      ]
+    }
+  }
+}

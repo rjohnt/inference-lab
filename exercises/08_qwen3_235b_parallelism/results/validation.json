@@ -1,0 +1,32 @@
+{
+  "tp": {
+    "status": "complete",
+    "measured_runs": 27,
+    "timed_requests": 864,
+    "preemptions_including_warmup_and_checks": 13.0,
+    "successful_requests_including_warmup_and_checks": 942.0,
+    "generated_tokens_including_warmup_and_checks": 519552.0,
+    "expected_requests_including_warmup_and_checks": 942,
+    "expected_generated_tokens_including_warmup_and_checks": 519552
+  },
+  "pp": {
+    "status": "complete",
+    "measured_runs": 27,
+    "timed_requests": 864,
+    "preemptions_including_warmup_and_checks": 0.0,
+    "successful_requests_including_warmup_and_checks": 942.0,
+    "generated_tokens_including_warmup_and_checks": 519552.0,
+    "expected_requests_including_warmup_and_checks": 942,
+    "expected_generated_tokens_including_warmup_and_checks": 519552
+  },
+  "ep": {
+    "status": "complete",
+    "measured_runs": 27,
+    "timed_requests": 864,
+    "preemptions_including_warmup_and_checks": 13.0,
+    "successful_requests_including_warmup_and_checks": 942.0,
+    "generated_tokens_including_warmup_and_checks": 519552.0,
+    "expected_requests_including_warmup_and_checks": 942,
+    "expected_generated_tokens_including_warmup_and_checks": 519552
+  }
+}

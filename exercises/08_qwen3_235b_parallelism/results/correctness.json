@@ -1,0 +1,98 @@
+{
+  "tp": [
+    {
+      "profile": "decode",
+      "index": 0,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "decode",
+      "index": 1,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "intermediate",
+      "index": 0,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "intermediate",
+      "index": 1,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "prefill",
+      "index": 0,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "prefill",
+      "index": 1,
+      "exact_text_match_tp": true
+    }
+  ],
+  "pp": [
+    {
+      "profile": "decode",
+      "index": 0,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "decode",
+      "index": 1,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "intermediate",
+      "index": 0,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "intermediate",
+      "index": 1,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "prefill",
+      "index": 0,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "prefill",
+      "index": 1,
+      "exact_text_match_tp": false
+    }
+  ],
+  "ep": [
+    {
+      "profile": "decode",
+      "index": 0,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "decode",
+      "index": 1,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "intermediate",
+      "index": 0,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "intermediate",
+      "index": 1,
+      "exact_text_match_tp": false
+    },
+    {
+      "profile": "prefill",
+      "index": 0,
+      "exact_text_match_tp": true
+    },
+    {
+      "profile": "prefill",
+      "index": 1,
+      "exact_text_match_tp": true
+    }
+  ]
+}

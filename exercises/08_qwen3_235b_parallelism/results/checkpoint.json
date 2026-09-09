@@ -1,0 +1,20 @@
+{
+  "model": "QuantTrio/Qwen3-235B-A22B-Thinking-2507-AWQ",
+  "revision": "38e8e75808020b2c9be573c19629a4d02cd8e8aa",
+  "quantization_config": {
+    "quant_method": "awq",
+    "bits": 4,
+    "group_size": 128,
+    "version": "gemm",
+    "zero_point": true,
+    "modules_to_not_convert": [
+      ".mlp.gate"
+    ]
+  },
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "declared_tensor_bytes": 124055313408,
+  "shard_count": 25,
+  "shard_file_bytes": 124068749176
+}
