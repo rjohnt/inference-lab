@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 850" role="img">
+<title>Pipeline parallelism · split the layer stack</title>
+<defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#fb923c"/></marker></defs><style>text{font-family:ui-monospace,Menlo,Consolas,monospace}</style>
+<rect width="1120" height="850" fill="#0f172a"/><rect width="1120" height="850" fill="url(#grid)"/>
+<text x="35" y="45" font-size="27" fill="#e2e8f0" text-anchor="start" font-weight="700">Pipeline parallelism · split the layer stack</text>
+<text x="35" y="78" font-size="15" fill="#a8b7cb" text-anchor="start" font-weight="400">Tested: TP=1 · PP=2 · EP off     |     A request crosses two sequential stages</text>
+<rect x="35" y="100" width="1050" height="40" rx="9" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="560" y="126" font-size="15" fill="#fbbf24" text-anchor="middle" font-weight="400">Qwen3-235B AWQ  /  2 × A100 80GB  /  NV12 verified  /  one node</text>
+<path d="M450 410 L670 410" fill="none" stroke="#fb923c" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="560" y="366" font-size="14" fill="#fb923c" text-anchor="middle" font-weight="400">hidden state</text>
+<text x="560" y="387" font-size="14" fill="#fb923c" text-anchor="middle" font-weight="400">+ residual</text>
+<text x="560" y="446" font-size="13" fill="#a8b7cb" text-anchor="middle" font-weight="400">each [T,4096]</text>
+<rect x="35" y="160" width="415" height="495" rx="9" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="55" y="193" font-size="21" fill="#22d3ee" text-anchor="start" font-weight="700">GPU 0 · PP stage 0</text>
+<text x="55" y="219" font-size="15" fill="#a8b7cb" text-anchor="start" font-weight="400">layers 0–46</text>
+<rect x="55" y="241" width="375" height="105" rx="9" fill="#172338" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="70" y="267" font-size="16" fill="#22d3ee" text-anchor="start" font-weight="700">ATTENTION</text>
+<text x="70" y="291" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">All 64 Q heads + 4 KV heads</text>
+<text x="70" y="311" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">Full Q/K/V and output matrices</text>
+<rect x="55" y="378" width="375" height="170" rx="9" fill="#172338" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="70" y="404" font-size="16" fill="#22d3ee" text-anchor="start" font-weight="700">MoE EXPERT WEIGHTS</text>
+<text x="70" y="428" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">All 128 whole experts per local layer</text>
+<rect x="70" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="71" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<rect x="124" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="125" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<rect x="178" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="179" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<rect x="232" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="233" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<rect x="286" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="287" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<rect x="340" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="341" y="442" width="41" height="29" rx="5" fill="#22d3ee" opacity="0.7"/>
+<text x="70" y="496" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">gate/up: [1536,4096] each</text>
+<text x="70" y="519" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">down:    [4096,1536]</text>
+<text x="70" y="537" font-size="12" fill="#a8b7cb" text-anchor="start" font-weight="400">Logical shapes per local expert</text>
+<rect x="55" y="580" width="375" height="55" rx="9" fill="#172338" stroke="#34d399" stroke-width="1.5"/>
+<text x="70" y="603" font-size="13" fill="#34d399" text-anchor="start" font-weight="400">BF16 KV CACHE · stays with attention</text>
+<text x="70" y="625" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">47 layers × 4 KV heads</text>
+<rect x="670" y="160" width="415" height="495" rx="9" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="690" y="193" font-size="21" fill="#a78bfa" text-anchor="start" font-weight="700">GPU 1 · PP stage 1</text>
+<text x="690" y="219" font-size="15" fill="#a8b7cb" text-anchor="start" font-weight="400">layers 47–93</text>
+<rect x="690" y="241" width="375" height="105" rx="9" fill="#172338" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="705" y="267" font-size="16" fill="#a78bfa" text-anchor="start" font-weight="700">ATTENTION</text>
+<text x="705" y="291" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">All 64 Q heads + 4 KV heads</text>
+<text x="705" y="311" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">Full Q/K/V and output matrices</text>
+<rect x="690" y="378" width="375" height="170" rx="9" fill="#172338" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="705" y="404" font-size="16" fill="#a78bfa" text-anchor="start" font-weight="700">MoE EXPERT WEIGHTS</text>
+<text x="705" y="428" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">All 128 whole experts per local layer</text>
+<rect x="705" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="706" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<rect x="759" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="760" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<rect x="813" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="814" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<rect x="867" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="868" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<rect x="921" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="922" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<rect x="975" y="441" width="43" height="31" rx="9" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+<rect x="976" y="442" width="41" height="29" rx="5" fill="#a78bfa" opacity="0.7"/>
+<text x="705" y="496" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">gate/up: [1536,4096] each</text>
+<text x="705" y="519" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">down:    [4096,1536]</text>
+<text x="705" y="537" font-size="12" fill="#a8b7cb" text-anchor="start" font-weight="400">Logical shapes per local expert</text>
+<rect x="690" y="580" width="375" height="55" rx="9" fill="#172338" stroke="#34d399" stroke-width="1.5"/>
+<text x="705" y="603" font-size="13" fill="#34d399" text-anchor="start" font-weight="400">BF16 KV CACHE · stays with attention</text>
+<text x="705" y="625" font-size="14" fill="#e2e8f0" text-anchor="start" font-weight="400">47 layers × 4 KV heads</text>
+<text x="35" y="692" font-size="15" fill="#e2e8f0" text-anchor="start" font-weight="400">Stage 0 precedes stage 1 for each forward pass; weights do not move at the stage boundary.</text>
+<text x="35" y="718" font-size="15" fill="#e2e8f0" text-anchor="start" font-weight="400">47 / 47 is the vLLM default partition for 94 layers; this figure does not imply measured overlap.</text>
+<text x="35" y="759" font-size="13" fill="#a8b7cb" text-anchor="start" font-weight="400">Cyan = GPU 0 ownership    Violet = GPU 1 ownership    Orange = logical cross-rank dependency</text>
+<text x="35" y="787" font-size="13" fill="#a8b7cb" text-anchor="start" font-weight="400">Expert tiles are illustrative. AWQ packing/scales, embeddings, LM head and norms are omitted.</text>
+<text x="35" y="813" font-size="13" fill="#a8b7cb" text-anchor="start" font-weight="400">Logical layout derived from the tested config + vLLM 0.24 source; not a memory dump or kernel trace.</text>
+</svg>

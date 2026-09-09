@@ -105,6 +105,58 @@ was not diagnosed, and no reference-answer accuracy evaluation was performed.
 Forced-length throughput can be compared, but these checks do not establish
 interchangeable answer quality.
 
+## How tensors and layers are distributed
+
+These diagrams reconstruct the **logical placement** from our tested settings,
+checkpoint configuration and vLLM 0.24 implementation. They are not kernel traces
+or physical AWQ buffer layouts. Matrix dimensions use `[output, input]` order;
+`T` denotes the tokens in a scheduled forward pass. Embeddings, the LM head,
+normalization parameters and quantization metadata are omitted for clarity.
+
+### TP: every expert is split across both GPUs
+
+Each rank holds half the intermediate width of all 128 experts in every layer.
+The two slices contribute to the same expert outputs. Attention partitions the
+64 query heads and four KV heads between the ranks; each GPU keeps its own KV
+head slices for all 94 layers.
+
+![Tensor-parallel tensor ownership](diagram/topology-tp.png)
+
+[Download SVG](diagram/topology-tp.svg) · [Download PNG](diagram/topology-tp.png)
+
+### PP: each GPU owns complete layers
+
+The default partition is 47 layers per stage: layers 0–46 and 47–93, using
+zero-based numbering. Within its layers, each GPU holds complete attention and
+expert matrices. Hidden-state and residual tensors cross the stage boundary;
+the layer weights and KV cache remain resident. This placement follows the
+[vLLM pipeline partition rule](https://github.com/vllm-project/vllm/blob/v0.24.0/vllm/distributed/utils.py#L99).
+It does not establish concurrent execution of pipeline stages in our runs.
+
+![Pipeline-parallel layer ownership](diagram/topology-pp.png)
+
+[Download SVG](diagram/topology-pp.svg) · [Download PNG](diagram/topology-pp.png)
+
+### EP: whole experts, with attention still tensor-parallel
+
+The tested EP variant gives rank 0 experts 0–63 and rank 1 experts 64–127 in
+each layer. Each expert keeps its full 1,536-wide intermediate dimension.
+Attention and KV-head placement remain identical to TP. This is TP+EP, with
+one data-parallel rank, not two independent request-serving replicas.
+
+![Expert-parallel tensor ownership](diagram/topology-ep.png)
+
+[Download SVG](diagram/topology-ep.svg) · [Download PNG](diagram/topology-ep.png)
+
+The expert-width and ownership rules follow the
+[vLLM MoE parallel configuration](https://github.com/vllm-project/vllm/blob/v0.24.0/vllm/model_executor/layers/fused_moe/config.py#L1116).
+That implementation enables its all-to-all kernel path when DP is greater than
+one; our run used DP=1. Arrows therefore show logical output-combination
+dependencies rather than a measured all-to-all exchange. Attention partitioning
+and pipeline intermediate tensors follow the
+[Qwen3MoE implementation](https://github.com/vllm-project/vllm/blob/v0.24.0/vllm/model_executor/models/qwen3_moe.py).
+The [diagram generator](analysis/topology.py) preserves the editable layout.
+
 ## Actual GPU activity
 
 ![GPU activity from matched measured requests](results/gpu-timeline.png)
