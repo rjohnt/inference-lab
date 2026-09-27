@@ -174,7 +174,7 @@ tilelang==0.1.9
 tokenizers==0.23.2
 tokenspeed-mla==0.1.2
 tokenspeed-triton==3.8.10.post20260906
-torch==2.11.0
+torch==2.13.0
 torch-c-dlpack-ext==0.1.5
 torchaudio==2.11.0
 torchvision==0.26.0
