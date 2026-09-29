@@ -33,3 +33,9 @@ The source scripts generate new raw outputs; keep these in ignored local storage
 ![Thinking-off follow-up throughput comparison](results/results-20260908T010140Z/throughput-comparison.png)
 
 [SVG comparison](results/results-20260908T010140Z/throughput-comparison.svg)
+
+## Visual summary
+
+![Experiment visual](results/draft-verify.png)
+
+[SVG version](results/draft-verify.svg)
