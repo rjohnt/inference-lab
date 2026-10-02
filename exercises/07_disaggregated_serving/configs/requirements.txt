@@ -142,7 +142,7 @@ pydantic-extra-types==2.11.1
 pydantic-settings==2.15.0
 pyelftools==0.33
 pygments==2.21.0
-pyjwt==2.13.0
+pyjwt==2.15.0
 python-dotenv==1.2.3
 python-json-logger==4.2.0
 python-multipart==0.0.32
