@@ -54,7 +54,7 @@ shellingham==1.5.4
 starlette==1.6.0
 sympy==1.14.0
 tokenizers==0.23.2
-torch==2.11.0
+torch==2.13.0
 tqdm==4.70.0
 transformers==5.16.1
 triton==3.6.0
