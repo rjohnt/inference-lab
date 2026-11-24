@@ -3,7 +3,7 @@ cuda-bindings==13.3.1
 cuda-pathfinder==1.6.0
 cuda-toolkit==13.0.3.0
 cycler==0.12.1
-filelock==3.32.3
+filelock==4.2.1
 fonttools==4.64.0
 fsspec==2026.7.0
 iniconfig==2.3.0
